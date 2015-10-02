@@ -1,0 +1,132 @@
+%%Standarddokument, v1.87 %%
+
+\documentclass[a4paper,DIV=9,12pt]{scrreprt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[colorlinks=false,pdfborder={0 0 0},bookmarksnumbered]{hyperref}
+\usepackage{blindtext}
+\usepackage{setspace}
+% \usepackage{lmodern}
+% \usepackage{libertine}
+\usepackage{microtype}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
+
+\begin{document}
+
+%\parindent0mm
+
+\hypersetup{
+	pdftitle={Handout},
+	pdfauthor={},
+	pdfsubject={Projekttreffen Nr. 1}
+	}
+
+\onehalfspace
+
+\begin{titlepage}
+    \title{Handout}
+    \subtitle{Projekttreffen Nr. 1}
+    \author{}
+    \date{01-10-2015}
+    \maketitle
+    \thispagestyle{empty}
+\end{titlepage}
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Kontaktdaten}
+
+    \begin{table}[htpb]
+        \centering
+        \caption{caption}
+        \label{tab:label}
+        \begin{tabular}{l l l l}
+            Name &  Studiengang & Mail & Handy \\
+            \hline
+
+            \input{./private}
+
+        \end{tabular}
+    \end{table}
+
+    \begin{itemize}
+        \item Herr Prof. Dr. Cochlovius
+
+            \begin{itemize}
+                \item B4.04
+                \item Sprechstunde: Montags 13:15 Uhr bis 13:45 Uhr oder nach
+                    Vereinbarung. In Anspruch nehmen!
+            \end{itemize}
+
+        \item Frau Jakob
+
+            \begin{itemize}
+                \item B4.05
+                \item Montags, Mittwochs, Donnerstags an der Hochschule
+                \item Ansprechpartner für Einweisung, Software, Dokumentation,
+                    kleinere Meetings
+            \end{itemize}
+    \end{itemize}
+
+\chapter{Treffen}
+
+\begin{itemize}
+    \item Jede 2. Woche
+    \item Donnerstags 13:00 Uhr bis 13:45 Uhr
+    \item C 2.01
+    \item Ausweichtermin per Mail vereinbaren
+    \item Präsentieren
+        \begin{itemize}
+            \item Aktuelle Ergebnisse
+            \item Nächste Schritte
+            \item Demonstrationen
+            \item Q \& A
+        \end{itemize}
+    \item Folien bis Mittwoch Nachmittags (14:00 Uhr) einsenden
+\end{itemize}
+
+\chapter{Projektdaten}
+
+\begin{itemize}
+    \item 15 Wochen
+    \item 6 ECTS
+    \item Eigene Use-Cases definieren und implementieren
+    \item Dokumentation, Test, Inbetriebname
+        \begin{itemize}
+            \item Muss verwendbar sein für Nachfolgeprojekte
+        \end{itemize}
+    \item Bis Mitte Dezember fertige Demo verfügbar. Danach nur noch Korrekturen
+    \item aldebaran.com
+    \item Hardware wird auch von Thesianten verwendet und ist nicht immer
+        verfügbar / Absprache nötig
+\end{itemize}
+
+\chapter{Nächste Schritte}
+
+\begin{itemize}
+    \item Definieren
+        \begin{itemize}
+            \item Meilensteine
+            \item Rollenverteilung
+                \begin{itemize}
+                    \item Name
+                    \item Rolle
+                    \item Rollen-Details
+                \end{itemize}
+            \item Inhaltliche Gliederung
+        \end{itemize}
+
+    \item Nächstes Treffen
+        \begin{itemize}
+            \item 15.10.15
+            \item Nicht unbedingt mit Herrn Cochlovius
+        \end{itemize}
+\end{itemize}
+
+\end{document}
