@@ -21,6 +21,12 @@ GLOSSARY=$(shell which makeglossaries)
 export GLOSSARY
 
 #
+# Destination of the log from the make files
+#
+MAKELOG=make.log
+export MAKELOG
+
+#
 # The output command
 #
 ECHO_CMD=$(shell which echo)
@@ -80,7 +86,7 @@ export RM
 all:
 	@for dir in $(shell find -mindepth 1 -type d);do 	\
 		$(ECHO) "\t[MAKE]\t$$dir";						\
-		cd $$dir; $(MAKE) $(MAKE_FLAGS); cd ..;			\
+		$(MAKE) -C $$dir $(MAKE_FLAGS);					\
 	done
 
 .PHONY: all
