@@ -1,0 +1,67 @@
+%%Standarddokument, v1.87 %%
+
+\documentclass[a4paper,DIV=9,12pt]{scrreprt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[colorlinks=false,pdfborder={0 0 0},bookmarksnumbered]{hyperref}
+\usepackage{blindtext}
+\usepackage{setspace}
+% \usepackage{lmodern}
+% \usepackage{libertine}
+\usepackage{microtype}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
+
+\begin{document}
+
+%\parindent0mm
+
+\hypersetup{
+	pdftitle={Handout},
+	pdfauthor={},
+    pdfsubject={Projekttreffen Nr. 3}
+	}
+
+\onehalfspace
+
+\begin{titlepage}
+    \title{Handout}
+    \subtitle{Projekttreffen Nr. 3}
+    \author{}
+    \date{21-10-2015}
+    \maketitle
+    \thispagestyle{empty}
+\end{titlepage}
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{NAO-Setup}
+
+Das Setup des NAO wurde mit Frau Jakob besprochen und ausprobiert.
+Den NAO aufstehen und hinsetzen zu lassen hat bei einem ersten Test
+funktioniert, allerdings war die Verbindung mittels WLAN äusserst schlecht und
+der physische Roboter hat erst nach mehreren Minuten auf gestartete Aktionen
+reagiert.
+
+Nachdem diese Schwierigkeiten überwunden wurden, konnten wir mehrere
+Testprogramme auf dem NAO ausführen.
+
+Von Frau Jakob erhielten wir zudem den Quellcode der Vorgängergruppen.
+Diesen Einblick erachten wir als besonders wichtig, da er einen ersten Kontakt
+mit der Materie im Sinne der Projekterstellung bezüglich der Aspekte
+Programmierung und Softwaredesign darstellte.
+
+Es war für Daniel nicht möglich, das ``qibuild''-Werkzeug zu installieren.
+Zudem war das Einrichten des Netzwerks im Labor war für Matthias schwierig.
+
+Zuletzt war es jedoch Möglich den Beispielquellcode, welcher bei der
+NAO-Installations-CD mitgeliefert wurde, zu übersetzen.
+
+Zudem wurde ein Virtualbox-Disc-Image angelegt.
+
+\end{document}
