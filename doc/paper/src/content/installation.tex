@@ -1,13 +1,40 @@
 \chapter{Installation}
 
+    Folgendes Kapitel beschreibt die Installation der Entwicklungsumgebung mitsamt
+    Toolchain und ``qibuild''.
+
+    \section{Ubuntu 14.04}
+
+        In folgendem Kapitel wird eine virtuelle Maschine mit Ubuntu
+        verwendet.
+        Es wurde die Ubuntuversion aus Listing \ref{lst:ubuntuvers} verwendet.
+
+\lstinputlisting[language=bash,caption={Ubuntu version},label=lst:ubuntuvers]{src/sources/ubuntu-os-release.sh}
+
+        Im Ersten Schritt werden alle benötigten Pakete installiert (siehe
+        Listing \ref{lst:aptget}).
+        Dazu wird das Systemtool ``apt-get'' verwendet.
+
 \lstinputlisting[language=bash,caption={Installation der Pakete},label=lst:aptget]{src/sources/installation-packages.sh}
 (entnommen aus \cite[S. 5, f.]{projss15})
+
+        Zur Verwendung der Toolchain wird im Folgenden eine Ordnerstruktur
+        angelegt, in welchem der Quellcode verwaltet wird (Listing
+        \ref{lst:mkdirp}).
 
 \lstinputlisting[language=bash,caption={Anlegen der Ordnerstruktur},label=lst:mkdirp]{src/sources/folder-structure.sh}
 (entnommen aus \cite[S. 4]{projss15})
 
+        Die Programmierumgebung ``qibuild'' welche die Toolchain zur Verfügung
+        stellt muss installiert und konfiguriert werden (Listing
+        \ref{lst:installqibuild}).
+
 \lstinputlisting[language=bash,caption={Installieren von qibuild},label=lst:installqibuild]{src/sources/install-qibuild.sh}
 (entnommen aus \cite[S. 5]{projss15})
+
+        Nachdem die Umgebung erfolgreich installiert wurde, kann eine Toolchain
+        angelegt werden (Listing \ref{lst:mktoolchain} und ``qibuild''
+        initialisiert werden (Listing \ref{lst:initqibuild}).
 
 \lstinputlisting[language=bash,caption={Erstellen der Toolchain},label=lst:mktoolchain]{src/sources/mk-toolchain.sh}
 (entnommen aus \cite[S. 7]{projss15})
@@ -15,6 +42,9 @@
 \lstinputlisting[language=bash,caption={Init: qibuild},label=lst:initqibuild]{src/sources/qibuild-init.sh}
 (entnommen aus \cite[S. 8, f.]{projss15})
 
+        Die Konfigurationsdatei für ``qibuild''
+        (im Pfad ~/.config/qi/qibuild.xml) muss bearbeitet werden, die
+        Toolchain muss eingetragen werden (Listing \ref{lst:qibuildxml}).
 
 \lstinputlisting[language=xml,caption={qibuild XML file},label=lst:qibuildxml]{src/sources/qibuild.xml}
 (entnommen aus \cite[S. 8]{projss15})
