@@ -1,2 +1,2 @@
-mkdir ~/nao/{devtools,workspace} -p ~/.local/bin
+mkdir ~/nao/{devtools/OpenCV/build,workspace} -p ~/.local/bin
 echo "export PATH=\$PATH:\&HOME/.local/bin/" >> ~/.profile
