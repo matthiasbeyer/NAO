@@ -1,0 +1,16 @@
+<qibuild version="1">
+  <build />
+  <defaults>
+    <env />
+    <toolchain>"test-001"</toolchain>
+    <cmake generator="Unix Makefiles" />
+  </defaults>
+  <config name="test-001">
+    <env />
+    <cmake />
+    <profiles />
+  </config>
+  <worktree path="/home/m/nao/workspace">
+    <defaults />
+  </worktree>
+</qibuild>
