@@ -1,16 +1,28 @@
 \lstset{
-	language=c,
-	backgroundcolor=\color{white},
-	breaklines=true,
-	prebreak={\carriagereturn},
- 	breakautoindent=true,
- 	numbers=left,
- 	numberstyle=\tiny,
- 	stepnumber=1,
- 	numbersep=5pt,
- 	keywordstyle=\color{blue},
-   	commentstyle=\color{green},
-   	stringstyle=\color{gray},
+    inputencoding=utf8,
+    extendedchars=true,
+    language=c,
+    backgroundcolor=\color{white},
+    breaklines=true,
+    prebreak={\carriagereturn},
+    breakautoindent=true,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    stringstyle=\color{gray},
+}
+
+\lstset{literate=
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}2
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
 }
 
 \lstdefinestyle{customc}{
