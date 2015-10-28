@@ -70,3 +70,115 @@
                     {lst:qibuildxml}
         (entnommen aus \cite[S. 8]{projss15})
 
+    \section{Installation unter Windows}
+
+        Folgendes Kapitel beschreibt die Installation des NAO-SDKs unter
+        Windows.
+
+        \subsection{Systemvorraussetzungen}
+
+            Die im Folgenden beschriebenen Schritte wurden auf einem Computer
+            mit folgender vorinstallierter Software ausgeführt:
+
+            \begin{itemize}
+                \item Windows 10 Pro 64 Bit
+                \item Python 2.7 (python-2.7.10.msi)
+                \item CMake 2.8.3 (cmake-2.8.3-win32-x86.exe)
+                \item Naoqi SDK 1.14.5 (naoqi-sdk-1.14.5-win32-vs2010.zip)
+                \item qiBuild 1.14.3 (qibuild-1.14.3.zip)
+                \item Microsoft Visual Studio 2010 Professional x86
+            \end{itemize}
+
+        \subsection{C++ SDK Installation unter Windows}
+
+            Folgende Schritte müssen zur Installation des C++ SDKs unter Windows
+            ausgeführt werden:
+
+            \begin{itemize}
+                \item Python 2.7 und CMake installieren
+                \begin{itemize}
+                    \item python-2.7.10.msi und cmake-3.3.2-win32-x86.exe
+                        ausführen
+
+                    \item Systemumgebungsvariablen öffnen und dabei
+                        Systemvariablen ``Neu''  auswählen
+
+                    \begin{itemize}
+                        \item ``Name der Variablen:'' ``PY\_HOME''
+                        \item ``Wert der Variablen:'' ``Python\_Pfad'',
+                            zum Beispiel ``C:\textbackslash{}Python27'')
+                    \end{itemize}
+
+                    \item Bereits bestehende Variable ``Path'' bearbeiten und
+                        Einträge hinzufügen, wie in Listing \ref{lst:win:path}
+                        zu sehen.
+                \end{itemize}
+
+                \item ``quiBuild'' installieren
+                \begin{itemize}
+                    \item qibuild-1.14.3.zip nach „C:\textbackslash{}naoqi\textbackslash{}qibuild\textbackslash{}“ entpacken
+
+                    \item C:\textbackslash{}naoqi\textbackslash{}qibuild\textbackslash{}install-qibuild.sh“ ausführen
+
+                    \item Per Windows-Taste + $x$ $\rightarrow$ a und mit
+                        ``Ja'' bestätigen - Administrator Eingabeaufforderung
+                        aufrufen
+
+                    \item Konfigurieren von qiBuild mittels
+                        ``qibuild config --wizard'', dabei
+                        ``10 Visual Studio 10 2010'' $\rightarrow$ ``7 Visual
+                        Studio'' mit ``7'' bestätigen
+                \end{itemize}
+
+                \item naoqi-SDK installieren
+
+                \begin{itemize}
+                    \item naoqi-sdk-1.14.5-win32-vs2010.zip nach
+                        ``C:\textbackslash{}naoqi\textbackslash{}sdk\textbackslash{}''
+                        entpacken (Ggf. Ordernamen anpassen)
+
+                    \item Wie zuvor die Administrator Eingabeaufforderungen
+                        öffnen und mittels
+                        ``cd C:\textbackslash{}naoqi\textbackslash{}''
+                        zu diesem Ordner navigieren
+
+                    \item„``qibuild init'' eingeben und per Enter bestätigen
+                \end{itemize}
+
+                \item Ein Beispielprogramm compilieren
+
+                \begin{itemize}
+                    \item Wie zuvor die Administrator Eingabeaufforderungen
+                        öffnen und per
+                        ``cd C:\textbackslash{}naoqi\textbackslash{}sdk\textbackslash{}doc\textbackslash{}examples''
+                        zu diesem Ordner navigieren
+
+                    \item Toolchain erstellen mit
+                        ``„qitoolchain create mytoolchain C:\textbackslash{}naoqi\textbackslash{}sdk\textbackslash{}toolchain.xml''
+                        (``mytoolchain'' entspricht dem Namen)
+
+                    \item Um die Konfiguration zu erzeugen und anschließen das
+                        Projekt zu bauen werden folgende Befehle ausgeführt:
+                    \begin{itemize}
+                        \item ``cd core/sayhelloworld'' - zum Projektorder
+                            wechseln
+
+                        \item ``qibuild configure -c mytoolchain'' - die
+                            Konfiguration erzeugen
+
+                        \item `„qibuild make -c mytoolchain'' - das Projekt
+                            bauen
+                    \end{itemize}
+
+                \end{itemize}
+
+            \end{itemize}
+
+            Sofern keine Fehler aufgetreten sind, ist das SDK nun erfolgreich
+            installiert und einsatzbereit.
+
+            \lstinputlisting[language=bash,
+                            caption={Windows Path},
+                             label=lst:win:path]
+                             {src/sources/windows-path-edit.txt}
+
