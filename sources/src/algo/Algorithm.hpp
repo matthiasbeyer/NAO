@@ -19,20 +19,20 @@ namespace algo {
             algo::State   state;
             algo::CardVec cards;
 
-            algo::CardVec &min;
-            algo::CardVec &max;
+            algo::CardVec min;
+            algo::CardVec max;
 
             unsigned int accumulate_cards(void);
 
         public:
 
-            explicit Algorithm(const algo::Card &minCard,
-                               const algo::Card &maxCard);
+            explicit Algorithm(algo::Card &minCard,
+                               algo::Card &maxCard);
             ~Algorithm();
 
             State getState(void);
 
-            State update(const std::shared_ptr<const Card> card);
+            State update(std::shared_ptr<Card> card);
 
             std::weak_ptr<CardVec> getCards(void);
 

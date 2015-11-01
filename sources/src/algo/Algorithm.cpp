@@ -1,3 +1,5 @@
+#include <numeric>
+
 #include "algo/Algorithm.hpp"
 
 #include "algo/Card.hpp"
@@ -8,9 +10,9 @@ using namespace algo;
 
 #define WINNERS_NUMBER (21)
 
-Algorithm::Algorithm(const Card &minCard, const Card &maxCard)
+Algorithm::Algorithm(Card &minCard, Card &maxCard)
     : state(NOT_STARTED)
-    , card_vec()
+    , cards()
     , min(minCard)
     , max(maxCard)
 {
@@ -27,7 +29,7 @@ Algorithm::getState(void)
 }
 
 State
-Algorithm::update(const std::shared_ptr<const Card> card)
+Algorithm::update(std::shared_ptr<Card> card)
 {
     this->cards.push_back(card);
     auto acc = this->accumulate_cards();
@@ -37,7 +39,7 @@ Algorithm::update(const std::shared_ptr<const Card> card)
     } else if (acc == WINNERS_NUMBER) {
         this->state = WON;
     } else if (acc > WINNERS_NUMBER) {
-        this->state = PLAYING
+        this->state = PLAYING;
     }
 
     return this->state;
@@ -69,7 +71,7 @@ Algorithm::accumulate_cards(void)
     unsigned int init = 0;
     return std::accumulate(this->cards.begin(), this->cards.end(), init,
             [](unsigned int i, std::shared_ptr<Card> c) {
-                return i + c.getNum();
+                return i + c->getNum();
             });
 }
 
