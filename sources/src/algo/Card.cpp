@@ -13,3 +13,33 @@ Card::getNum(void) {
     return this->number;
 }
 
+bool operator != (Card &c1, Card &c2)
+{
+    return c1.number != c2.number;
+}
+
+bool operator == (Card &c1, Card &c2)
+{
+    return c1.number == c2.number;
+}
+
+bool operator < (Card &c1, Card &c2)
+{
+    return c1.number < c2.number;
+}
+
+bool operator <=(Card &c1, Card &c2)
+{
+    return c1.number <= c2.number;
+}
+
+bool operator > (Card &c1, Card &c2)
+{
+    return c1.number > c2.number;
+}
+
+bool operator >=(Card &c1, Card &c2)
+{
+    return c1.number >= c2.number;
+}
+

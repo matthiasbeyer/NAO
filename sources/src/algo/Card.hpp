@@ -15,6 +15,16 @@ namespace algo {
 
             unsigned int getNum(void);
 
+            friend bool operator != (Card &c1, Card &c2);
+            friend bool operator == (Card &c1, Card &c2);
+
+            friend bool operator < (Card &c1, Card &c2);
+            friend bool operator <=(Card &c1, Card &c2);
+
+            friend bool operator > (Card &c1, Card &c2);
+            friend bool operator >=(Card &c1, Card &c2);
+
+
     };
 
 }
