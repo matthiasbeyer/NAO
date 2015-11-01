@@ -4,9 +4,11 @@ using namespace algo;
 
 #define WINNERS_NUMBER (21)
 
-Algorithm::Algorithm()
+Algorithm::Algorithm(const Card &minCard, const Card &maxCard)
     : state(NOT_STARTED)
     , card_vec()
+    , min(minCard)
+    , max(maxCard)
 {
 }
 

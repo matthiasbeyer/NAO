@@ -17,9 +17,12 @@ namespace algo {
             State   state;
             CardVec cards;
 
+            CardVec &min;
+            CardVec &max;
+
         public:
 
-            Algorithm() explicit;
+            Algorithm(const Card &minCard, const Card &maxCard) explicit;
             ~Algorithm();
 
             State getState(void);
