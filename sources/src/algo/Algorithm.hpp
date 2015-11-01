@@ -20,6 +20,8 @@ namespace algo {
             CardVec &min;
             CardVec &max;
 
+            unsigned int accumulate_cards(void);
+
         public:
 
             Algorithm(const Card &minCard, const Card &maxCard) explicit;
