@@ -8,7 +8,7 @@
 
 namespace algo {
 
-    typedef std::vector<std::shared_ptr<Card>> CardVec;
+    typedef std::vector<const std::shared_ptr<const Card>> CardVec;
 
     class Algorithm {
 
