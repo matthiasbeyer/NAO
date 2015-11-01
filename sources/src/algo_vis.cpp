@@ -24,7 +24,9 @@ bool step(algo::Algorithm &a, unsigned int next_draw) {
         {
             const auto c = std::make_shared<algo::Card>(next_draw);
 
+            std::cout << "Algorithm draws: " << next_draw << std::endl;
             auto state = a.update(c);
+            std::cout << "Algorithm has: " << a.get_current_sum() << std::endl;
 
             switch (state) {
                 case algo::State::NOT_STARTED:
