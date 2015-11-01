@@ -4,11 +4,14 @@
 #include <vector>
 #include <memory>
 
+#include "algo/Card.hpp"
+
 namespace algo {
 
     typedef std::vector<std::shared_ptr<Card>> CardVec;
 
     class Algorithm {
+
         private:
 
             State   state;
@@ -26,6 +29,7 @@ namespace algo {
             std::weak_ptr<CardVec> getCards(void);
 
             Draw doDraw(void);
+
     }
 
 }
