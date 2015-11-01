@@ -1,5 +1,9 @@
 #include "algo/Algorithm.hpp"
 
+#include "algo/Card.hpp"
+#include "algo/Draw.hpp"
+#include "algo/State.hpp"
+
 using namespace algo;
 
 #define WINNERS_NUMBER (21)
