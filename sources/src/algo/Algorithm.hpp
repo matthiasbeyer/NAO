@@ -38,6 +38,8 @@ namespace algo {
 
             Draw doDraw(void);
 
+            unsigned int get_current_sum(void);
+
     };
 
 }

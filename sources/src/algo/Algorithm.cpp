@@ -32,7 +32,7 @@ State
 Algorithm::update(std::shared_ptr<Card> card)
 {
     this->cards.push_back(card);
-    auto acc = this->accumulate_cards();
+    auto acc = this->get_current_sum();
 
     if (acc < WINNERS_NUMBER) {
         this->state = PLAYING;
@@ -55,7 +55,7 @@ Algorithm::getCards(void)
 Draw
 Algorithm::doDraw(void)
 {
-    unsigned int sum = this->accumulate_cards();
+    unsigned int sum = this->get_current_sum();
 
     // naiive implementation
     if (sum < WINNERS_NUMBER) {
@@ -66,7 +66,7 @@ Algorithm::doDraw(void)
 }
 
 unsigned int
-Algorithm::accumulate_cards(void)
+Algorithm::get_current_sum(void)
 {
     unsigned int init = 0;
     return std::accumulate(this->cards.begin(), this->cards.end(), init,
@@ -74,4 +74,3 @@ Algorithm::accumulate_cards(void)
                 return i + c->getNum();
             });
 }
-
