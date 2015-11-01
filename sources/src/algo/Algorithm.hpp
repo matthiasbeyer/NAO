@@ -5,26 +5,29 @@
 #include <memory>
 
 #include "algo/Card.hpp"
+#include "algo/State.hpp"
+#include "algo/Draw.hpp"
 
 namespace algo {
 
-    typedef std::vector<const std::shared_ptr<const Card>> CardVec;
+    typedef std::vector<std::shared_ptr<Card>> CardVec;
 
     class Algorithm {
 
         private:
 
-            State   state;
-            CardVec cards;
+            algo::State   state;
+            algo::CardVec cards;
 
-            CardVec &min;
-            CardVec &max;
+            algo::CardVec &min;
+            algo::CardVec &max;
 
             unsigned int accumulate_cards(void);
 
         public:
 
-            Algorithm(const Card &minCard, const Card &maxCard) explicit;
+            explicit Algorithm(const algo::Card &minCard,
+                               const algo::Card &maxCard);
             ~Algorithm();
 
             State getState(void);
@@ -35,7 +38,7 @@ namespace algo {
 
             Draw doDraw(void);
 
-    }
+    };
 
 }
 
