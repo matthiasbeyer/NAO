@@ -24,6 +24,7 @@ namespace algo {
             friend bool operator > (Card &c1, Card &c2);
             friend bool operator >=(Card &c1, Card &c2);
 
+            operator unsigned int();
 
     };
 
