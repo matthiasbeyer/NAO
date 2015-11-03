@@ -23,6 +23,7 @@ namespace algo {
                 return c1.number == c2.number;
             }
 
+
             friend bool operator < (const Card &c1, const Card &c2) {
                 return c1.number < c2.number;
             }
@@ -31,9 +32,15 @@ namespace algo {
                 return c1.number < n;
             }
 
+            friend bool operator < (unsigned int n, const Card &c1) {
+                return c1 < n;
+            }
+
+
             friend bool operator <=(const Card &c1, const Card &c2) {
                 return c1.number <= c2.number;
             }
+
 
             friend bool operator > (const Card &c1, const Card &c2) {
                 return c1.number > c2.number;
@@ -42,6 +49,11 @@ namespace algo {
             friend bool operator > (const Card &c1, unsigned int n) {
                 return c1.number > n;
             }
+
+            friend bool operator > (unsigned int n, const Card &c1) {
+                return c1 > n;
+            }
+
 
             friend bool operator >=(const Card &c1, const Card &c2) {
                 return c1.number >= c2.number;
