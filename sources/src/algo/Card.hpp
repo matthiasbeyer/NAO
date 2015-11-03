@@ -15,27 +15,35 @@ namespace algo {
 
             unsigned int getNum(void);
 
-            friend bool operator != (Card &c1, Card &c2) {
+            friend bool operator != (const Card &c1, const Card &c2) {
                 return c1.number != c2.number;
             }
 
-            friend bool operator == (Card &c1, Card &c2) {
+            friend bool operator == (const Card &c1, const Card &c2) {
                 return c1.number == c2.number;
             }
 
-            friend bool operator < (Card &c1, Card &c2) {
+            friend bool operator < (const Card &c1, const Card &c2) {
                 return c1.number < c2.number;
             }
 
-            friend bool operator <=(Card &c1, Card &c2) {
+            friend bool operator < (const Card &c1, unsigned int n) {
+                return c1.number < n;
+            }
+
+            friend bool operator <=(const Card &c1, const Card &c2) {
                 return c1.number <= c2.number;
             }
 
-            friend bool operator > (Card &c1, Card &c2) {
+            friend bool operator > (const Card &c1, const Card &c2) {
                 return c1.number > c2.number;
             }
 
-            friend bool operator >=(Card &c1, Card &c2) {
+            friend bool operator > (const Card &c1, unsigned int n) {
+                return c1.number > n;
+            }
+
+            friend bool operator >=(const Card &c1, const Card &c2) {
                 return c1.number >= c2.number;
             }
 
