@@ -1,0 +1,47 @@
+%%Standarddokument, v1.87 %%
+
+\documentclass[a4paper,DIV=9,12pt]{scrreprt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[colorlinks=false,pdfborder={0 0 0},bookmarksnumbered]{hyperref}
+\usepackage{blindtext}
+\usepackage{setspace}
+% \usepackage{lmodern}
+% \usepackage{libertine}
+\usepackage{microtype}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\makeatother
+
+\begin{document}
+
+%\parindent0mm
+
+\hypersetup{
+	pdftitle={Handout},
+	pdfauthor={},
+    pdfsubject={Projekttreffen Nr. 4}
+	}
+
+\onehalfspace
+
+\begin{titlepage}
+    \title{Handout}
+    \subtitle{Projekttreffen Nr. 4}
+    \author{}
+    \date{03-11-2015}
+    \maketitle
+    \thispagestyle{empty}
+\end{titlepage}
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Vorlage}
+
+Dies ist eine Vorlage.
+
+\end{document}
