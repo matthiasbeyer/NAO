@@ -39,7 +39,7 @@ Algorithm::update(std::shared_ptr<Card> card)
     } else if (acc == WINNERS_NUMBER) {
         this->state = WON;
     } else if (acc > WINNERS_NUMBER) {
-        this->state = PLAYING;
+        this->state = LOST;
     }
 
     return this->state;
