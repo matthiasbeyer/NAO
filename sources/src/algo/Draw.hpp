@@ -3,13 +3,22 @@
 
 namespace algo {
 
-    enum Draw {
-        NO_SURE,
-        NO_UNUSURE,
-        NO_NERVOUS,
-        YES_SURE,
-        YES_UNUSURE,
-        YES_NERVOUS,
+    class Draw {
+
+        private:
+
+            signed short __certainty;
+
+        public:
+
+            Draw(signed short certainty);
+
+            operator char();
+            operator bool();
+
+            char certainty();   // alias for operator char()
+            bool doDraw();      // alias for operator bool()
+
     };
 
 }

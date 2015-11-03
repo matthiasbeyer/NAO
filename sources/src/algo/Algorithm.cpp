@@ -59,9 +59,9 @@ Algorithm::doDraw(void)
 
     // naiive implementation
     if (sum < WINNERS_NUMBER) {
-        return YES_SURE;
+        return Draw(100);
     } else {
-        return NO_SURE;
+        return Draw(-100);
     }
 }
 

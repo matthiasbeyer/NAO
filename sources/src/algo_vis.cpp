@@ -10,49 +10,39 @@
 #define NUM_MAX (7)
 
 bool step(algo::Algorithm &a, unsigned int next_draw) {
-    switch (a.doDraw()) {
-        case algo::Draw::NO_SURE:
-        case algo::Draw::NO_UNUSURE:
-        case algo::Draw::NO_NERVOUS:
-            std::cout << "No more drawing..." << std::endl;
-            return false;
-            break;
+    if (a.doDraw()) {
+        std::cout << "Drawing with certainty: "
+                  << (int) (char) a.doDraw()
+                  << std::endl;
 
-        case algo::Draw::YES_SURE:
-        case algo::Draw::YES_UNUSURE:
-        case algo::Draw::YES_NERVOUS:
-        {
-            const auto c = std::make_shared<algo::Card>(next_draw);
+        const auto c = std::make_shared<algo::Card>(next_draw);
 
-            std::cout << "Algorithm draws: " << next_draw << std::endl;
-            auto state = a.update(c);
-            std::cout << "Algorithm has: " << a.get_current_sum() << std::endl;
+        std::cout << "Algorithm draws: " << next_draw << std::endl;
+        auto state = a.update(c);
+        std::cout << "Algorithm has: " << a.get_current_sum() << std::endl;
 
-            switch (state) {
-                case algo::State::NOT_STARTED:
-                case algo::State::PLAYING:
-                    std::cout << "Game will continue" << std::endl;
-                    return true;
+        switch (state) {
+            case algo::State::NOT_STARTED:
+            case algo::State::PLAYING:
+                std::cout << "Game will continue" << std::endl;
+                return true;
 
-                case algo::State::HALTED:
-                    std::cout << "Game halted by algorithm" << std::endl;
-                    return false;
+            case algo::State::HALTED:
+                std::cout << "Game halted by algorithm" << std::endl;
+                return false;
 
-                case algo::State::WON:
-                    std::cout << "Game halted by algorithm: Won" << std::endl;
-                    return false;
+            case algo::State::WON:
+                std::cout << "Game halted by algorithm: Won" << std::endl;
+                return false;
 
-                case algo::State::LOST:
-                    std::cout << "Game halted by algorithm: Lost" << std::endl;
-                    return false;
+            case algo::State::LOST:
+                std::cout << "Game halted by algorithm: Lost" << std::endl;
+                return false;
 
-            }
-
-            break;
         }
     }
 
-    return true;
+    return a.doDraw();
 }
 
 int

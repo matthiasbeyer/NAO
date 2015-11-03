@@ -9,6 +9,7 @@ set(algo_vis_SOURCES
         src/algo_vis.cpp
         src/algo/Algorithm.cpp
         src/algo/Card.cpp
+        src/algo/Draw.cpp
     )
 
 include_directories(${INCLUDES})
