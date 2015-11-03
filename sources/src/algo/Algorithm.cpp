@@ -1,4 +1,5 @@
 #include <numeric>
+#include <algorithm>
 
 #include "algo/Algorithm.hpp"
 
@@ -74,3 +75,24 @@ Algorithm::get_current_sum(void)
                 return i + c->getNum();
             });
 }
+
+std::vector<Card>
+Algorithm::calc_possible_next_draws(const std::vector<Card> &v, unsigned int sum)
+{
+    std::vector<Card> res = v;
+    std::remove_if(res.begin(), res.end(),
+            [sum](const Card &c) {
+                return c < (WINNERS_NUMBER - sum);
+            });
+    return std::move(res);
+}
+
+std::vector<Card>
+Algorithm::possible_draws() {
+    auto vec = std::vector<Card>();
+    for (unsigned int i = this->min; i < this->max; ++i) {
+        vec.push_back(Card(i));
+    }
+    return vec;
+}
+

@@ -24,6 +24,12 @@ namespace algo {
 
             unsigned int accumulate_cards(void);
 
+            std::vector<Card>
+            calc_possible_next_draws(const std::vector<Card>&, unsigned int);
+
+            std::vector<Card>
+            possible_draws();
+
         public:
 
             explicit Algorithm(algo::Card &minCard,
