@@ -1,0 +1,41 @@
+\chapter{Spiele-Algorithmus}
+
+    Der Algorithmus welcher den Ablauf des Spiels beschreibt ist in
+    \ref{img:game-algo} beschrieben.
+
+    Das Softwaremodul welches den Algorithmus implementiert hat dabei eine
+    wohldefinierte Schnittstelle, welche nach aussen verfügbar ist.
+    Ein Benutzer der Schnittstelle hat verschiedene Usecases, welche in
+    \ref{img:game-algo-usecases} visualisiert sind.
+    Der Ablauf des Spieles ist zudem in Abbildung \ref{img:game-algo-ablauf}
+    umrissen.
+
+    Das resultierende Klassendiagramm (\ref{img:game-algo-classes}) zeigt die
+    Algorithmus-Komponente.
+    Es existieren drei Helfer-Klassen, welche in Folgendem beschrieben werden
+    sollen.
+
+    \section{Helferklasse: Card}
+
+        Diese Klasse repräsentiert eine ``Karte'' im Spiel.
+        Sie existiert um eine Karte zu abstrahieren und stellt ein einfaches
+        Interface für den Algorithmus dar, mit Karten zu hantieren.
+
+    \section{Helferklasse: State}
+
+        Diese Klasse (eine Enumeration) stellt den aktuellen Status des
+        Algorithmus dar.
+        Der Algorithmus kann in verschiedenen Zuständen sein, wie zum Beispiel
+        ``Spielend'' oder ``Angehalten''.
+
+    \section{Helferklasse: Draw}
+
+        Diese Klasse (eine Enumeration) stellt die Antwort auf die Frage, ob
+        noch einmal gezogen werden soll, dar.
+        Ein einfacher Wahrheitswert wäre zwar ausreichend, beschreibt allerdings
+        nur ob gezogen werden soll oder nicht.
+        Diese Klasse bietet eine abstraktere Antwort, damit der Roboter
+        entsprechend verdeutlichen kann, wie sicher er sich ist beim nächsten
+        Zug.
+
+% vim: spelllang=de
