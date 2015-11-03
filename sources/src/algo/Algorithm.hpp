@@ -19,8 +19,8 @@ namespace algo {
             algo::State   state;
             algo::CardVec cards;
 
-            algo::CardVec min;
-            algo::CardVec max;
+            algo::Card min;
+            algo::Card max;
 
             unsigned int accumulate_cards(void);
 
