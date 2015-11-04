@@ -69,7 +69,7 @@ Algorithm::doDraw(void)
         return Draw(-100);
     }
 
-    auto percentage = 100 / poss_draws.size() * poss_next_draws.size();
+    auto percentage = 100.0 / poss_draws.size() * poss_next_draws.size();
 
     /**
      * If the percentage is lower than 50 percent, we do not want to draw again.
