@@ -1,5 +1,6 @@
 #include <numeric>
 #include <algorithm>
+#include <iterator>
 
 #include "algo/Algorithm.hpp"
 
@@ -98,8 +99,9 @@ Algorithm::get_current_sum(void)
 std::vector<Card>
 Algorithm::calc_possible_next_draws(const std::vector<Card> &v, unsigned int sum)
 {
-    std::vector<Card> res = v;
-    std::remove_if(res.begin(), res.end(),
+    std::vector<Card> res;
+    auto insert = std::back_inserter<std::vector<Card>>(res);
+    std::copy_if(v.begin(), v.end(), insert,
             [sum](const Card &c) {
                 return c < (WINNERS_NUMBER - sum);
             });
