@@ -56,6 +56,10 @@ Algorithm::getCards(void)
 Draw
 Algorithm::doDraw(void)
 {
+    if (this->state == NOT_STARTED) {
+        return Draw(100);
+    }
+
     unsigned int sum = this->get_current_sum();
 
     auto poss_draws = this->possible_draws();
