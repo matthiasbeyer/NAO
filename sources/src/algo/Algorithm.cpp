@@ -109,7 +109,9 @@ Algorithm::calc_possible_next_draws(const std::vector<Card> &v, unsigned int sum
 std::vector<Card>
 Algorithm::possible_draws() {
     auto vec = std::vector<Card>();
-    for (unsigned int i = this->min; i < this->max; ++i) {
+    unsigned int i = this->min;
+    unsigned int max = this->max;
+    for (; i < max; ++i) {
         vec.push_back(Card(i));
     }
     return vec;
