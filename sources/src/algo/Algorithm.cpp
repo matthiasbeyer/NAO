@@ -58,12 +58,27 @@ Algorithm::doDraw(void)
 {
     unsigned int sum = this->get_current_sum();
 
-    // naiive implementation
-    if (sum < WINNERS_NUMBER) {
-        return Draw(100);
-    } else {
+    auto poss_draws = this->possible_draws();
+    auto poss_next_draws = this->calc_possible_next_draws(poss_draws, sum);
+
+    if (0 == poss_next_draws.size()) {
         return Draw(-100);
     }
+
+    auto percentage = 100 / poss_draws.size() * poss_next_draws.size();
+
+    /**
+     * If the percentage is lower than 50 percent, we do not want to draw again.
+     * So we use this percentage, and transform it to a negative value, which is
+     * then scaled onto the 0-100 percent range.
+     *
+     * So a 40 % will be a -80 % afterwards.
+     */
+    if (percentage < 50) {
+        percentage *= -2;
+    }
+
+    return Draw(percentage);
 }
 
 unsigned int
