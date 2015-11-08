@@ -1,0 +1,36 @@
+digraph usecase {
+    graph [autosize=false, size="25.7,8.3!", resolution=100];
+    rankdir=LR;
+    bgcolor="#e4e4e4";
+    node [fontname=Arial, fontsize=10];
+    edge [color=black, style=bold, fontsize=8];
+
+    // Actors
+    {
+        node [shape=custom, shapefile="src/pictures/Actor.png",
+            width=.500, height=0.90, fixedsize=true,
+            color="#ffffaa", label="\n\n\n\n\n\n\N"]
+
+        Controller
+    }
+
+    // System Use Cases
+    subgraph algorithmCluster
+    {
+        label="Algorithm";
+        fillcolor="#aeaeae"; style=filled; color=black; // The system box
+        node [shape=ellipse, style=filled, fillcolor="#c9c9c9", color="#558855"]
+
+        CreateGame [label="Spiel erstellen"]
+        StepGame   [label="Spielschritt auslösen"]
+        StatusGame [label="Spielstatus abfragen"]
+        QuitGame   [label="Spiel beenden"]
+    }
+
+    Controller -> CreateGame    [arrowhead=none];
+    Controller -> StepGame      [arrowhead=none];
+    Controller -> StatusGame    [arrowhead=none];
+    Controller -> QuitGame      [arrowhead=none];
+
+}
+
