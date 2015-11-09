@@ -40,6 +40,9 @@ bool step(algo::Algorithm &a, unsigned int next_draw) {
                 return false;
 
         }
+    } else {
+        std::cout << "Game ends because Algorithm doesn't want to draw: "
+                  << (signed short) a.doDraw() << std::endl;
     }
 
     return a.doDraw();
