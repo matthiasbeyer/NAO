@@ -282,7 +282,7 @@ $(PDF_FILE): $(AUX_FILE) $(BBL_FILE) $(GLS_FILE)
 
 %.png: %.dot
 	@$(ECHO) "\t[GRPHV]"
-	$(GRAPHVIZ) $< -o $@
+	@$(GRAPHVIZ) $< -o $@
 
 
 ##
