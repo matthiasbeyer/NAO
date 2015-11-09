@@ -1,0 +1,10 @@
+SRC=4.tex
+
+all:
+	@$(ECHO) "\t[LATEX]\t$(SRC)"
+	@$(LATEX) $(LATEX_FLAGS) $(SRC) >> $(MAKELOG)
+	@$(LATEX) $(LATEX_FLAGS) $(SRC) >> $(MAKELOG)
+	@$(LATEX) $(LATEX_FLAGS) $(SRC) >> $(MAKELOG)
+
+.PHONY: all
+
