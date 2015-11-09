@@ -2,44 +2,53 @@
 #include <string>
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
+
 using namespace std;
 using namespace cv;
 
 class Objekte
 {
-public:
-	Objekte();
-	~Objekte(void);
+    public:
 
-	Objekte(string name);
+        Objekte();
+        ~Objekte(void);
 
-	int getXPos();
-	void setXPos(int x);
+        Objekte(string name);
 
-	int getYPos();
-	void setYPos(int y);
+        int getXPos();
+        void setXPos(int x);
 
-	Scalar getHSVmin();
-	Scalar getHSVmax();
+        int getYPos();
+        void setYPos(int y);
 
-	void setHSVmin(Scalar min);
-	void setHSVmax(Scalar max);
+        Scalar getHSVmin();
+        Scalar getHSVmax();
 
-	string getType(){return type;}
-	void setType(string t){type = t;}
+        void setHSVmin(Scalar min);
+        void setHSVmax(Scalar max);
 
-	Scalar getColor(){
-		return Color;
-	}
-	void setColor(Scalar c){
+        string getType() {
+            return type;
+        }
 
-		Color = c;
-	}
+        void setType(string t){
+            type = t;
+        }
 
-private:
+        Scalar getColor() {
+            return Color;
+        }
 
-	int xPos, yPos;
-	string type;
-	Scalar HSVmin, HSVmax;
-	Scalar Color;
+        void setColor(Scalar c) {
+            Color = c;
+        }
+
+    private:
+
+        int     xPos;
+        int     yPos;
+        string  type;
+        Scalar  HSVmin;
+        Scalar  HSVmax;
+        Scalar  Color;
 };
