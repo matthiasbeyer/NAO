@@ -12,7 +12,7 @@
 bool step(algo::Algorithm &a, unsigned int next_draw) {
     if (a.doDraw()) {
         std::cout << "Drawing with certainty: "
-                  << (int) (char) a.doDraw()
+                  << (signed short) a.doDraw()
                   << std::endl;
 
         const auto c = std::make_shared<algo::Card>(next_draw);

@@ -5,7 +5,7 @@ using namespace algo;
 Draw::Draw(signed short certainty) : __certainty(certainty) {
 }
 
-Draw::operator char() {
+Draw::operator signed short() {
     return this->certainty();
 }
 
@@ -13,9 +13,9 @@ Draw::operator bool() {
     return this->doDraw();
 }
 
-char
+signed short
 Draw::certainty() {
-    return (char) ((this->__certainty > 100) ? 100 : this->__certainty);
+    return this->__certainty;
 }
 
 bool

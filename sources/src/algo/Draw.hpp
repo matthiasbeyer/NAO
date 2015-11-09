@@ -13,11 +13,11 @@ namespace algo {
 
             Draw(signed short certainty);
 
-            operator char();
+            operator signed short();
             operator bool();
 
-            char certainty();   // alias for operator char()
-            bool doDraw();      // alias for operator bool()
+            signed short certainty();   // alias for operator char()
+            bool doDraw();              // alias for operator bool()
 
     };
 
