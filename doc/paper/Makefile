@@ -296,6 +296,8 @@ $(PDF_FILE): $(AUX_FILE) $(BBL_FILE) $(GLS_FILE)
 clean: nearly_clean
 	@$(ECHO) "\t[RM] *.pdf"
 	@$(RM) "*.pdf"
+	@$(ECHO) "\t[RM] *.png"
+	@$(RM) $(shell find src -name "*.png")
 
 #
 # Remove everything except the target pdf file
