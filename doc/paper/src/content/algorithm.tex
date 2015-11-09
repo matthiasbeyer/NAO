@@ -1,16 +1,39 @@
 \chapter{Spiele-Algorithmus}
 
-    Der Algorithmus welcher den Ablauf des Spiels beschreibt ist in
-    \ref{img:algo:sequence} beschrieben.
+    Der Algorithmus welcher den Ablauf des Spiels implementiert ist in
+    \autoref{img:algo:sequence} aufgezeigt.
+
+    Der Algorithmus bedient sich dabei folgenden einfachen Fakten:
+
+    \begin{itemize}
+        \item Es wird nicht mehr gezogen wenn\dots
+            \begin{itemize}
+                \item keine Karten mehr verfügbar sind
+                \item die $21$ mit weniger als der Hälfte der möglichen Karten
+                    erreicht werden kann
+            \end{itemize}
+        \item Es wird gezogen wenn\dots
+            \begin{itemize}
+                \item die $21$ mit mehr als der Hälfte der möglichen Karten
+                    erreicht werden kann
+                \item Noch nicht gezogen wurde
+            \end{itemize}
+    \end{itemize}
 
     Das Softwaremodul welches den Algorithmus implementiert hat dabei eine
     wohldefinierte Schnittstelle, welche nach aussen verfügbar ist.
-    Ein Benutzer der Schnittstelle hat verschiedene Usecases, welche in
-    \ref{img:algo:usecases} visualisiert sind.
-    Der Ablauf des Spieles ist zudem in Abbildung \ref{img:algo:sequence}
-    umrissen.
+    Der Algorithmus teilt der aufrufenden Entität dabei eine ``Sicherheit'' mit,
+    wie sicher sich der Algorithmus beim nächsten Zug ist.
+    Diese ``Sicherheit'' wird durch eine Ganzzahl im Bereich $-100..100$
+    dargestellt, wobei eine negative Sicherheit ein ``Nein'' angibt, eine
+    positive ein ``Ja'' auf die Frage, ob noch einmal gezogen werden soll.
+    Die Klasse, welche die Antwort auf diese Frage darstellt (``Draw'') stellt
+    entsprechende Methoden zur Verfügung.
 
-    Das resultierende Klassendiagramm (\ref{img:algo:classes}) zeigt die
+    Ein Benutzer der Schnittstelle hat verschiedene Usecases, welche in
+    \autoref{img:algo:usecases} visualisiert sind.
+
+    Das resultierende Klassendiagramm (\autoref{img:algo:classes}) zeigt die
     Algorithmus-Komponente.
     Es existieren drei Helfer-Klassen, welche in Folgendem beschrieben werden
     sollen.
