@@ -81,11 +81,11 @@ struct FarbPos {
     }
 
     operator int() {
-		return this->yPos;
+        return this->yPos;
     }
 
-	operator string() {
-		return this->farbe;
+    operator string() {
+        return this->farbe;
     }
 };
 
@@ -164,11 +164,11 @@ void drawObject(vector<Objekte> theObjects,
                 vector<Vec4i> hierarchy)
 {
     for(int i =0; i<theObjects.size(); i++) {
-        cout << "Farbe: "
+        /*cout << "Farbe: "
              << theObjects.at(i).getType()
              << " Y-Koord.: "
              << theObjects.at(i).getYPos()
-             << endl;
+             << endl;*/
 
         writeColorPos(theObjects.at(i).getType(),
                       theObjects.at(i).getYPos());
@@ -292,52 +292,63 @@ int main(int argc, char* argv[])
 {
     //if we would like to calibrate our filter values, set to true.
     bool calibrationMode = false;
+    bool videoMode = false;
 
     //Matrix to store each frame of the webcam feed
     Mat cameraFeed;
     Mat threshold;
     Mat HSV;
 
-    if (calibrationMode){
-        //create slider bars for HSV filtering
-        createTrackbars();
-    }
+    int fps = 0;
 
     //video capture object to acquire webcam feed
     VideoCapture capture;
 
+    if (calibrationMode){
+        //create slider bars for HSV filtering
+        createTrackbars();
+    }
+    
+    if(videoMode){
     //open capture object at location zero (default location for webcam)
     capture.open(0);
+
+    fps = 20;
 
     //set height and width of capture frame
     capture.set(CV_CAP_PROP_FRAME_WIDTH,FRAME_WIDTH);
     capture.set(CV_CAP_PROP_FRAME_HEIGHT,FRAME_HEIGHT);
-
+    }
     //start an infinite loop where webcam feed is copied to cameraFeed matrix
     //all of our operations will be performed within this loop
     waitKey(1000);
 
     for(;;) {
 
-        /*
-         * //store image to matrix (video)
-         * capture.read(cameraFeed);
-         *
-         * src = cameraFeed;
-         */
+        
+        //store image to matrix (video)
+        if(videoMode){
+            capture.read(cameraFeed);
+         
+            src = cameraFeed;
+        }
 
         //picture
-        cameraFeed = imread("farbiger_wurfel.jpg",1);
-        src = cameraFeed;
+        if(!videoMode){
+            cameraFeed = imread("cmyk.jpg",1);
+            src = cameraFeed;
 
-        if(!src.data) {
-            return -1;
+            if(!src.data) {
+                return -1;
+            }
         }
 
         //convert frame from BGR to HSV colorspace
         cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
 
         if (calibrationMode == true) {
+            //set fps-rate
+            fps = 30;
 
             //need to find the appropriate color range values
             // calibrationMode must be false
@@ -368,7 +379,7 @@ int main(int argc, char* argv[])
                            &lowThreshold,
                            max_lowThreshold,
                            CannyThreshold);
-
+    
             /// Show the image
             //trackFilteredObject(threshold,HSV,cameraFeed);
         } else {
@@ -414,10 +425,12 @@ int main(int argc, char* argv[])
         //image will not appear without this waitKey() command
 
         //write out Top color
+        if(!calibrationMode){
         auto fp = getTopColor();
         cout << "FARBE IST: " << fp->farbe << endl;
+        }
 
-        waitKey(0);
+        waitKey(fps);
     }
 
     return 0;
