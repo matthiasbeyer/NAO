@@ -1,4 +1,4 @@
-SRC=4.tex
+SRC=5.tex
 
 all:
 	@$(ECHO) "\t[LATEX]\t$(SRC)"
