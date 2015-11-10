@@ -21,11 +21,24 @@
 
     Das Softwaremodul welches den Algorithmus implementiert hat dabei eine
     wohldefinierte Schnittstelle, welche nach aussen verfügbar ist.
-    Der Algorithmus teilt der aufrufenden Entität dabei eine ``Sicherheit'' mit,
+    Der Algorithmus teilt der aufrufenden Entität eine ``Sicherheit'' mit,
     wie sicher sich der Algorithmus beim nächsten Zug ist.
+
+    \begin{equation}
+        \label{eq:algo:answer:yes}
+        A_{ja} = \{ a \mid a >= 0, a <= 100 \}
+    \end{equation}
+
     Diese ``Sicherheit'' wird durch eine Ganzzahl im Bereich $-100..100$
-    dargestellt, wobei eine negative Sicherheit ein ``Nein'' angibt, eine
-    positive ein ``Ja'' auf die Frage, ob noch einmal gezogen werden soll.
+    dargestellt, wobei eine negative Sicherheit ein ``Nein''
+    (\ref{eq:algo:answer:yes}) angibt, eine positive ein ``Ja''
+    (\ref{eq:algo:answer:no}) auf die Frage, ob noch einmal gezogen werden soll.
+
+    \begin{equation}
+        \label{eq:algo:answer:no}
+        A_{nein} = \{ a \mid a < 0, a >= -100 \}
+    \end{equation}
+
     Die Klasse, welche die Antwort auf diese Frage darstellt (``Draw'') stellt
     entsprechende Methoden zur Verfügung.
 
