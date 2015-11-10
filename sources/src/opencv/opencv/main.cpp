@@ -291,8 +291,10 @@ void trackFilteredObject(Objekte theObject,
 int main(int argc, char* argv[])
 {
     //if we would like to calibrate our filter values, set to true.
+    //HSV max: pure color picture; HSV min: real picture
     bool calibrationMode = false;
-    bool videoMode = false;
+    bool videoMode = true;
+    std::string pathToFile = "cmyk.jpg";
 
     //Matrix to store each frame of the webcam feed
     Mat cameraFeed;
@@ -335,7 +337,7 @@ int main(int argc, char* argv[])
 
         //picture
         if(!videoMode){
-            cameraFeed = imread("cmyk.jpg",1);
+            cameraFeed = imread(pathToFile,1);
             src = cameraFeed;
 
             if(!src.data) {
@@ -389,6 +391,8 @@ int main(int argc, char* argv[])
             Objekte yellow("yellow");
             Objekte red("red");
             Objekte green("green");
+            Objekte cyan("cyan");
+            Objekte magenta("magenta");
 
             //first find blue objects
             cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
@@ -414,6 +418,18 @@ int main(int argc, char* argv[])
             morphOps(threshold);
             trackFilteredObject(green, threshold, HSV, cameraFeed);
 
+            //then cyan
+            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            inRange(HSV, cyan.getHSVmin(), cyan.getHSVmax(), threshold);
+            morphOps(threshold);
+            trackFilteredObject(cyan, threshold, HSV, cameraFeed);
+
+            //then magenta
+            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            inRange(HSV, magenta.getHSVmin(), magenta.getHSVmax(), threshold);
+            morphOps(threshold);
+            trackFilteredObject(magenta, threshold, HSV, cameraFeed);
+
         }
         //show frames
         //imshow(windowName2, threshold);
@@ -425,9 +441,12 @@ int main(int argc, char* argv[])
         //image will not appear without this waitKey() command
 
         //write out Top color
-        if(!calibrationMode){
+        if(!calibrationMode && farblist.size() != 0){
         auto fp = getTopColor();
         cout << "FARBE IST: " << fp->farbe << endl;
+        }
+        else{
+            cout << "CALI-MODE ON or EMPTY" << endl;
         }
 
         waitKey(fps);

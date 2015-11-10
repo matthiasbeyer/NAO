@@ -15,8 +15,8 @@ Objekte::Objekte(string name){
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        setHSVmin(Scalar(92,0,0));
-        setHSVmax(Scalar(124,256,256));
+        setHSVmin(Scalar(92,150,0));
+        setHSVmax(Scalar(124,255,255));
 
         //BGR value for Green:
         setColor(Scalar(255,0,0));
@@ -26,8 +26,8 @@ Objekte::Objekte(string name){
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        setHSVmin(Scalar(34,50,50));
-        setHSVmax(Scalar(80,220,200));
+        setHSVmin(Scalar(35,70,100));
+        setHSVmax(Scalar(85,255,255));
 
         //BGR value for Yellow:
         setColor(Scalar(0,255,0));
@@ -37,24 +37,42 @@ Objekte::Objekte(string name){
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        setHSVmin(Scalar(20,124,123));
-        setHSVmax(Scalar(30,256,256));
+        setHSVmin(Scalar(1,124,123));
+        setHSVmax(Scalar(35,255,255));
 
         //BGR value for Red:
         setColor(Scalar(0,255,255));
     }
-
-    if(name=="red"){
+	if(name=="red"){
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        setHSVmin(Scalar(0,200,0));
-        setHSVmax(Scalar(19,255,255));
+		setHSVmin(Scalar(0,110,130));
+		setHSVmax(Scalar(20,255,255));
 
         //BGR value for Red:
-        setColor(Scalar(0,0,255));
-    }
+		setColor(Scalar(0,0,255));
+	}
+    if(name=="cyan"){
+        //TODO: use "calibration mode" to find HSV min
+        //and HSV max values
 
+		setHSVmin(Scalar(86,105,130));
+		setHSVmax(Scalar(100,255,255));
+
+        //BGR value for Cyan:
+		setColor(Scalar(255,255,0));
+    }
+    if(name=="magenta"){
+        //TODO: use "calibration mode" to find HSV min
+        //and HSV max values
+
+		setHSVmin(Scalar(145,60,100));
+		setHSVmax(Scalar(175,256,256));
+
+        //BGR value for Magenta:
+		setColor(Scalar(255,0,255));
+    }
 }
 
 Objekte::~Objekte(void)
