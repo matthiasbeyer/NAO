@@ -3,7 +3,7 @@
     Folgendes Kapitel beschreibt die Installation der Entwicklungsumgebung mitsamt
     Toolchain und ``qibuild''.
 
-    \section{Ubuntu 14.04}
+    \section{Ubuntu 12.04}
 
         In folgendem Kapitel wird eine virtuelle Maschine mit Ubuntu
         verwendet.
@@ -42,7 +42,7 @@
                     {bash}
                     {Installieren von qibuild}
                     {lst:installqibuild}
-        (entnommen aus \cite[S. 5]{projss15})
+        (teilweise entnommen aus \cite[S. 5]{projss15})
 
         Nachdem die Umgebung erfolgreich installiert wurde, kann eine Toolchain
         angelegt werden (Listing \ref{lst:mktoolchain} und ``qibuild''
@@ -53,6 +53,26 @@
                     {Erstellen der Toolchain}
                     {lst:mktoolchain}
         (entnommen aus \cite[S. 7]{projss15})
+
+        Zudem muss OpenCV aus dem Quellcode installiert werden.
+        Hierzu muss der OpenCV-Quellcode als ZIP-Archiv von der Herstellerseite
+        heruntergeladen und wie in Listing \ref{lst:buildinstallopencv}
+        dargestellt installiert werden:
+
+        \defaultlst{src/sources/install-opencv.sh}
+                    {bash}
+                    {Build, Install: opencv}
+                    {lst:buildinstallopencv}
+
+        Die Linker-Konfiguration muss während des Installationsprozesses
+        bearbeitet werden.
+        In Listing \ref{lst:ldconfig} ist die vollständige Datei gelistet.
+
+        \defaultlst{src/sources/ldconfig-change}
+                    {bash}
+                    {/etc/ld.so.conf}
+                    {lst:ldconfig}
+
 
         \defaultlst{src/sources/qibuild-init.sh}
                     {bash}
@@ -182,3 +202,4 @@
                              label=lst:win:path]
                              {src/sources/windows-path-edit.txt}
 
+% vim: spelllang=de
