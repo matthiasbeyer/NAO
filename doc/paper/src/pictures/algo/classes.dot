@@ -1,0 +1,73 @@
+digraph G {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+
+    node [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+        shape = "record"
+    ]
+
+    edge [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+    ]
+
+    subgraph clusterAlgorithm {
+        label = "Package: Algorithm"
+
+        State [
+            label = "{\<enumeration\>\lGame|
++ NOT_STARTED\l
++ PLAYING\l
++ HALTED\l
++ WON\l
++ LOST\l
+}"
+        ]
+
+        Card [
+            label = "{Card|
+- number: unsigned int\l|
++ Card(unsigned int)\l
++ getNum(void) : unsigned int\l
++ operator unsigned int() : unsigned int\l
+}"
+        ]
+
+        Draw [
+            label = "{Draw|
+- do_draw: bool\l
+- certainty: char\l|
++ operator bool() : bool\l
++ operator char() : char\l
+}"
+        ]
+
+        Algorithm [
+            label = "{Algorithm||+ getState(void) : State\l
++ update(card: std::shared_ptr\<Card\>): State\l
++ getCards(void): std::weak_ptr\<std::vector\<std::shared_ptr\<Card\>\>\>\l
++ doDraw(void) : Draw\l
+}"
+        ]
+
+        edge [
+            arrowhead = "none"
+            headlabel = "1"
+            taillabel = "1"
+        ]
+
+        Algorithm -> State
+        Algorithm -> Draw
+
+        edge [
+            arrowhead = "none"
+            headlabel = "0..*"
+            taillabel = "1"
+
+        ] Algorithm -> Card
+
+    }
+
+}

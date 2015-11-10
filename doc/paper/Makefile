@@ -40,6 +40,11 @@ ECHO_CMD=$(shell which echo)
 #
 RM_CMD=$(shell which rm)
 
+#
+# Graphviz executable
+#
+GRAPHVIZ_CMD=$(shell which dot)
+
 
 ##
 ## Flags
@@ -68,6 +73,11 @@ export ECHO_FLAGS
 #
 RM_FLAGS=-f
 
+#
+# Graphviz flags
+#
+GRAPHVIZ_FLAGS=-Tpng
+
 
 ##
 ## Standard commands
@@ -81,6 +91,10 @@ export ECHO
 
 RM=$(RM_CMD) $(RM_FLAGS)
 export RM
+
+# Graphviz call
+GRAPHVIZ=$(GRAPHVIZ_CMD) $(GRAPHVIZ_FLAGS)
+export GRAPHVIZ
 
 
 ##
@@ -102,6 +116,16 @@ LATEX_MAIN_SOURCE=main.tex
 # All latex sources
 #
 LATEX_SUB_SOURCES:=$(shell find src -iname '*.tex')
+
+#
+# PNG sources
+#
+PNG_SOURCES=$(shell find src -iname '*.dot')
+
+#
+# PNG objects
+#
+PNG_OBJECTS=$(foreach x, $(basename $(PNG_SOURCES)), $(x).png)
 
 #
 # The main.aux file
@@ -209,7 +233,7 @@ gen_tex:
 	@$(ECHO) "\t[MAKE] $(GEN_DIR)"
 	@$(MAKE) $(MAKE_FLAGS) -C $(GEN_DIR)
 
-
+gen_png: $(PNG_OBJECTS)
 
 
 ##
@@ -220,7 +244,7 @@ gen_tex:
 #
 # Generate main.aux from TeX sources
 #
-$(AUX_FILE): $(LATEX_MAIN_SOURCE) $(LATEX_SUB_SOURCES) gen_tex
+$(AUX_FILE): $(LATEX_MAIN_SOURCE) $(LATEX_SUB_SOURCES) gen_tex gen_png
 	@$(ECHO) "\t[LATEX]"
 	@$(LATEX) $(LATEX_FLAGS) -draftmode $< >> $(MAKELOG)
 
@@ -256,7 +280,9 @@ $(PDF_FILE): $(AUX_FILE) $(BBL_FILE) $(GLS_FILE)
 	@$(ECHO) "\t[LATEX]"
 	@$(LATEX) $(LATEX_FLAGS) $(LATEX_MAIN_SOURCE) >> $(MAKELOG)
 
-
+%.png: %.dot
+	@$(ECHO) "\t[GRPHV]"
+	@$(GRAPHVIZ) $< -o $@
 
 
 ##
@@ -270,6 +296,8 @@ $(PDF_FILE): $(AUX_FILE) $(BBL_FILE) $(GLS_FILE)
 clean: nearly_clean
 	@$(ECHO) "\t[RM] *.pdf"
 	@$(RM) "*.pdf"
+	@$(ECHO) "\t[RM] *.png"
+	@$(RM) $(shell find src -name "*.png")
 
 #
 # Remove everything except the target pdf file

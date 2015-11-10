@@ -1,0 +1,63 @@
+digraph sequence {
+    graph [autosize=false, size="25.7,8.3!", resolution=100];
+    bgcolor="#e4e4e4";
+    node [fontname=Arial,
+          fontsize=10,
+          shape=ellipse,
+          style=filled,
+          fillcolor="#c9c9c9",
+          color="#558855"];
+    edge [color=black, style=bold, fontsize=8];
+
+    subgraph sequenceCluster
+    {
+        Callee          [label="Aufrufender"]
+
+        Update          [label="Update State"]
+        UpdateSaveCard  [label="Speichere Karte"]
+        UpdateCalcSum   [label="Berechne Kartensumme"]
+        UpdateCheckSum  [label="Überprüfe Kartensumme"]
+        UpdateSetState  [label="Setze internen Status"]
+
+        DoDraw              [label="DoDraw"]
+        DoDrawChkState      [label="Überprüfe Status"]
+        DoDrawGetSum        [label="Aktuelle Summe berechnen"]
+        DoDrawGetPossDr     [label="Berechne mögliche Züge"]
+        DoDrawGetPossNDr    [label="Berechne mögliche nächste Züge"]
+        DoDrawCalcPercent   [label="Berechne prozentual verfügbare Züge"]
+        DoDrawPercentNorm   [label="Normalisiere Prozentsatz"]
+    }
+
+    /*
+     * Update subroutine
+     */
+
+    edge [ label="\<call\>" ]   Callee              -> Update;
+
+    edge [ label="" ]           Update              -> UpdateSaveCard;
+    edge [ label="" ]           UpdateSaveCard      -> UpdateCalcSum;
+    edge [ label="" ]           UpdateCalcSum       -> UpdateCheckSum;
+    edge [ label="" ]           UpdateCheckSum      -> UpdateSetState;
+
+    edge [ label="\<return\>" ] UpdateSetState      -> Callee;
+
+    /*
+     * Draw subroutine
+     */
+
+    edge [ label="\<call\>" ]               Callee          -> DoDraw;
+
+    edge [ label="" ]                       DoDraw          -> DoDrawChkState;
+    edge [ label="" ]                       DoDrawChkState  -> DoDrawGetSum;
+    edge [ label="state == NOT_STARTED" ]   DoDrawChkState  -> Callee;
+
+    edge [ label="" ] DoDrawGetSum        -> DoDrawGetPossDr;
+    edge [ label="" ] DoDrawGetPossDr     -> DoDrawGetPossNDr;
+        edge [ label="Possible next draws == 0" ] DoDrawGetPossDr     -> Callee;
+
+    edge [ label="" ]                   DoDrawGetPossNDr  -> DoDrawCalcPercent;
+    edge [ label="if percentage < 50" ] DoDrawCalcPercent -> DoDrawPercentNorm;
+
+    edge [ label="\<return\>" ]         DoDrawCalcPercent -> Callee;
+    edge [ label="\<return\>" ]         DoDrawPercentNorm -> Callee;
+}

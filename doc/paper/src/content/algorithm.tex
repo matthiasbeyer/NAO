@@ -1,0 +1,77 @@
+\chapter{Spiele-Algorithmus}
+
+    Der Algorithmus welcher den Ablauf des Spiels implementiert ist in
+    \autoref{img:algo:sequence} aufgezeigt.
+
+    Der Algorithmus bedient sich dabei folgenden einfachen Fakten:
+
+    \begin{itemize}
+        \item Es wird nicht mehr gezogen wenn\dots
+            \begin{itemize}
+                \item die $21$ mit weniger als der Hälfte der möglichen Karten
+                    erreicht werden kann
+            \end{itemize}
+        \item Es wird gezogen wenn\dots
+            \begin{itemize}
+                \item die $21$ mit mehr als der Hälfte der möglichen Karten
+                    erreicht werden kann
+                \item Noch nicht gezogen wurde
+            \end{itemize}
+    \end{itemize}
+
+    Das Softwaremodul welches den Algorithmus implementiert hat dabei eine
+    wohldefinierte Schnittstelle, welche nach aussen verfügbar ist.
+    Der Algorithmus teilt der aufrufenden Entität eine ``Sicherheit'' mit,
+    wie sicher sich der Algorithmus beim nächsten Zug ist.
+
+    \begin{equation}
+        \label{eq:algo:answer:yes}
+        A_{ja} = \{ a \mid a >= 0, a <= 100 \}
+    \end{equation}
+
+    Diese ``Sicherheit'' wird durch eine Ganzzahl im Bereich $-100..100$
+    dargestellt, wobei eine negative Sicherheit ein ``Nein''
+    (\ref{eq:algo:answer:yes}) angibt, eine positive ein ``Ja''
+    (\ref{eq:algo:answer:no}) auf die Frage, ob noch einmal gezogen werden soll.
+
+    \begin{equation}
+        \label{eq:algo:answer:no}
+        A_{nein} = \{ a \mid a < 0, a >= -100 \}
+    \end{equation}
+
+    Die Klasse, welche die Antwort auf diese Frage darstellt (``Draw'') stellt
+    entsprechende Methoden zur Umwandlung in Wahrheitswerte und Prozentzahl
+    zur Verfügung.
+
+    Ein Benutzer der Schnittstelle hat verschiedene Usecases, welche in
+    \autoref{img:algo:usecases} visualisiert sind.
+
+    Das resultierende Klassendiagramm (\autoref{img:algo:classes}) zeigt die
+    Algorithmus-Komponente.
+    Es existieren drei Helfer-Klassen, welche in Folgendem beschrieben werden
+    sollen.
+
+    \section{Helferklasse: Card}
+
+        Diese Klasse repräsentiert eine ``Karte'' im Spiel.
+        Sie existiert um eine Karte zu abstrahieren und stellt ein einfaches
+        Interface für den Algorithmus dar, mit Karten zu hantieren.
+
+    \section{Helferklasse: State}
+
+        Diese Klasse (eine Enumeration) stellt den aktuellen Status des
+        Algorithmus dar.
+        Der Algorithmus kann in verschiedenen Zuständen sein, wie zum Beispiel
+        ``Spielend'' oder ``Angehalten''.
+
+    \section{Helferklasse: Draw}
+
+        Diese Klasse (eine Enumeration) stellt die Antwort auf die Frage, ob
+        noch einmal gezogen werden soll, dar.
+        Ein einfacher Wahrheitswert wäre zwar ausreichend, beschreibt allerdings
+        nur ob gezogen werden soll oder nicht.
+        Diese Klasse bietet eine abstraktere Antwort, damit der Roboter
+        entsprechend verdeutlichen kann, wie sicher er sich ist beim nächsten
+        Zug.
+
+% vim: spelllang=de
