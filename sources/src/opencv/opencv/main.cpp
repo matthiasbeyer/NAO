@@ -80,15 +80,13 @@ struct FarbPos {
         return self.yPos != other.yPos;
     }
 
-    /* FarbPos::operator int() {
-     *     return this->yPos;
-     * }
-     */
+    operator int() {
+		return this->yPos;
+    }
 
-    /* FarbPos::operator string() {
-     *     return this->farbe;
-     * }
-     */
+	operator string() {
+		return this->farbe;
+    }
 };
 
 std::vector<std::shared_ptr<FarbPos>> farblist;
