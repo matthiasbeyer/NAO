@@ -288,13 +288,35 @@ void trackFilteredObject(Objekte theObject,
     }
 }
 
+int getValue(std::shared_ptr<FarbPos> ptr){
+    if(ptr->farbe == "cyan"){
+        return 1;
+    }
+    if(ptr->farbe == "red" || ptr->farbe == "red2"){
+        return 2;
+    }
+    if(ptr->farbe == "yellow"){
+        return 3;
+    }
+    if(ptr->farbe == "green"){
+        return 4;
+    }
+    if(ptr->farbe == "magenta"){
+        return 5;
+    }
+    if(ptr->farbe == "blue"){
+        return 6;
+    }
+
+}
+
 int main(int argc, char* argv[])
 {
     //if we would like to calibrate our filter values, set to true.
     //HSV max: pure color picture; HSV min: real picture
     bool calibrationMode = false;
-    bool videoMode = true;
-    std::string pathToFile = "cmyk.jpg";
+    bool videoMode = false;
+    std::string pathToFile = "test2.jpg";
 
     //Matrix to store each frame of the webcam feed
     Mat cameraFeed;
@@ -302,6 +324,7 @@ int main(int argc, char* argv[])
     Mat HSV;
 
     int fps = 0;
+    int value;
 
     //video capture object to acquire webcam feed
     VideoCapture capture;
@@ -390,6 +413,7 @@ int main(int argc, char* argv[])
             Objekte blue("blue");
             Objekte yellow("yellow");
             Objekte red("red");
+            Objekte red2("red2");
             Objekte green("green");
             Objekte cyan("cyan");
             Objekte magenta("magenta");
@@ -411,6 +435,12 @@ int main(int argc, char* argv[])
             inRange(HSV, red.getHSVmin(), red.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(red, threshold, HSV, cameraFeed);
+
+            //then red2
+            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            inRange(HSV, red2.getHSVmin(), red2.getHSVmax(), threshold);
+            morphOps(threshold);
+            trackFilteredObject(red2, threshold, HSV, cameraFeed);
 
             //then greens
             cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
@@ -442,8 +472,13 @@ int main(int argc, char* argv[])
 
         //write out Top color
         if(!calibrationMode && farblist.size() != 0){
-        auto fp = getTopColor();
-        cout << "FARBE IST: " << fp->farbe << endl;
+            auto fp = getTopColor();
+            cout << "FARBE IST: " << fp->farbe << endl;
+
+            for(int i = 0; i < farblist.size();i++){
+                cout << "Element " << i << ": " << farblist.at(i)->yPos << endl;
+            }
+            cout << (*min_element(farblist.begin(),farblist.end()))->yPos << endl;
         }
         else{
             cout << "CALI-MODE ON or EMPTY" << endl;
