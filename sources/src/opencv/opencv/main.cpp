@@ -50,6 +50,8 @@ struct FarbPos {
     FarbPos(string s, int i): farbe(s), yPos(i) {
     }
 
+    FarbPos(){}
+
     friend bool
     FarbPos::operator < (const FarbPos &self, const FarbPos &other) {
         return self.yPos < other.yPos;
@@ -153,8 +155,15 @@ void writeColorPos(string s, int yPos) {
     farblist.push_back(fp);
 }
 
-std::shared_ptr<FarbPos> getTopColor() {
-    return *min_element(farblist.begin(),farblist.end());
+FarbPos getTopColor() {
+    FarbPos result;
+    result = *farblist.at(0);
+    for(int i=0;i<farblist.size();i++){
+        if(farblist.at(i)->yPos<result.yPos){
+            result = *farblist.at(i);
+        }
+    }
+    return result;
 }
 
 void drawObject(vector<Objekte> theObjects,
@@ -233,7 +242,7 @@ void trackFilteredObject(Objekte theObject,
     threshold.copyTo(temp);
 
     //these two vectors needed for output of findContours
-    vector< vector<Point> > contours;
+    vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
 
     //find contours of filtered image using openCV findContours function
@@ -288,23 +297,23 @@ void trackFilteredObject(Objekte theObject,
     }
 }
 
-int getValue(std::shared_ptr<FarbPos> ptr){
-    if(ptr->farbe == "cyan"){
+int getValue(FarbPos ptr){
+    if(ptr.farbe == "cyan"){
         return 1;
     }
-    if(ptr->farbe == "red" || ptr->farbe == "red2"){
+    if(ptr.farbe == "red" || ptr.farbe == "red2"){
         return 2;
     }
-    if(ptr->farbe == "yellow"){
+    if(ptr.farbe == "yellow"){
         return 3;
     }
-    if(ptr->farbe == "green"){
+    if(ptr.farbe == "green"){
         return 4;
     }
-    if(ptr->farbe == "magenta"){
+    if(ptr.farbe == "magenta"){
         return 5;
     }
-    if(ptr->farbe == "blue"){
+    if(ptr.farbe == "blue"){
         return 6;
     }
 
@@ -471,14 +480,13 @@ int main(int argc, char* argv[])
         //image will not appear without this waitKey() command
 
         //write out Top color
+        int i = getValue(getTopColor());
         if(!calibrationMode && farblist.size() != 0){
-            auto fp = getTopColor();
-            cout << "FARBE IST: " << fp->farbe << endl;
-
-            for(int i = 0; i < farblist.size();i++){
+            //cout << "FARBE IST: " << getTopColor().yPos << endl;
+            cout << "Wert: " << i << endl;
+            /*for(int i = 0; i < farblist.size();i++){
                 cout << "Element " << i << ": " << farblist.at(i)->yPos << endl;
-            }
-            cout << (*min_element(farblist.begin(),farblist.end()))->yPos << endl;
+            }*/
         }
         else{
             cout << "CALI-MODE ON or EMPTY" << endl;
