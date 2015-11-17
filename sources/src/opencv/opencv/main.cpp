@@ -306,7 +306,7 @@ enum Farbe {
     BLUE,
 };
 
-int getValue(FarbPos ptr){
+Farbe getValue(FarbPos ptr){
     if(ptr.farbe == "cyan"){
         return CYAN;
     }
@@ -332,7 +332,7 @@ int main(int argc, char* argv[])
 {
     //if we would like to calibrate our filter values, set to true.
     //HSV max: pure color picture; HSV min: real picture
-    bool calibrationMode = false;
+    bool calibrationMode = true;
     bool videoMode = false;
     std::string pathToFile = "test2.jpg";
 
@@ -489,12 +489,12 @@ int main(int argc, char* argv[])
         //image will not appear without this waitKey() command
 
         //write out Top color
-        int i = getValue(getTopColor());
+        Farbe f = getValue(getTopColor());
         if(!calibrationMode && farblist.size() != 0){
             //cout << "FARBE IST: " << getTopColor().yPos << endl;
-            cout << "Wert: " << i << endl;
+            cout << "Wert: " << (int) f << endl;
             /*for(int i = 0; i < farblist.size();i++){
-                cout << "Element " << i << ": " << farblist.at(i)->yPos << endl;
+                cout << "Element " << (int) f << ": " << farblist.at(i)->yPos << endl;
             }*/
         }
         else{
