@@ -297,24 +297,33 @@ void trackFilteredObject(Objekte theObject,
     }
 }
 
+enum Farbe {
+    CYAN,
+    RED,
+    YELLOW,
+    GREEN,
+    MAGENTA,
+    BLUE,
+};
+
 int getValue(FarbPos ptr){
     if(ptr.farbe == "cyan"){
-        return 1;
+        return CYAN;
     }
     if(ptr.farbe == "red" || ptr.farbe == "red2"){
-        return 2;
+        return RED;
     }
     if(ptr.farbe == "yellow"){
-        return 3;
+        return YELLOW;
     }
     if(ptr.farbe == "green"){
-        return 4;
+        return GREEN;
     }
     if(ptr.farbe == "magenta"){
-        return 5;
+        return MAGENTA;
     }
     if(ptr.farbe == "blue"){
-        return 6;
+        return BLUE;
     }
 
 }
