@@ -1,1 +1,17 @@
+*.exe
+*.idb
+*.ilk
+*.ipch
+*.jpg
+*.lastbuildstate
+*.manifest
+*.obj
+*.opensdf
+*.pdb
+*.rc
+*.res
+*.sdf
+*.sln
+*.suo
+*.tlog
 resources
