@@ -351,7 +351,7 @@ int main(int argc, char* argv[])
         //create slider bars for HSV filtering
         createTrackbars();
     }
-    
+
     if(videoMode){
     //open capture object at location zero (default location for webcam)
     capture.open(0);
@@ -368,11 +368,11 @@ int main(int argc, char* argv[])
 
     for(;;) {
 
-        
+
         //store image to matrix (video)
         if(videoMode){
             capture.read(cameraFeed);
-         
+
             src = cameraFeed;
         }
 
@@ -422,7 +422,7 @@ int main(int argc, char* argv[])
                            &lowThreshold,
                            max_lowThreshold,
                            CannyThreshold);
-    
+
             /// Show the image
             //trackFilteredObject(threshold,HSV,cameraFeed);
         } else {
