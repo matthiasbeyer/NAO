@@ -1,7 +1,7 @@
 #pragma once
+
 #include <string>
 #include <opencv\cv.h>
-#include <opencv\highgui.h>
 
 class Objekte
 {
