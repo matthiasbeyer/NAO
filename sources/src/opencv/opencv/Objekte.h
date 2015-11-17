@@ -18,7 +18,7 @@ class Objekte
         int getYPos();
         void setYPos(int y);
 
-        cv:.Scalar getHSVmin();
+        cv::Scalar getHSVmin();
         cv::Scalar getHSVmax();
 
         void setHSVmin(cv::Scalar min);
