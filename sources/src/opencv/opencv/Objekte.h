@@ -3,8 +3,6 @@
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
 
-using namespace cv;
-
 class Objekte
 {
     public:
@@ -20,11 +18,11 @@ class Objekte
         int getYPos();
         void setYPos(int y);
 
-        Scalar getHSVmin();
-        Scalar getHSVmax();
+        cv:.Scalar getHSVmin();
+        cv::Scalar getHSVmax();
 
-        void setHSVmin(Scalar min);
-        void setHSVmax(Scalar max);
+        void setHSVmin(cv::Scalar min);
+        void setHSVmax(cv::Scalar max);
 
         std::string getType() {
             return type;
@@ -34,11 +32,11 @@ class Objekte
             type = t;
         }
 
-        Scalar getColor() {
+        cv::Scalar getColor() {
             return Color;
         }
 
-        void setColor(Scalar c) {
+        void setColor(cv::Scalar c) {
             this->Color = c;
         }
 
@@ -47,7 +45,7 @@ class Objekte
         int             xPos;
         int             yPos;
         std::string     type;
-        Scalar          HSVmin;
-        Scalar          HSVmax;
-        Scalar          Color;
+        cv::Scalar      HSVmin;
+        cv::Scalar      HSVmax;
+        cv::Scalar      Color;
 };
