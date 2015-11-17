@@ -1,16 +1,14 @@
 #include "Objekte.h"
 
 Objekte::Objekte()
+    : type("Objekte")
+      Color(Scalar(0, 0, 0))
 {
-    //set values for default constructor
-    setType("Objekte");
-    setColor(Scalar(0,0,0));
 }
 
-Objekte::Objekte(string name){
-
-    setType(name);
-
+Objekte::Objekte(string name)
+    : type(name)
+{
     if(name=="blue"){
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
