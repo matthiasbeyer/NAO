@@ -90,34 +90,34 @@ Objekte::~Objekte(void)
 }
 
 int Objekte::getXPos(){
-    return Objekte::xPos;
+    return this->xPos;
 }
 
 void Objekte::setXPos(int x){
-    Objekte::xPos = x;
+    this->xPos = x;
 }
 
 int Objekte::getYPos(){
-    return Objekte::yPos;
+    return this->yPos;
 }
 
 void Objekte::setYPos(int y){
-    Objekte::yPos = y;
+    this->yPos = y;
 }
 
 Scalar Objekte::getHSVmin(){
-    return Objekte::HSVmin;
+    return this->HSVmin;
 }
 
 Scalar Objekte::getHSVmax(){
-    return Objekte::HSVmax;
+    return this->HSVmax;
 }
 
 void Objekte::setHSVmin(Scalar min){
-    Objekte::HSVmin = min;
+    thix->HSVmin = min;
 }
 
 void Objekte::setHSVmax(Scalar max){
-    Objekte::HSVmax = max;
+    this->HSVmax = max;
 }
 

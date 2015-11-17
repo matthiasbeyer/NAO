@@ -40,7 +40,7 @@ class Objekte
         }
 
         void setColor(Scalar c) {
-            Color = c;
+            this->Color = c;
         }
 
     private:
