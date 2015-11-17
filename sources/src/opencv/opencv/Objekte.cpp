@@ -1,7 +1,9 @@
 #include <string>
 #include <opencv\cv.h>
 
-#include "Objekte.h"
+#include "opencv/opencv/Objekte.h"
+
+using namespace naocv;
 
 Objekte::Objekte()
     : type("Objekte"),

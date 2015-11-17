@@ -4,9 +4,11 @@
 #include <vector>
 #include <algorithm>
 
-#include "Objekte.h"
-#include "FarbPos.hpp"
-#include "util.hpp"
+#include "opencv/opencv/Objekte.h"
+#include "opencv/opencv/FarbPos.hpp"
+#include "opencv/opencv/util.hpp"
+
+using namespace naocv;
 
 //initial min and max HSV filter values.
 //these will be changed using trackbars

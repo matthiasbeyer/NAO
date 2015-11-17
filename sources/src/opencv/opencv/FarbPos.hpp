@@ -2,86 +2,90 @@
 
 #include <string>
 
-enum Farbe {
-    CYAN,
-    RED,
-    YELLOW,
-    GREEN,
-    MAGENTA,
-    BLUE,
-};
+namespace naocv {
 
-struct FarbPos {
+    enum Farbe {
+        CYAN,
+        RED,
+        YELLOW,
+        GREEN,
+        MAGENTA,
+        BLUE,
+    };
 
-    std::string farbe;
-    int         yPos;
+    struct FarbPos {
 
-    FarbPos(std::string s, int i): farbe(s), yPos(i) {
-    }
+        std::string farbe;
+        int         yPos;
 
-    FarbPos(){}
-
-    friend bool
-    FarbPos::operator < (const FarbPos &self, const FarbPos &other) {
-        return self.yPos < other.yPos;
-    }
-
-    friend bool
-    FarbPos::operator > (const FarbPos &self, const FarbPos &other) {
-        return self.yPos > other.yPos;
-    }
-
-    friend bool
-    FarbPos::operator >= (const FarbPos &self, const FarbPos &other) {
-        return self.yPos >= other.yPos;
-    }
-
-    friend bool
-    FarbPos::operator <= (const FarbPos &self, const FarbPos &other) {
-        return self.yPos <= other.yPos;
-    }
-
-    friend bool
-    FarbPos::operator == (const FarbPos &self, const FarbPos &other) {
-        return self.yPos == other.yPos;
-    }
-
-    friend bool
-    FarbPos::operator != (const FarbPos &self, const FarbPos &other) {
-        return self.yPos != other.yPos;
-    }
-
-    operator int() {
-        return this->yPos;
-    }
-
-    operator std::string() {
-        return this->farbe;
-    }
-
-    operator Farbe() {
-        if (this->farbe == "cyan"){
-            return CYAN;
+        FarbPos(std::string s, int i): farbe(s), yPos(i) {
         }
 
-        if (this->farbe == "red" || this->farbe == "red2"){
-            return RED;
+        FarbPos(){}
+
+        friend bool
+        FarbPos::operator < (const FarbPos &self, const FarbPos &other) {
+            return self.yPos < other.yPos;
         }
 
-        if (this->farbe == "yellow"){
-            return YELLOW;
+        friend bool
+        FarbPos::operator > (const FarbPos &self, const FarbPos &other) {
+            return self.yPos > other.yPos;
         }
 
-        if (this->farbe == "green"){
-            return GREEN;
+        friend bool
+        FarbPos::operator >= (const FarbPos &self, const FarbPos &other) {
+            return self.yPos >= other.yPos;
         }
 
-        if (this->farbe == "magenta"){
-            return MAGENTA;
+        friend bool
+        FarbPos::operator <= (const FarbPos &self, const FarbPos &other) {
+            return self.yPos <= other.yPos;
         }
 
-        if (this->farbe == "blue"){
-            return BLUE;
+        friend bool
+        FarbPos::operator == (const FarbPos &self, const FarbPos &other) {
+            return self.yPos == other.yPos;
         }
-    }
-};
+
+        friend bool
+        FarbPos::operator != (const FarbPos &self, const FarbPos &other) {
+            return self.yPos != other.yPos;
+        }
+
+        operator int() {
+            return this->yPos;
+        }
+
+        operator std::string() {
+            return this->farbe;
+        }
+
+        operator Farbe() {
+            if (this->farbe == "cyan"){
+                return CYAN;
+            }
+
+            if (this->farbe == "red" || this->farbe == "red2"){
+                return RED;
+            }
+
+            if (this->farbe == "yellow"){
+                return YELLOW;
+            }
+
+            if (this->farbe == "green"){
+                return GREEN;
+            }
+
+            if (this->farbe == "magenta"){
+                return MAGENTA;
+            }
+
+            if (this->farbe == "blue"){
+                return BLUE;
+            }
+        }
+    };
+
+}
