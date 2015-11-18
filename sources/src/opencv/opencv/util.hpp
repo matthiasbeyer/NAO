@@ -5,6 +5,8 @@
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
 
+#include "opencv/opencv/module.hpp"
+
 namespace naocv {
 
     const int           H_MIN                  = 0;
