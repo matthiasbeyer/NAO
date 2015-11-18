@@ -1,13 +1,11 @@
 #include <string>
 #include <opencv\cv.h>
 
-#include "opencv/opencv/Objekte.h"
-
-using namespace naocv;
+#include "Objekte.h"
 
 Objekte::Objekte()
     : type("Objekte"),
-      cv::Color(cv::Scalar(0, 0, 0))
+      Color(cv::Scalar(0, 0, 0))
 {
 }
 
@@ -121,7 +119,7 @@ cv::Scalar Objekte::getHSVmax() {
 }
 
 void Objekte::setHSVmin(cv::Scalar min) {
-    thix->HSVmin = min;
+    this->HSVmin = min;
 }
 
 void Objekte::setHSVmax(cv::Scalar max) {

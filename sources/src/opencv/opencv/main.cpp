@@ -1,5 +1,6 @@
 #include "module.hpp"
 
 int main(void) {
-    naocv::run();
+    const std::string path = ("test2.jpg");
+    naocv::run(path);
 }
