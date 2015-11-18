@@ -13,11 +13,11 @@ using namespace naocv;
 //initial min and max HSV filter values.
 //these will be changed using trackbars
 
-int                                         lowThreshold;
-cv::Mat                                     dst;
-cv::Mat                                     detected_edges;
-cv::Mat                                     src;
-cv::Mat                                     src_gray;
+int                                         naocv::lowThreshold;
+cv::Mat                                     naocv::dst;
+cv::Mat                                     naocv::detected_edges;
+cv::Mat                                     naocv::src;
+cv::Mat                                     naocv::src_gray;
 std::vector<std::shared_ptr<FarbPos>>       farblist;
 
 /*
