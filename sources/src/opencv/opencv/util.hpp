@@ -7,12 +7,12 @@
 
 namespace naocv {
 
-    int                 H_MIN                  = 0;
-    int                 H_MAX                  = 256;
-    int                 S_MIN                  = 0;
-    int                 S_MAX                  = 256;
-    int                 V_MIN                  = 0;
-    int                 V_MAX                  = 256;
+    const int           H_MIN                  = 0;
+    const int           H_MAX                  = 256;
+    const int           S_MIN                  = 0;
+    const int           S_MAX                  = 256;
+    const int           V_MIN                  = 0;
+    const int           V_MAX                  = 256;
     const int           FRAME_WIDTH            = 640;
     const int           FRAME_HEIGHT           = 480;
     const int           MAX_NUM_OBJECTS        = 50;
@@ -23,12 +23,11 @@ namespace naocv {
     const std::string   windowName2            = "Thresholded Image";
     const std::string   windowName3            = "After Morphological Operations";
     const std::string   trackbarWindowName     = "Trackbars";
-    int                 const max_lowThreshold = 100;
-    int                 ratio                  = 3;
-    int                 kernel_size            = 3;
-    char*               window_name            = "Edge Map";
-    int                 edgeThresh             = 1;
-
+    const int           const max_lowThreshold = 100;
+    const int           ratio                  = 3;
+    const int           kernel_size            = 3;
+    const char*         window_name            = "Edge Map";
+    const int           edgeThresh             = 1;
 
     std::string intTostring(int number) {
         std::stringstream ss;
