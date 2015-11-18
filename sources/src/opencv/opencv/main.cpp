@@ -1,4 +1,4 @@
-#include "opencv/opencv/module.hpp"
+#include "module.hpp"
 
 int main(void) {
     naocv::run();

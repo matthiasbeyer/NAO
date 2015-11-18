@@ -4,19 +4,19 @@
 #include <vector>
 #include <algorithm>
 
-#include "opencv/opencv/Objekte.h"
-#include "opencv/opencv/FarbPos.hpp"
-#include "opencv/opencv/util.hpp"
+#include "Objekte.h"
+#include "FarbPos.hpp"
+#include "util.hpp"
 
 using namespace naocv;
 
 //initial min and max HSV filter values.
 //these will be changed using trackbars
 
-int                 lowThreshold;
-Mat                 dst;
-Mat                 detected_edges;
-Mat                 src, src_gray;
+int                                         lowThreshold;
+cv::Mat                                     dst;
+cv::Mat                                     detected_edges;
+cv::Mat                                     src, src_gray;
 std::vector<std::shared_ptr<FarbPos>>       farblist;
 
 /*
@@ -46,8 +46,8 @@ FarbPos getTopColor() {
 void drawObject(std::vector<Objekte> theObjects,
                 cv::Mat &frame,
                 cv::Mat &temp,
-                std::vector<std::vector<Point>> contours,
-                std::vector<Vec4i> hierarchy)
+                std::vector<std::vector<cv::Point>> contours,
+                std::vector<cv::Vec4i> hierarchy)
 {
     for (int i = 0; i < theObjects.size(); i++) {
         /*cout << "Farbe: "
@@ -59,7 +59,7 @@ void drawObject(std::vector<Objekte> theObjects,
         {
             auto type = theObjects.at(i).getType();
             auto ypos = theObjects.at(i).getYPos();
-            writeColorPos(type, ypos);
+            saveColorPos(type, ypos);
         }
 
         cv::drawContours(frame,
@@ -97,7 +97,7 @@ void drawObject(std::vector<Objekte> theObjects,
     }
 }
 
-void morphOps(Mat &thresh) {
+void morphOps(cv::Mat &thresh) {
     //create structuring element that will be used to "dilate" and "erode" image.
     //the element chosen here is a 3px by 3px rectangle
     cv::Mat erodeElement = getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
@@ -124,7 +124,7 @@ void trackFilteredObject(Objekte theObject,
 
     //these two vectors needed for output of findContours
     std::vector<std::vector<cv::Point>> contours;
-    std::vector<Vec4i> hierarchy;
+    std::vector<cv::Vec4i> hierarchy;
 
     //find contours of filtered image using openCV findContours function
     findContours(temp,  contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
@@ -139,7 +139,7 @@ void trackFilteredObject(Objekte theObject,
         //if number of objects greater than MAX_NUM_OBJECTS we have a noisy filter
         if (numObjects < MAX_NUM_OBJECTS) {
             for (int index = 0; index >= 0; index = hierarchy[index][0]) {
-                Moments moment = moments((cv::Mat) contours[index]);
+                cv::Moments moment = moments((cv::Mat) contours[index]);
                 double area = moment.m00;
 
                 //if the area is less than 20 px by 20px then it is probably just noise
@@ -171,7 +171,7 @@ void trackFilteredObject(Objekte theObject,
         } else {
             putText(cameraFeed,
                     "TOO MUCH NOISE! ADJUST FILTER",
-                    Point(0, 50),
+                    cv::Point(0, 50),
                     1, 2, cv::Scalar(0, 0, 255), 2);
         }
     }
@@ -188,7 +188,7 @@ int run(const std::string& pathToFile,
     cv::Mat         HSV;
     int             value;
     int             fps = 0;
-    VideoCapture    capture; //video capture object to acquire webcam feed
+    cv::VideoCapture    capture; //video capture object to acquire webcam feed
 
     if (calibrationMode){
         //create slider bars for HSV filtering
@@ -208,7 +208,7 @@ int run(const std::string& pathToFile,
 
     //start an infinite loop where webcam feed is copied to cameraFeed matrix
     //all of our operations will be performed within this loop
-    waitKey(1000);
+    cv::waitKey(1000);
 
     for(;;) {
         //store image to matrix (video)
@@ -219,7 +219,7 @@ int run(const std::string& pathToFile,
 
         //picture
         if(!videoMode){
-            cameraFeed = imread(pathToFile,1);
+            cameraFeed = cv::imread(pathToFile,1);
             src        = cameraFeed;
 
             if (!src.data) {
@@ -228,7 +228,7 @@ int run(const std::string& pathToFile,
         }
 
         //convert frame from BGR to HSV colorspace
-        cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+        cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
 
         if (calibrationMode == true) {
             //set fps-rate
@@ -238,7 +238,7 @@ int run(const std::string& pathToFile,
             // calibrationMode must be false
 
             // if in calibration mode, we track objects based on the HSV slider values.
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV,
                     cv::Scalar(H_MIN, S_MIN, V_MIN),
                     cv::Scalar(H_MAX, S_MAX, V_MAX),
@@ -255,10 +255,10 @@ int run(const std::string& pathToFile,
             cvtColor(src, src_gray, CV_BGR2GRAY);
 
             /// Create a window
-            namedWindow(window_name, CV_WINDOW_AUTOSIZE);
+            cv::namedWindow(window_name, CV_WINDOW_AUTOSIZE);
 
             /// Create a Trackbar for user to enter threshold
-            createTrackbar("Min Threshold:",
+            cv::createTrackbar("Min Threshold:",
                            window_name,
                            &lowThreshold,
                            max_lowThreshold,
@@ -278,43 +278,43 @@ int run(const std::string& pathToFile,
             Objekte magenta("magenta");
 
             //first find blue objects
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, blue.getHSVmin(), blue.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(blue, threshold, HSV, cameraFeed);
 
             //then yellows
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, yellow.getHSVmin(), yellow.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(yellow, threshold, HSV, cameraFeed);
 
             //then reds
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, red.getHSVmin(), red.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(red, threshold, HSV, cameraFeed);
 
             //then red2
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, red2.getHSVmin(), red2.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(red2, threshold, HSV, cameraFeed);
 
             //then greens
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, green.getHSVmin(), green.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(green, threshold, HSV, cameraFeed);
 
             //then cyan
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, cyan.getHSVmin(), cyan.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(cyan, threshold, HSV, cameraFeed);
 
             //then magenta
-            cvtColor(cameraFeed, HSV, COLOR_BGR2HSV);
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, magenta.getHSVmin(), magenta.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(magenta, threshold, HSV, cameraFeed);
@@ -330,19 +330,19 @@ int run(const std::string& pathToFile,
         //image will not appear without this waitKey() command
 
         //write out Top color
-        Farbe f = getValue(getTopColor());
+        Farbe f = getTopColor();
         if(!calibrationMode && farblist.size() != 0){
             //cout << "FARBE IST: " << getTopColor().yPos << endl;
-            cout << "Wert: " << (int) f << endl;
+            std::cout << "Wert: " << (int) f << std::endl;
             /*for(int i = 0; i < farblist.size();i++){
                 cout << "Element " << (int) f << ": " << farblist.at(i)->yPos << endl;
             }*/
         }
         else{
-            cout << "CALI-MODE ON or EMPTY" << endl;
+            std::cout << "CALI-MODE ON or EMPTY" << std::endl;
         }
 
-        waitKey(fps);
+        cv::waitKey(fps);
     }
 
     return 0;

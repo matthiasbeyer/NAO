@@ -5,16 +5,16 @@
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
 
-#include "opencv/opencv/module.hpp"
+#include "module.hpp"
 
 namespace naocv {
 
-    const int           H_MIN                  = 0;
-    const int           H_MAX                  = 256;
-    const int           S_MIN                  = 0;
-    const int           S_MAX                  = 256;
-    const int           V_MIN                  = 0;
-    const int           V_MAX                  = 256;
+    int                 H_MIN                  = 0;
+    int                 H_MAX                  = 256;
+    int                 S_MIN                  = 0;
+    int                 S_MAX                  = 256;
+    int                 V_MIN                  = 0;
+    int                 V_MAX                  = 256;
     const int           FRAME_WIDTH            = 640;
     const int           FRAME_HEIGHT           = 480;
     const int           MAX_NUM_OBJECTS        = 50;
@@ -61,7 +61,7 @@ namespace naocv {
 
     void createTrackbars() {
         //create window for trackbars
-        namedWindow(trackbarWindowName, 0);
+        cv::namedWindow(trackbarWindowName, 0);
 
         //create memory to store trackbar name on window
         char TrackbarName[50];
@@ -81,12 +81,12 @@ namespace naocv {
         // moved(eg. on_trackbar)
         //                                  ---->    ---->     ---->
 
-        createTrackbar("H_MIN", trackbarWindowName, &H_MIN, H_MAX, on_trackbar);
-        createTrackbar("H_MAX", trackbarWindowName, &H_MAX, H_MAX, on_trackbar);
-        createTrackbar("S_MIN", trackbarWindowName, &S_MIN, S_MAX, on_trackbar);
-        createTrackbar("S_MAX", trackbarWindowName, &S_MAX, S_MAX, on_trackbar);
-        createTrackbar("V_MIN", trackbarWindowName, &V_MIN, V_MAX, on_trackbar);
-        createTrackbar("V_MAX", trackbarWindowName, &V_MAX, V_MAX, on_trackbar);
+        cv::createTrackbar("H_MIN", trackbarWindowName, &H_MIN, H_MAX, on_trackbar);
+        cv::createTrackbar("H_MAX", trackbarWindowName, &H_MAX, H_MAX, on_trackbar);
+        cv::createTrackbar("S_MIN", trackbarWindowName, &S_MIN, S_MAX, on_trackbar);
+        cv::createTrackbar("S_MAX", trackbarWindowName, &S_MAX, S_MAX, on_trackbar);
+        cv::createTrackbar("V_MIN", trackbarWindowName, &V_MIN, V_MAX, on_trackbar);
+        cv::createTrackbar("V_MAX", trackbarWindowName, &V_MAX, V_MAX, on_trackbar);
     }
 
 }
