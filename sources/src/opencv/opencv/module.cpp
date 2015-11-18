@@ -13,27 +13,6 @@ using namespace naocv;
 //initial min and max HSV filter values.
 //these will be changed using trackbars
 
-int                 H_MIN                  = 0;
-int                 H_MAX                  = 256;
-int                 S_MIN                  = 0;
-int                 S_MAX                  = 256;
-int                 V_MIN                  = 0;
-int                 V_MAX                  = 256;
-const int           FRAME_WIDTH            = 640;
-const int           FRAME_HEIGHT           = 480;
-const int           MAX_NUM_OBJECTS        = 50;
-const int           MIN_OBJECT_AREA        = 20 * 20;
-const int           MAX_OBJECT_AREA        = FRAME_HEIGHT * FRAME_WIDTH / 1.5;
-const std::string   windowName             = "Original Image";
-const std::string   windowName1            = "HSV Image";
-const std::string   windowName2            = "Thresholded Image";
-const std::string   windowName3            = "After Morphological Operations";
-const std::string   trackbarWindowName     = "Trackbars";
-int                 const max_lowThreshold = 100;
-int                 ratio                  = 3;
-int                 kernel_size            = 3;
-char*               window_name            = "Edge Map";
-int                 edgeThresh             = 1;
 int                 lowThreshold;
 Mat                 dst;
 Mat                 detected_edges;
