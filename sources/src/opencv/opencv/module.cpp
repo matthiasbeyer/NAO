@@ -16,7 +16,8 @@ using namespace naocv;
 int                                         lowThreshold;
 cv::Mat                                     dst;
 cv::Mat                                     detected_edges;
-cv::Mat                                     src, src_gray;
+cv::Mat                                     src;
+cv::Mat                                     src_gray;
 std::vector<std::shared_ptr<FarbPos>>       farblist;
 
 /*
