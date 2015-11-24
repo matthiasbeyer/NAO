@@ -7,3 +7,32 @@
     \autoref{img:packages} beschrieben ist.
     Jedes dieser Teilmodule wurde unabhängig voneinander entwickelt. In einem
     abschließenden Entwicklungsschritt wurdden die Teilmodule zusammengefügt.
+
+    \section{Module}
+
+        In folgendem soll kurz auf die einzelnen Module eingegangen werden.
+
+        \subsection{Behaviour}
+
+            Dieses Modul beinhaltet den Quellcode welcher zum Aufrufen der
+            Behaviours auf dem Roboter benötigt werden.
+            Es beinhaltet ein Untermodul ``Nao``, welches funktionalität
+            beinhaltet welche Nao behaviours aufrufen kann welche keine
+            speziellen Eingabewerte benötigen.
+            Ein Beispiel dafür ist die Begrüßung oder Verabschiedung am Anfang
+            bzw. Ende des Spiels.
+            Dieses Behaviour ist immer gleich und bedarf keiner speziellen
+            Eingabeparameter.
+
+            Das Modul exportiert Funktionen welche in
+            \autoref{img:package:behaviour} aufgezeigt werden.
+
+        \subsection{Algorithmus}
+
+            Das Modul welches den Algorithmus beinhaltet Funktionalitäten welche
+            den Spielealgorithmus abbilden.
+
+            \autoref{img:algo:classes} zeigt die Funktionalitäten in UML auf.
+
+        \subsection{OpenCV}
+
