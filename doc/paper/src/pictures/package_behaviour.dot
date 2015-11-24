@@ -1,0 +1,49 @@
+digraph G {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+
+    node [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+        shape = "record"
+    ]
+
+    edge [
+        fontname = "Bitstream Vera Sans"
+        fontsize = 8
+    ]
+
+    subgraph clusterBehaviour {
+        label = "Package: Behaviour"
+        Behaviour [
+            label = "{Package Methods||+ find_cube(void): Cube\l
++ go_to(c: Cube) : bool\l
++ throw_cube(c: Cube) : void\l
++ analyze_cube() : AnalyzedCube\l
+}"
+        ]
+
+        Cube [
+            label = "{Cube ||+ operator bool(void)\l}"
+        ]
+
+        AnalyzedCube [
+            label = "{AnalyzedCube ||+ operator nao::algo::Card(void)\l}"
+        ]
+
+        AnalyzedCube -> Cube;
+
+        subgraph clusterNao {
+            label = "Package: Nao"
+            Nao [
+                label = "{Package Methods||+ intro(void): void\l
++ outro(void) : void\l
++ abort(void) : void\l
+}"
+            ]
+        }
+
+
+    }
+
+}
