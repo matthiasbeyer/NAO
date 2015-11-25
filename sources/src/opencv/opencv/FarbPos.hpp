@@ -5,12 +5,12 @@
 namespace naocv {
 
     enum Farbe {
-        CYAN,
-        RED,
-        YELLOW,
-        GREEN,
-        MAGENTA,
-        BLUE,
+        CYAN = 1,
+        RED = 2,
+        YELLOW = 3,
+        GREEN = 4,
+        MAGENTA = 5,
+        BLUE = 6,
     };
 
     struct FarbPos {
