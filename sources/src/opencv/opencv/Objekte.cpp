@@ -82,8 +82,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(135, 85, 150));
-		this->setHSVmax(cv::Scalar(150, 256, 256));
+		this->setHSVmin(cv::Scalar(135, 85, 115));
+		this->setHSVmax(cv::Scalar(170, 255, 255));
 
         //BGR value for Magenta:
 		this->setColor(cv::Scalar(255, 0, 255));

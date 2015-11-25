@@ -67,12 +67,6 @@ void drawObject(std::vector<Objekte> theObjects,
                 std::vector<cv::Vec4i> hierarchy)
 {
     for (int i = 0; i < theObjects.size(); i++) {
-        /*cout << "Farbe: "
-             << theObjects.at(i).getType()
-             << " Y-Koord.: "
-             << theObjects.at(i).getYPos()
-             << endl;*/
-
         {
             auto type = theObjects.at(i).getType();
             auto ypos = theObjects.at(i).getYPos();
@@ -290,7 +284,6 @@ int naocv::run(const std::string& pathToFile,
         if(!videoMode){
             cameraFeed = cv::imread(pathToFile,1);
             src        = cameraFeed;
-
             if (!src.data) {
                 return -1;
             }
@@ -398,10 +391,9 @@ int naocv::run(const std::string& pathToFile,
         //delay 30ms so that screen can refresh.
         //image will not appear without this waitKey() command
 
-        //write out Top color
-        Farbe f = getTopColor();
         if(!calibrationMode && farblist.size() != 0){
             //cout << "FARBE IST: " << getTopColor().yPos << endl;
+            Farbe f = getTopColor();
             std::cout << "Wert: " << (int) f << std::endl;
             /*for(int i = 0; i < farblist.size();i++){
                 cout << "Element " << (int) f << ": " << farblist.at(i)->yPos << endl;
