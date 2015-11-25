@@ -241,7 +241,7 @@ void naocv::createTrackbars() {
 }
 
 
-int naocv::run(const std::string& pathToFile,
+int naocv::colorDetection(const std::string& pathToFile,
         bool calibrationMode,
         bool videoMode)
 {

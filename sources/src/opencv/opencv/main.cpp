@@ -2,5 +2,5 @@
 
 int main(void) {
     std::string a = "C:/naoqi/_workspace/nao_repo/NAO/sources/src/opencv/Debug/shost.jpg";
-    naocv::run(a, false);
+    naocv::colorDetection(a, false);
 }
