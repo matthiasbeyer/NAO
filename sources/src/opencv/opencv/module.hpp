@@ -14,7 +14,7 @@
 
 namespace naocv {
      
-    int colorDetection(const std::string& pathToFile,
+    Farbe colorDetection(const std::string& pathToFile,
             bool calibrationMode = true,
             bool videoMode = false);
 

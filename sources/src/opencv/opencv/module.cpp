@@ -241,7 +241,7 @@ void naocv::createTrackbars() {
 }
 
 
-int naocv::colorDetection(const std::string& pathToFile,
+Farbe naocv::colorDetection(const std::string& pathToFile,
         bool calibrationMode,
         bool videoMode)
 {
@@ -273,7 +273,7 @@ int naocv::colorDetection(const std::string& pathToFile,
     //all of our operations will be performed within this loop
     cv::waitKey(1000);
 
-    for(;;) {
+    //for(;;) {
         //store image to matrix (video)
         if (videoMode){
             capture.read(cameraFeed);
@@ -285,7 +285,7 @@ int naocv::colorDetection(const std::string& pathToFile,
             cameraFeed = cv::imread(pathToFile,1);
             src        = cameraFeed;
             if (!src.data) {
-                return -1;
+                throw std::runtime_error("Falscher Dateipfad");
             }
         }
 
@@ -395,16 +395,13 @@ int naocv::colorDetection(const std::string& pathToFile,
             //cout << "FARBE IST: " << getTopColor().yPos << endl;
             Farbe f = getTopColor();
             std::cout << "Wert: " << (int) f << std::endl;
-            /*for(int i = 0; i < farblist.size();i++){
-                cout << "Element " << (int) f << ": " << farblist.at(i)->yPos << endl;
-            }*/
         }
         else{
             std::cout << "CALI-MODE ON or EMPTY" << std::endl;
         }
 
-        cv::waitKey(fps);
-    }
+        //cv::waitKey(fps);
+    //}
 
-    return 0;
+    return getTopColor();
 }
