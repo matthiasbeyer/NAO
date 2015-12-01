@@ -386,6 +386,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         //imshow(windowName2, threshold);
 
         imshow(windowName, cameraFeed);
+        cv::waitKey(0);
         //imshow(windowName1, HSV);
 
         //delay 30ms so that screen can refresh.
