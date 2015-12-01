@@ -1,21 +1,30 @@
 #ifndef __MODULE_HPP__
 #define __MODULE_HPP__
 
-#include <opencv\cv.h>
-
+#include <iostream>
+#include <vector>
+#include <algorithm>
 #include <string>
+#include <sstream>
+#include <opencv\cv.h>
+#include <opencv\highgui.h>
+
+#include "Objekte.h"
+#include "FarbPos.hpp"
 
 namespace naocv {
-
-    extern int lowThreshold;
-    extern cv::Mat dst;
-    extern cv::Mat detected_edges;
-    extern cv::Mat src;
-    extern cv::Mat src_gray;
-
+     
     int run(const std::string& pathToFile,
             bool calibrationMode = true,
             bool videoMode = false);
+
+    std::string intTostring(int number);
+
+    void CannyThreshold(int, void*);
+
+    void on_trackbar(int, void*);
+
+    void createTrackbars();
 
 }
 
