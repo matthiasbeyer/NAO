@@ -1,6 +1,6 @@
 #include "module.hpp"
 
 int main(void) {
-    const std::string path = ("test2.jpg");
-    naocv::run(path);
+    std::string a = "C:/naoqi/_workspace/nao_repo/NAO/sources/src/opencv/Debug/test2.jpg";
+    naocv::run(a, false);
 }
