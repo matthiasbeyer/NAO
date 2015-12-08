@@ -125,4 +125,3 @@ void Objekte::setHSVmin(cv::Scalar min) {
 void Objekte::setHSVmax(cv::Scalar max) {
     this->HSVmax = max;
 }
-
