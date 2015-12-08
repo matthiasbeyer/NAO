@@ -5,17 +5,32 @@
  *
  */
 
-#include "algo/Algorithm.hpp"
-#include "algo/Card.hpp"
+#include "opencv/colorDetection.hpp"
+#include "interaction/Behavior.hpp"
 
-int main(void)
+int main(int argc, char* argv[])
 {
-    nao::algo::Card min = 1;
-    nao::algo::Card max = 6;
-    nao::algo::Algorithm algo(min, max);
+    std::string imagePath ("C:/naoqi/_workspace/nao_repo/NAO/sources/src/build-naochain/sdk/bin/shost.jpg");
+    try{
+        std::cout << "Wert: " << naocv::colorDetection(imagePath, false) << std::endl;
+    }
+    catch(cv::Exception& e){
+        std::cout << "OpenCV Error: " << e.what() << std::endl;
+    }catch(const AL::ALError& e){
+        std::cerr << "Aldebaran Error: " << e.what() << std::endl;
+    }catch(std::runtime_error& e){
+        std::cout << "Runtime Error: " << e.what() << std::endl;
+    }
+
+    return 0;
+
+    /* PSEUDOCODE
+    algo::Card min = 1;
+    algo::Card max = 6;
+    algo::Algorithm algo(min, max);
 
     // Introduction
-    nao::behaviour::intro();
+    behaviour::intro();
 
     // Find Cube
     auto cube = nao::behaviour::find_cube();
@@ -51,4 +66,5 @@ int main(void)
 
     // Outro
     nao::behaviour::outro();
+*/
 }

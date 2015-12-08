@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <string>
 #include <sstream>
+#include <memory>
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
 

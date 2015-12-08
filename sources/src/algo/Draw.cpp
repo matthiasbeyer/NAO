@@ -1,4 +1,4 @@
-#include "algo/Draw.hpp"
+#include "Draw.hpp"
 
 using namespace algo;
 
@@ -22,5 +22,3 @@ bool
 Draw::doDraw() {
     return this->__certainty > 0;
 }
-
-

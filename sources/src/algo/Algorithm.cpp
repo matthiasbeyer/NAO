@@ -2,11 +2,7 @@
 #include <algorithm>
 #include <iterator>
 
-#include "algo/Algorithm.hpp"
-
-#include "algo/Card.hpp"
-#include "algo/Draw.hpp"
-#include "algo/State.hpp"
+#include "Algorithm.hpp"
 
 using namespace algo;
 

@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <opencv\cv.h>
+#include <memory>
 #include <opencv\highgui.h>
 
 #include "Objekte.h"
