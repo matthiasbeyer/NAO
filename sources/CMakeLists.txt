@@ -12,7 +12,14 @@ set(algo_vis_SOURCES
         src/algo/Draw.cpp
     )
 
+set(naocv_SOURCES
+        src/opencv/opencv/module.cpp
+        src/opencv/opencv/Objekte.cpp
+        src/opencv/opencv/main.cpp
+    )
+
 include_directories(${INCLUDES})
 
 add_executable(algo_vis ${algo_vis_SOURCES})
+add_executable(naocv    ${naocv_SOURCES})
 
