@@ -1,7 +1,7 @@
 #include "Behavior.hpp"
 
 
-Behavior::Behavior(BehaviorID BID, std::string s)
+Behavior::Behavior(std::string s)
 {
     robotIp = s;
     initializeMap();
@@ -27,7 +27,7 @@ void Behavior::initializeMap(){
     #undef insert_in_map
 }
 
-// TODO: edit Proxy if global works
+// TODO: edit Proxy if global works :: Edit constructor and remove behaveProxy
 void Behavior::startBehavior(BehaviorID BID,std::string &robotIp){
         AL::ALBehaviorManagerProxy behaveProxy(robotIp, 9559);
         switch(BID) {

@@ -11,6 +11,10 @@
 int main(int argc, char* argv[])
 {
     std::string imagePath ("C:/naoqi/_workspace/nao_repo/NAO/sources/src/build-naochain/sdk/bin/shost.jpg");
+    //std::string robotIp(argv[1]);
+
+    //Behavior behaviorProxy(robotIp);
+
     try{
         std::cout << "Wert: " << naocv::colorDetection(imagePath, false) << std::endl;
     }

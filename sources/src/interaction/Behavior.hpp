@@ -26,9 +26,9 @@ class Behavior
     std::string robotIp;
     std::map<BehaviorID, std::string> BIDstring;
     std::shared_ptr<AL::ALBehaviorManagerProxy> globalBehaveProxy;
-
+    
 public:
-    Behavior(BehaviorID BID, std::string robotIp);
+    Behavior(std::string robotIp);
     ~Behavior(void);
     void initializeMap();
     void startBehavior(BehaviorID BID,std::string &robotIp);
