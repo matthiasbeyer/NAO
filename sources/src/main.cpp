@@ -7,6 +7,7 @@
 
 #include "opencv/colorDetection.hpp"
 #include "interaction/Behavior.hpp"
+#include "interaction\ImageLoader.h"
 
 int main(int argc, char* argv[])
 {
