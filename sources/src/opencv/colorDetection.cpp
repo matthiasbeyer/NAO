@@ -246,7 +246,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
     cv::Mat         threshold;
     cv::Mat         HSV;
     int             value;
-    int             fps = 0;
+    int             fps = 1;
     cv::VideoCapture    capture; //video capture object to acquire webcam feed
 
     if (calibrationMode){
@@ -269,7 +269,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
     //all of our operations will be performed within this loop
     cv::waitKey(1000);
 
-    //for(;;) {
+    do {
         //store image to matrix (video)
         if (videoMode){
             capture.read(cameraFeed);
@@ -382,7 +382,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         //imshow(windowName2, threshold);
 
         imshow(windowName, cameraFeed);
-        cv::waitKey(0);
+        //cv::waitKey(0);
         //imshow(windowName1, HSV);
 
         //delay 30ms so that screen can refresh.
@@ -397,8 +397,8 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             std::cout << "CALI-MODE ON or EMPTY" << std::endl;
         }
 
-        //cv::waitKey(fps);
-    //}
+        if(calibrationMode)cv::waitKey(fps);
+    }while(calibrationMode);
 
     return getTopColor();
 }

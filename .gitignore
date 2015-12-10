@@ -88,3 +88,6 @@ sources/src/build-naochain/Win32/Debug/ZERO_CHECK/ZERO_CHECK.log
 sources/src/build-naochain/Win32/Debug/ZERO_CHECK/ZERO_CHECK.vcxprojResolveAssemblyReference.cache
 sources/src/build-naochain/resource.h
 sources/src/build-naochain/src.aps
+cd
+dir
+Microsoft

@@ -27,7 +27,7 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(35, 70, 100));
+        this->setHSVmin(cv::Scalar(35, 55, 100));
         this->setHSVmax(cv::Scalar(85, 255, 255));
 
         //BGR value for Yellow:

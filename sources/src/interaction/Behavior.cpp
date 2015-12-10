@@ -1,6 +1,9 @@
 #include "Behavior.hpp"
 
 
+
+#include <alproxies/alvisionrecognitionproxy.h>
+
 Behavior::Behavior(std::string s)
 {
     robotIp = s;
@@ -29,14 +32,14 @@ void Behavior::initializeMap(){
 
 // TODO: edit Proxy if global works :: Edit constructor and remove behaveProxy
 void Behavior::startBehavior(BehaviorID BID,std::string &robotIp){
-        AL::ALBehaviorManagerProxy behaveProxy(robotIp, 9559);
-        switch(BID) {
+        //AL::ALBehaviorManagerProxy behaveProxy(robotIp, 9559);
+        /*switch(BID) {
         case 0:
             behaveProxy.runBehavior(BIDstring[Stand_up]);
-        }
-        behaveProxy.runBehavior("sayPeter");
-        int i2 = 0;
-        std::cin >> i2;
+        }*/
+        globalBehaveProxy->runBehavior("sayPeter");
+        /*int i2 = 0;
+        std::cin >> i2;*/
 }
 
 void Behavior::initializeBehaviorProxy(std::string &robotIp){

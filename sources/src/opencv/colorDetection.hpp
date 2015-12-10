@@ -16,7 +16,7 @@
 namespace naocv {
      
     Farbe colorDetection(const std::string& pathToFile,
-            bool calibrationMode = true,
+            bool calibrationMode = false,
             bool videoMode = false);
 
     std::string intTostring(int number);
