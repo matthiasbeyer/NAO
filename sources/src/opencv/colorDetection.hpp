@@ -1,14 +1,16 @@
 #ifndef __colorDetection_HPP__
 #define __colorDetection_HPP__
 
+// Opencv includes.
+#include <opencv\cv.h>
+#include <opencv\highgui.h>
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <string>
 #include <sstream>
 #include <memory>
-#include <opencv\cv.h>
-#include <opencv\highgui.h>
 
 #include "Objekte.hpp"
 #include "FarbPos.hpp"

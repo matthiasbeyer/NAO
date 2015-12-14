@@ -1,9 +1,10 @@
 #pragma once
 
+// Aldebaran includes.
+#include <alproxies\alnavigationproxy.h>
+
 #include <string>
 #include <memory>
-
-#include <alproxies\alnavigationproxy.h>
 
 namespace navigation {
 

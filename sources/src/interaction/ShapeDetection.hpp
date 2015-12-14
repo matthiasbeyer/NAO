@@ -1,9 +1,10 @@
 #define _USE_MATH_DEFINES
 
-#include <math.h>
+// Opencv includes.
+#include <opencv\cv.h>
+#include <opencv\highgui.h>
 
-#include "opencv\cv.h"
-#include "opencv\highgui.h"
+#include <math.h>
 
 int height, width, x, y;
 cv::Mat image;
@@ -47,6 +48,7 @@ bool findCircle(){
 
          // draw the circle outline
          cvCircle(rgbcanny, center, radius+1, CV_RGB(0,0,255), 2, 8, 0 );
+
          x = center.x;
          y = center.y + radius;
 
@@ -63,8 +65,6 @@ bool findCircle(){
     image = cv::Mat(img);
     //-->
 
-    
-    //TODO: GOON -> Change to bool, return true/false; struct
     if(circles->total == NULL)return false;
     
     return true;

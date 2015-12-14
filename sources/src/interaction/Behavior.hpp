@@ -1,11 +1,13 @@
 #pragma once
 
+
+// Aldebaran includes.
+#include <alproxies\albehaviormanagerproxy.h>
+
 #include <iostream>
 #include <string>
 #include <map>
 #include <memory>
-
-#include <alproxies\albehaviormanagerproxy.h>
 
 namespace behavior {
 
