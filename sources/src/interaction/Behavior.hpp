@@ -6,7 +6,6 @@
 #include <memory>
 
 #include <alproxies\albehaviormanagerproxy.h>
-#include <alerror\alerror.h>
 
 enum BehaviorID {
     Stand_up,
@@ -21,16 +20,15 @@ enum BehaviorID {
     Search_Dice
 };
 
-class Behavior
-{
+class Behavior {
     std::string robotIp;
     std::map<BehaviorID, std::string> BIDstring;
     std::shared_ptr<AL::ALBehaviorManagerProxy> globalBehaveProxy;
-    
+    void initializeBehaviorProxy(std::string &robotIp);
+
 public:
     Behavior(std::string robotIp);
     ~Behavior(void);
     void initializeMap();
     void startBehavior(BehaviorID BID,std::string &robotIp);
-    void initializeBehaviorProxy(std::string &robotIp);
 };

@@ -1,9 +1,5 @@
 #include "Behavior.hpp"
 
-
-
-#include <alproxies/alvisionrecognitionproxy.h>
-
 Behavior::Behavior(std::string s)
 {
     robotIp = s;
