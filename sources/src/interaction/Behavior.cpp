@@ -1,5 +1,7 @@
 #include "Behavior.hpp"
 
+using namespace behavior;
+
 Behavior::Behavior(std::string s)
 {
     robotIp = s;

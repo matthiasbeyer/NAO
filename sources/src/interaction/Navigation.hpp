@@ -5,13 +5,17 @@
 
 #include <alproxies\alnavigationproxy.h>
 
-class Navigation {
-    std::string robotIp;
-    std::shared_ptr<AL::ALNavigationProxy> globalNavProxy;
-    void initializeNavigationProxy(std::string &robotIp);
+namespace navigation {
 
-public:
-    Navigation(std::string robotIp);
-    ~Navigation(void);
-    void moveTo(const float x, const float y, const float rad);
-};
+    class Navigation {
+        std::string robotIp;
+        std::shared_ptr<AL::ALNavigationProxy> globalNavProxy;
+        void initializeNavigationProxy(std::string &robotIp);
+
+    public:
+        Navigation(std::string robotIp);
+        ~Navigation(void);
+        void moveTo(const float x, const float y, const float rad);
+    };
+
+}

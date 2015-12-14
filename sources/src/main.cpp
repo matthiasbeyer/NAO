@@ -19,8 +19,8 @@ int main(int argc, char* argv[])
     algo::Card min = 1;
     algo::Card max = 6;
 
-    //Behavior behaviorProxy(robotIp);
-    Navigation navigationProxy(robotIp);
+    //behavior::Behavior behaviorProxy(robotIp);
+    //navigation::Navigation navigationProxy(robotIp);
 
     try{
         //std::cout << "Wert: " << naocv::colorDetection(imagePath, false) << std::endl;

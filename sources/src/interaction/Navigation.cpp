@@ -1,5 +1,7 @@
 #include "Navigation.hpp"
 
+using namespace navigation;
+
 Navigation::Navigation(std::string s){
     robotIp = s;
     initializeNavigationProxy(robotIp);
