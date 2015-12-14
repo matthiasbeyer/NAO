@@ -29,7 +29,7 @@ void Behavior::initializeMap(){
 }
 
 // TODO: edit Proxy if global works :: Edit constructor and remove behaveProxy
-void Behavior::startBehavior(BehaviorID BID,std::string &robotIp){
+void Behavior::startBehavior(BehaviorID BID){
         //AL::ALBehaviorManagerProxy behaveProxy(robotIp, 9559);
         /*switch(BID) {
         case 0:

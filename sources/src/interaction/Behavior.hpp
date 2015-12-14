@@ -32,7 +32,7 @@ namespace behavior {
         Behavior(std::string robotIp);
         ~Behavior(void);
         void initializeMap();
-        void startBehavior(BehaviorID BID,std::string &robotIp);
+        void startBehavior(BehaviorID BID);
     };
 
 }

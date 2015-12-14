@@ -8,8 +8,9 @@
 #include "opencv/colorDetection.hpp"
 #include "interaction/Behavior.hpp"
 #include "interaction/ImageLoader.hpp"
-#include "algo/Algorithm.hpp"
 #include "interaction/Navigation.hpp"
+#include "interaction/ShapeDetection.hpp"
+#include "algo/Algorithm.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -19,7 +20,7 @@ int main(int argc, char* argv[])
     algo::Card min = 1;
     algo::Card max = 6;
 
-    //behavior::Behavior behaviorProxy(robotIp);
+    behavior::Behavior behaviorProxy(robotIp);
     //navigation::Navigation navigationProxy(robotIp);
 
     try{
@@ -29,6 +30,26 @@ int main(int argc, char* argv[])
             //behaviorProxy.startBehavior(Stand_up, robotIp);
         //
         naocv::colorDetection(imagePath, false);
+
+        do {
+            behaviorProxy.startBehavior(Throw); // Throw cube
+
+            cube = nao::behaviour::find_cube(); // find/goto cube
+            if (!cube) {
+                nao::behaviour::abort("Cannot find cube");
+                break;
+            }
+
+            auto b = nao::behaviour::go_to(cube);
+            if (!b) {
+                nao::behaviour::abort("Cannot goto cube");
+                break;
+            }
+
+            auto analyzed = nao::behaviour::analyze_cube(); // analyze cube-color
+            algo.update(analyzed); // Game step
+        } while (algo.doDraw());
+
     }
     catch(cv::Exception& e){
         std::cout << "OpenCV Error: " << e.what() << std::endl;
