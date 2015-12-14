@@ -10,7 +10,7 @@
 #include <opencv\cv.h>
 #include <opencv\highgui.h>
 
-#include "Objekte.h"
+#include "Objekte.hpp"
 #include "FarbPos.hpp"
 
 namespace naocv {

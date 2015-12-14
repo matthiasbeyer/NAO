@@ -38,19 +38,29 @@ std::vector<std::shared_ptr<FarbPos>>       farblist;
  *
  */
 
-void saveColorPos(std::string s, int yPos) {
-    auto fp = std::make_shared<FarbPos>(s, yPos);
+void saveColorPos(std::string s, int yPos, int size) {
+    auto fp = std::make_shared<FarbPos>(s, yPos, size);
     farblist.push_back(fp);
 }
 
 FarbPos getTopColor() {
     FarbPos result = *farblist.at(0);
 
+    //Nach geringstem yPos-Wert 
+    /*
     for (int i = 0; i < farblist.size(); i++) {
         if (farblist.at(i)->yPos < result.yPos) {
             result = *farblist.at(i);
         }
+    }*/
+
+    //Nach größter Fläche
+    for (int i = 0; i < farblist.size(); i++) {
+        if (farblist.at(i)->size > result.size) {
+            result = *farblist.at(i);
+        }
     }
+
 
     // TODO : What if color is not found?
     return result;
@@ -61,13 +71,16 @@ void drawObject(std::vector<Objekte> theObjects,
                 cv::Mat &temp,
                 std::vector<std::vector<cv::Point>> contours,
                 std::vector<cv::Vec4i> hierarchy)
-{
+{    
     for (int i = 0; i < theObjects.size(); i++) {
-        {
-            auto type = theObjects.at(i).getType();
-            auto ypos = theObjects.at(i).getYPos();
-            saveColorPos(type, ypos);
+        
+        int size = 0;
+        for(int ic = 0; ic < contours.size(); ic++){
+            if(size < contours.at(i).size()) size = contours.at(i).size();
         }
+        auto type = theObjects.at(i).getType();
+        auto ypos = theObjects.at(i).getYPos();
+        saveColorPos(type, ypos, size);
 
         cv::drawContours(frame,
                          contours,
@@ -267,7 +280,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
 
     //start an infinite loop where webcam feed is copied to cameraFeed matrix
     //all of our operations will be performed within this loop
-    cv::waitKey(1000);
+    //cv::waitKey(1000);
 
     do {
         //store image to matrix (video)
@@ -381,8 +394,9 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         //show frames
         //imshow(windowName2, threshold);
 
+        //TODO:Only for show!
         imshow(windowName, cameraFeed);
-        //cv::waitKey(0);
+        cv::waitKey(0);
         //imshow(windowName1, HSV);
 
         //delay 30ms so that screen can refresh.
@@ -400,5 +414,9 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         if(calibrationMode)cv::waitKey(fps);
     }while(calibrationMode);
 
+    for( int i2= 0; i2 < farblist.size(); i2++){
+        std::cout << farblist.at(i2)->farbe << std::endl;
+        std::cout << farblist.at(i2)->size << std::endl;
+    }
     return getTopColor();
 }

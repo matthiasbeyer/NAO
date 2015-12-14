@@ -8,11 +8,15 @@
 #include "opencv/colorDetection.hpp"
 #include "interaction/Behavior.hpp"
 #include "interaction/ImageLoader.h"
+#include "algo/Algorithm.hpp"
 
 int main(int argc, char* argv[])
 {
+    // INITIALISATION
     std::string imagePath ("C:/naoqi/_workspace/nao_repo/NAO/sources/src/build-naochain/sdk/bin/robotImage.jpg");
     std::string robotIp(argv[1]);
+    algo::Card min = 1;
+    algo::Card max = 6;
 
     //Behavior behaviorProxy(robotIp);
 

@@ -1,7 +1,4 @@
-#include <string>
-#include <opencv\cv.h>
-
-#include "Objekte.h"
+#include "Objekte.hpp"
 
 Objekte::Objekte()
     : type("Objekte"),

@@ -17,8 +17,9 @@ namespace naocv {
 
         std::string farbe;
         int         yPos;
+        int         size;
 
-        FarbPos(std::string s, int i): farbe(s), yPos(i) {
+        FarbPos(std::string s, int i, int is): farbe(s), yPos(i), size(is) {
         }
 
         FarbPos(){}
