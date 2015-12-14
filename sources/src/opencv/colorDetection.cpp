@@ -414,9 +414,5 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         if(calibrationMode)cv::waitKey(fps);
     }while(calibrationMode);
 
-    for( int i2= 0; i2 < farblist.size(); i2++){
-        std::cout << farblist.at(i2)->farbe << std::endl;
-        std::cout << farblist.at(i2)->size << std::endl;
-    }
     return getTopColor();
 }
