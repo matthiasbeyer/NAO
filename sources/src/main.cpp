@@ -17,11 +17,14 @@ int main(int argc, char* argv[])
     // INIT
     std::string imagePath ("C:/naoqi/_workspace/nao_repo/NAO/sources/src/build-naochain/sdk/bin/robotImage.jpg");
     std::string robotIp(argv[1]);
-    algo::Card min = 1;
-    algo::Card max = 6;
+    //algo::Card min = 1;
+    //algo::Card max = 6;
+    //algo::Algorithm algo(min, max);
+    int x, y;
+    float angle;
 
-    behavior::Behavior behaviorProxy(robotIp);
-    //navigation::Navigation navigationProxy(robotIp);
+    //behavior::Behavior behaviorProxy(robotIp);
+    navigation::Navigation navigationProxy(robotIp);
 
     try{
         //std::cout << "Wert: " << naocv::colorDetection(imagePath, false) << std::endl;
@@ -29,10 +32,26 @@ int main(int argc, char* argv[])
         //if(naocv::colorDetection(imagePath, false) == 4){
             //behaviorProxy.startBehavior(Stand_up, robotIp);
         //
-        naocv::colorDetection(imagePath, false);
+        //naocv::colorDetection(imagePath, false);
+        ShapeDetection(x, y, angle);
+        std::cout <<"x: "<< x <<" y: "<< y <<" angle: "<< angle << std::endl;
 
-        do {
-            behaviorProxy.startBehavior(Throw); // Throw cube
+
+        /*do {
+            //Throw cube
+            behaviorProxy.startBehavior(behavior::Throw);
+
+            //Find cube
+            do {
+                behaviorProxy.startBehavior(behavior::Rotate);
+            } while(!ShapeDetection(x, y, angle));
+
+            //goto cube
+            navigationProxy.moveTo(x, y, angle);
+
+            //analyze color
+            naocv::colorDetection(imagePath);
+
 
             cube = nao::behaviour::find_cube(); // find/goto cube
             if (!cube) {
@@ -48,7 +67,7 @@ int main(int argc, char* argv[])
 
             auto analyzed = nao::behaviour::analyze_cube(); // analyze cube-color
             algo.update(analyzed); // Game step
-        } while (algo.doDraw());
+        } while (algo.doDraw());*/
 
     }
     catch(cv::Exception& e){

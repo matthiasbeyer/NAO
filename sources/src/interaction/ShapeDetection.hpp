@@ -5,13 +5,13 @@
 #include "opencv\cv.h"
 #include "opencv\highgui.h"
 
-int height, width;
+int height, width, x, y;
 cv::Mat image;
 cv::Point centerPoint;
 
-cv::Point findCircle(){
+bool findCircle(){
     IplImage* img = NULL;
-    char* c = "C:/naoqi/_workspace/ShapeDetection/Debug/cube3.jpg";
+    char* c = "C:/naoqi/_workspace/_src/cube2.jpg";
     if ((img = cvLoadImage(c))== 0)
     {
         printf("cvLoadImage failed\n");
@@ -31,7 +31,7 @@ cv::Point findCircle(){
     IplImage* rgbcanny = cvCreateImage(cvGetSize(img),IPL_DEPTH_8U,3);
     cvCanny(gray, canny, 170, 250, 3);
 
-    CvSeq* circles = cvHoughCircles(gray, storage, CV_HOUGH_GRADIENT, 2, gray->height/8, 120, 150, 20, 600);
+    CvSeq* circles = cvHoughCircles(gray, storage, CV_HOUGH_GRADIENT, 2, gray->height/8, 25, 255, 10, 600);
     cvCvtColor(canny, rgbcanny, CV_GRAY2BGR);
   
     for (size_t i = 0; i < circles->total; i++)
@@ -47,25 +47,39 @@ cv::Point findCircle(){
 
          // draw the circle outline
          cvCircle(rgbcanny, center, radius+1, CV_RGB(0,0,255), 2, 8, 0 );
+         x = center.x;
+         y = center.y + radius;
 
+         //TODO: ausgabe
          printf("x: %d y: %d r: %d\n",center.x,center.y, radius);
     }
 
+    //anzeigen ..>
     cvNamedWindow("circles", 1);
     cvShowImage("circles", rgbcanny);
 
     //cvSaveImage("out.png", rgbcanny);
     cvWaitKey(0);
     image = cv::Mat(img);
-    return centerPoint;
+    //-->
+
+    
+    //TODO: GOON -> Change to bool, return true/false; struct
+    if(circles->total == NULL)return false;
+    
+    return true;
 }
 
 double getAngle(cv::Point pt)
 {
     cv::Point center(width/2, height);
     cv::Point zero(0, 0);
+    
     const double Rad2Deg = 180.0 / M_PI;
-    return atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y) * Rad2Deg;
+
+    //TODO: Change when first real start
+    //return atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y) * Rad2Deg; //degree
+    return atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y); //rad
 }
 
 void getAngleCenter(){ //Funktion um das Bild auszugeben
@@ -91,10 +105,10 @@ void getAngleCenter(){ //Funktion um das Bild auszugeben
 }
 
 //TODO: edit rückgabewert
-bool ShapeDetection(){ //.hpp Name
+void ShapeDetection(int& i1, int& i2, float& angle){ //.hpp Name
     findCircle();
-    double angle = getAngle(centerPoint);
+    i1 = x;
+    i2 = y;
+    angle = getAngle(centerPoint);
     cv::waitKey(0);
-
-    return false;
 }
