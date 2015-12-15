@@ -1,7 +1,7 @@
 #pragma once
 
 // Aldebaran includes.
-#include <alproxies\alnavigationproxy.h>
+#include <alproxies/alnavigationproxy.h>
 
 #include <string>
 #include <memory>

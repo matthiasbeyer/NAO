@@ -6,15 +6,15 @@
  */
 
 #include "opencv/colorDetection.hpp"
+#include "opencv/ShapeDetection.hpp"
 #include "interaction/Behavior.hpp"
 #include "interaction/ImageLoader.hpp"
 #include "interaction/Navigation.hpp"
-#include "interaction/ShapeDetection.hpp"
 #include "algo/Algorithm.hpp"
 
 int main(int argc, char* argv[])
 {
-    // INIT
+    // INIT <-----
     std::string imagePath ("C:/naoqi/_workspace/nao_repo/NAO/sources/src/build-naochain/sdk/bin/robotImage.jpg");
     std::string robotIp(argv[1]);
     //algo::Card min = 1;
@@ -25,6 +25,7 @@ int main(int argc, char* argv[])
 
     //behavior::Behavior behaviorProxy(robotIp);
     navigation::Navigation navigationProxy(robotIp);
+    // ----->
 
     try{
         //std::cout << "Wert: " << naocv::colorDetection(imagePath, false) << std::endl;
