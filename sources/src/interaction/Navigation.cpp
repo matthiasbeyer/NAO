@@ -3,8 +3,7 @@
 using namespace navigation;
 
 Navigation::Navigation(std::string s){
-    robotIp = s;
-    initializeNavigationProxy(robotIp);
+    initializeNavigationProxy(s);
 }
 
 void Navigation::moveTo(const float x, const float y, const float rad){

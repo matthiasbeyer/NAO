@@ -16,12 +16,14 @@
 namespace imgloader {
 
     class ImageLoader {
-        std::string robotIp;
+        std::string pathToFile;
         std::shared_ptr<AL::ALVideoDeviceProxy> globalVideoProxy;
         void initializeVideoProxy(std::string &robotIp);
 
     public:
-        ImageLoader(std::string robotIp);
+        ImageLoader(std::string robotIp, std::string path);
         ~ImageLoader(void);
-        void getImage(std::string &pathToFile);
+        void getImage();
+    };
+
 }

@@ -24,10 +24,10 @@ int main(int argc, char* argv[])
     float angle;
 
     //behavior::Behavior behaviorProxy(robotIp);
-    navigation::Navigation navigationProxy(robotIp);
+
     // ----->
 
-    try{
+    try {
         //std::cout << "Wert: " << naocv::colorDetection(imagePath, false) << std::endl;
         //naocv::getImageNao(robotIp,imagePath);
         //if(naocv::colorDetection(imagePath, false) == 4){

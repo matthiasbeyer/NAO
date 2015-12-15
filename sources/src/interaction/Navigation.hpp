@@ -9,7 +9,6 @@
 namespace navigation {
 
     class Navigation {
-        std::string robotIp;
         std::shared_ptr<AL::ALNavigationProxy> globalNavProxy;
         void initializeNavigationProxy(std::string &robotIp);
 
