@@ -44,20 +44,24 @@ void saveColorPos(std::string s, int yPos, int size) {
 }
 
 FarbPos getTopColor() {
-    FarbPos result = *farblist.at(0);
+    FarbPos result;
 
-    //Nach geringstem yPos-Wert 
-    /*
-    for (int i = 0; i < farblist.size(); i++) {
-        if (farblist.at(i)->yPos < result.yPos) {
-            result = *farblist.at(i);
-        }
-    }*/
+    if(!farblist.empty()){
+        result = *farblist.at(0);
 
-    //Nach größter Fläche
-    for (int i = 0; i < farblist.size(); i++) {
-        if (farblist.at(i)->size > result.size) {
-            result = *farblist.at(i);
+        //Nach geringstem yPos-Wert 
+        /*
+        for (int i = 0; i < farblist.size(); i++) {
+            if (farblist.at(i)->yPos < result.yPos) {
+                result = *farblist.at(i);
+            }
+        }*/
+
+        //Nach größter Fläche
+        for (int i = 0; i < farblist.size(); i++) {
+            if (farblist.at(i)->size > result.size) {
+                result = *farblist.at(i);
+            }
         }
     }
 
@@ -260,7 +264,9 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
     cv::Mat         HSV;
     int             value;
     int             fps = 1;
+
     cv::VideoCapture    capture; //video capture object to acquire webcam feed
+    farblist.clear();
 
     if (calibrationMode){
         //create slider bars for HSV filtering
@@ -317,6 +323,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
 
             morphOps(threshold);
             imshow(windowName2, threshold);
+            imshow("bild1", src);
 
             //the folowing for canny edge detec
             /// Create a matrix of the same type and size as src (for dst)
@@ -340,11 +347,13 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         } else {
             //create some temp fruit objects so that
             //we can use their member functions/information
+            //##### ADDING ONE COLOR in Objekte.cpp and FarbPos.hpp!
             Objekte blue("blue");
             Objekte yellow("yellow");
             Objekte red("red");
             Objekte red2("red2");
             Objekte green("green");
+            Objekte greendark("greendark");
             Objekte cyan("cyan");
             Objekte magenta("magenta");
 
@@ -378,6 +387,12 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             morphOps(threshold);
             trackFilteredObject(green, threshold, HSV, cameraFeed);
 
+            //then dark greens
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+            inRange(HSV, greendark.getHSVmin(), greendark.getHSVmax(), threshold);
+            morphOps(threshold);
+            trackFilteredObject(greendark, threshold, HSV, cameraFeed);
+
             //then cyan
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, cyan.getHSVmin(), cyan.getHSVmax(), threshold);
@@ -395,8 +410,9 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         //imshow(windowName2, threshold);
 
         //TODO:Only for show!
-        imshow(windowName, cameraFeed);
-        cv::waitKey(0);
+        //imshow(windowName, cameraFeed);
+        //cv::waitKey(0);
+
         //imshow(windowName1, HSV);
 
         //delay 30ms so that screen can refresh.
@@ -413,6 +429,8 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
 
         if(calibrationMode)cv::waitKey(fps);
     }while(calibrationMode);
+
+    if(farblist.size() == 0)naocv::Farbe();
 
     return getTopColor();
 }

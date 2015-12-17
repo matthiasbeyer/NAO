@@ -75,7 +75,7 @@ namespace naocv {
                 return YELLOW;
             }
 
-            if (this->farbe == "green"){
+            if (this->farbe == "green" || this->farbe == "greendark"){
                 return GREEN;
             }
 

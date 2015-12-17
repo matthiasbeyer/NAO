@@ -56,3 +56,6 @@ void ImageLoader::getImage(){
     
     cv::imwrite(pathToFile, imgHeader);
 }
+
+ImageLoader::~ImageLoader(void){
+}

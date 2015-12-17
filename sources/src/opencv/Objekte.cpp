@@ -13,10 +13,10 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(105, 90, 120));
-        this->setHSVmax(cv::Scalar(130, 255, 255));
+        this->setHSVmin(cv::Scalar(105, 190, 120));
+        this->setHSVmax(cv::Scalar(130, 240, 200));
 
-        //BGR value for Green:
+        //BGR value for Blue:
         this->setColor(cv::Scalar(255, 0, 0));
     }
 
@@ -27,7 +27,18 @@ Objekte::Objekte(std::string name)
         this->setHSVmin(cv::Scalar(35, 55, 100));
         this->setHSVmax(cv::Scalar(85, 255, 255));
 
-        //BGR value for Yellow:
+        //BGR value for Green:
+        this->setColor(cv::Scalar(0, 255, 0));
+    }
+
+     if (name=="greendark") {
+        //TODO: use "calibration mode" to find HSV min
+        //and HSV max values
+
+        this->setHSVmin(cv::Scalar(40, 90, 20));
+        this->setHSVmax(cv::Scalar(140, 200, 100));
+
+        //BGR value for Green:
         this->setColor(cv::Scalar(0, 255, 0));
     }
 
@@ -38,7 +49,7 @@ Objekte::Objekte(std::string name)
         this->setHSVmin(cv::Scalar(1, 124, 123));
         this->setHSVmax(cv::Scalar(35, 255, 255));
 
-        //BGR value for Red:
+        //BGR value for Yellow:
         this->setColor(cv::Scalar(0, 255, 255));
     }
 
@@ -57,8 +68,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-	    this->setHSVmin(cv::Scalar(170, 120, 170));
-	    this->setHSVmax(cv::Scalar(180, 140, 200));
+	    this->setHSVmin(cv::Scalar(0, 180, 170));
+	    this->setHSVmax(cv::Scalar(200, 250, 240));
 
         //BGR value for Red:
 	    this->setColor(cv::Scalar(0, 0, 255));
@@ -68,8 +79,9 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(90, 105, 130));
-		this->setHSVmax(cv::Scalar(105, 255, 255));
+		//his->setHSVmin(cv::Scalar(90, 80, 60));
+        this->setHSVmin(cv::Scalar(100, 80, 60));
+		this->setHSVmax(cv::Scalar(120, 230, 255));
 
         //BGR value for Cyan:
 		this->setColor(cv::Scalar(255, 255, 0));
@@ -79,7 +91,7 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(135, 85, 115));
+		this->setHSVmin(cv::Scalar(135, 85, 50));
 		this->setHSVmax(cv::Scalar(170, 255, 255));
 
         //BGR value for Magenta:
