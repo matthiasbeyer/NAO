@@ -67,7 +67,7 @@ namespace naocv {
                 return CYAN;
             }
 
-            if (this->farbe == "red" || this->farbe == "red2"){
+            if (this->farbe == "red"){
                 return RED;
             }
 
@@ -83,7 +83,7 @@ namespace naocv {
                 return MAGENTA;
             }
 
-            if (this->farbe == "blue"){
+            if (this->farbe == "blue" || this->farbe ==  "bluedark"){
                 return BLUE;
             }
         }

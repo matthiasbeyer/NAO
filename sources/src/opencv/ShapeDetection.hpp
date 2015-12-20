@@ -55,8 +55,8 @@ bool find_squares(cv::Mat& image, std::vector<std::vector<cv::Point>>& squares)
         mixChannels(&blurred, 1, &gray0, 1, ch, 1);
 
         // try several threshold levels
-        const int threshold_level = 24;
-        for (int l = 10; l < threshold_level; l++)
+        const int threshold_level = 25;
+        for (int l = 11; l < threshold_level; l++)
         {
             if(looprequest)break;
             // Use Canny instead of zero threshold level!
@@ -100,11 +100,11 @@ bool find_squares(cv::Mat& image, std::vector<std::vector<cv::Point>>& squares)
                             maxCosine = MAX(maxCosine, cosine);
                     }
                     //Ignore too big rectangle
-                    if (maxCosine < 1.5 && (approx[2].x - approx[0].x) < 300  && (approx[2].y - approx[0].y) < 300) {
-                            /*squares.push_back(approx);
+                    if (maxCosine < 1.5 && (approx[2].x - approx[0].x) < 300  && (approx[2].y - approx[0].y) < 300 && approx[0].x > 300 && approx[1].x > 300 && approx[2].x > 300 && approx[3].x > 300) {
+                            squares.push_back(approx);
 
-                            looprequest = false;*/
-                        cv::Mat cut = image(cv::Rect(approx[0], approx[2]));
+                            looprequest = false;
+                        /*cv::Mat cut = image(cv::Rect(approx[0], approx[2]));
                         //Used to find very small rectangle-cuts
                         if(cut.cols < 20 || cut.rows < 20){
                             cv::Mat whitespace(cv::Size(cut.cols + 50, cut.rows + 50), CV_8UC3);
@@ -125,7 +125,7 @@ bool find_squares(cv::Mat& image, std::vector<std::vector<cv::Point>>& squares)
                         }
                         else {
                             std::cout << "Falsches" << std::endl;
-                        }
+                        }*/
                     }
                 }
             }
@@ -159,7 +159,7 @@ double getAngle(cv::Point pt)
 
     //TODO: Change when first real start
     //return atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y) * Rad2Deg; //degree
-    return atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y); //rad
+    return -atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y); //rad
 }
 
 void showAngle(cv::Mat &image){ //Funktion um das Bild auszugeben
@@ -201,7 +201,34 @@ void rotate(cv::Mat& src, double angle, cv::Mat& dst)
     cv::warpAffine(src, dst, r, cv::Size(len, len));
 }
 
-bool ShapeDetection(std::string& pathToFile) 
+void getXY(float& x, float& y){
+    //unit in cm
+    int start = 20;
+    if(centerPoint.y >= 752) {
+        y = start + (centerPoint.x - 752) / 20.8;
+    }else if(centerPoint.x >= 615) {
+        x = start + 10 + (centerPoint.x - 615) / 13.7;
+    }else if(centerPoint.x >= 512) {
+        x = start + 20 + (centerPoint.x - 512) / 10.3;
+    }else if(centerPoint.x >= 416) {
+        x = start + 30 + (centerPoint.x - 416) / 9.6;
+    }else if(centerPoint.x >= 345) {
+        x = start + 40 + (centerPoint.x - 345) / 7.1;
+    }else if(centerPoint.x >= 285) {
+        x = start + 50 + (centerPoint.x - 285) / 6;
+    }else if(centerPoint.x >= 232) {
+        x = start + 60 + (centerPoint.x - 232) / 5.3;
+    }else if(centerPoint.x >= 189) {
+        x = start + 70 + (centerPoint.x - 189) / 4.3;
+    }else if(centerPoint.x >= 150) {
+        x = start + 80 + (centerPoint.x - 150) / 3.9;
+    }else if(centerPoint.x >= 117) {
+        x = start + 90 + (centerPoint.x - 117) / 3.3;
+    }
+    y = (640 - centerPoint.x) / 14;
+}
+
+bool ShapeDetection(std::string& pathToFile, float& angle, float& x, float& y) 
 {
     cv::Mat                             image;
     std::vector<std::vector<cv::Point>> squares;
@@ -224,39 +251,48 @@ bool ShapeDetection(std::string& pathToFile)
     }
 
     squareFound = find_squares(image, squares);
-    /*int i = 0;
-    while(!squareFound && i < 9){
-        if(i==1){
-            std::cout << "h";
-        }
-        cv::Mat dst;
-        std::cout << "Drehen" << std::endl;
-        rotate(image, 5, dst);
-        find_squares(image, squares);
-        image = dst;
-        i++;
-    }*/
-    //TODO: centerPoint festlegen
-    //centerPoint = cv::Point((squares.at(0).at(0).x)
 
-    //TODO: Show-only
-    drawContours(image, squares);
+    if(squareFound) {
+        //TODO: centerPoint festlegen
+        //std::cout << squares.at(0).at(2).x << " X " << squares.at(0).at(0).x << std::endl;
+        int xBase, yBase;
+        if(squares.at(0).at(0).x < squares.at(0).at(2).x) xBase = squares.at(0).at(0).x;
+        else xBase = squares.at(0).at(2).x;
+        if(squares.at(0).at(0).y < squares.at(0).at(2).y) yBase = squares.at(0).at(0).y;
+        else yBase = squares.at(0).at(2).y;
+    
+        int xCenter = xBase + (std::abs(squares.at(0).at(2).x - squares.at(0).at(0).x) * 0.5);
+        int yCenter = yBase + (std::abs(squares.at(0).at(2).y - squares.at(0).at(0).y) * 0.5);
+        std::cout << "xDiff: " << xCenter << " yDiff: " << yCenter << std::endl;
+        //centerPoint = cv::Point(squares.at(0).at(2).x + (squares.at(0).at(0).x - squares.at(0).at(2).x) * 0.5, squares.at(0).at(0).y);
+        centerPoint = cv::Point(xCenter, yCenter);
 
-    //ausgaben
-    for(int i = 0;i < squares.size(); i++){
-        std::cout << "Viereck " << i << std::endl;
-        for(int i2 = 0;i2 <= 3; i2++){
-            std::cout << "Punkt " << i2 << ":" << std::endl;
-            std::cout << "X: " << squares.at(i).at(i2).x << std::endl;
-            std::cout << "Y: " << squares.at(i).at(i2).y << std::endl;
+        //cv::circle(image, centerPoint, 5, cv::Scalar(0, 255,0), 1);
+
+        //TODO: Show-only
+        drawContours(image, squares);
+        getXY(x, y);
+        angle = getAngle(centerPoint);
+        std::cout << "WINKEL: " << angle << " X: " << x << " Y: " << y << std::endl;
+        showAngle(image);
+    
+
+        //ausgaben
+        for(int i = 0;i < squares.size(); i++){
+            std::cout << "Viereck " << i << std::endl;
+            for(int i2 = 0;i2 <= 3; i2++){
+                std::cout << "Punkt " << i2 << ":" << std::endl;
+                std::cout << "X: " << squares.at(i).at(i2).x << std::endl;
+                std::cout << "Y: " << squares.at(i).at(i2).y << std::endl;
+            }
+            std::cout << "----------------"  << std::endl;
         }
-        std::cout << "----------------"  << std::endl;
+
+        std::cout << "Höhe: " << height << " Breite: " << width << std::endl;
     }
-
-    std::cout << "Höhe: " << height << " Breite: " << width << std::endl;
-
-    cv::imshow("OutputPicture", image);
-    cv::waitKey(0);
+    else std::cout << "Kein Wuerfel gefunden" << std::endl;
+    //cv::imshow("OutputPicture", image);
+    //cv::waitKey(0);
 
     return squareFound;
 }

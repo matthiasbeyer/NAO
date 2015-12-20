@@ -13,30 +13,53 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(105, 190, 120));
-        this->setHSVmax(cv::Scalar(130, 240, 200));
+        this->setHSVmin(cv::Scalar(100, 120, 200));
+        this->setHSVmax(cv::Scalar(120, 180, 250));
 
         //BGR value for Blue:
         this->setColor(cv::Scalar(255, 0, 0));
     }
 
+    if (name=="bluedark") {
+        //TODO: use "calibration mode" to find HSV min
+        //and HSV max values
+
+        this->setHSVmin(cv::Scalar(105, 220, 140));
+        this->setHSVmax(cv::Scalar(120, 240, 170));
+
+        //BGR value for Blue:
+        this->setColor(cv::Scalar(255, 0, 0));
+    }
+
+    //blue nah
+    //100 120 200
+    //120 180 250
+    //blue fern
+    //105 220 140
+    //120 240 170
     if (name=="green") {
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(35, 55, 100));
-        this->setHSVmax(cv::Scalar(85, 255, 255));
+        this->setHSVmin(cv::Scalar(40, 30, 180));
+        this->setHSVmax(cv::Scalar(75, 70, 250));
 
         //BGR value for Green:
         this->setColor(cv::Scalar(0, 255, 0));
     }
+    //green nah
+    //40 30 180
+    //75 70 250
+    //green fern
+    //30 70 120
+    //90 140 190
 
      if (name=="greendark") {
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(40, 90, 20));
-        this->setHSVmax(cv::Scalar(140, 200, 100));
+        this->setHSVmin(cv::Scalar(30, 70, 120));
+        this->setHSVmax(cv::Scalar(90, 140, 190));
 
         //BGR value for Green:
         this->setColor(cv::Scalar(0, 255, 0));
@@ -46,57 +69,69 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(1, 124, 123));
-        this->setHSVmax(cv::Scalar(35, 255, 255));
+        this->setHSVmin(cv::Scalar(20, 110, 135)); //TODO: 135 only freehand! maybe 2nd yellow object
+        this->setHSVmax(cv::Scalar(35, 210, 255));
 
         //BGR value for Yellow:
         this->setColor(cv::Scalar(0, 255, 255));
     }
+    //yellow nah
+    //25 110 250
+    //35 180 255
+    //yellow fern
+    //20 160 200
+    //35 210 255
 
 	if (name=="red") {
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(0, 110, 130));
-		this->setHSVmax(cv::Scalar(20, 255, 255));
+		this->setHSVmin(cv::Scalar(0, 150, 210));
+		this->setHSVmax(cv::Scalar(10, 240, 255));
 
         //BGR value for Red:
 		this->setColor(cv::Scalar(0, 0, 255));
 	}
-
-    if (name=="red2") {
-        //TODO: use "calibration mode" to find HSV min
-        //and HSV max values
-
-	    this->setHSVmin(cv::Scalar(0, 180, 170));
-	    this->setHSVmax(cv::Scalar(200, 250, 240));
-
-        //BGR value for Red:
-	    this->setColor(cv::Scalar(0, 0, 255));
-	}
+    //red nah
+    //0 150 240
+    //10 185 255
+    //red fern
+    //0 220 210
+    //0 240 235
 
     if (name=="cyan") {
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		//his->setHSVmin(cv::Scalar(90, 80, 60));
-        this->setHSVmin(cv::Scalar(100, 80, 60));
-		this->setHSVmax(cv::Scalar(120, 230, 255));
+        this->setHSVmin(cv::Scalar(90, 30, 215));
+		this->setHSVmax(cv::Scalar(110, 90, 255));
 
         //BGR value for Cyan:
 		this->setColor(cv::Scalar(255, 255, 0));
     }
+    //cyan nah
+    //90 30 240
+    //110 80 255
+    //cyan fern
+    //95 65 215
+    //105 90 255
 
     if (name=="magenta") {
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(135, 85, 50));
-		this->setHSVmax(cv::Scalar(170, 255, 255));
+		this->setHSVmin(cv::Scalar(145, 40, 155));
+		this->setHSVmax(cv::Scalar(165, 195, 245));
 
         //BGR value for Magenta:
 		this->setColor(cv::Scalar(255, 0, 255));
     }
+    //magenta nah
+    //145 40 200
+    //165 95 245
+    //magenta fern
+    //150 130 155
+    //165 195 180
 }
 
 Objekte::~Objekte(void)

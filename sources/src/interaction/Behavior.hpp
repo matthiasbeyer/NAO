@@ -21,7 +21,10 @@ namespace behavior {
         Search_Mark_y,
         Won,
         Lost,
-        Search_Dice
+        Search_Dice,
+        Search_Dice2,
+        Search_Dice3,
+        ALL
     };
 
     class Behavior {
@@ -35,6 +38,7 @@ namespace behavior {
         ~Behavior(void);
         void initializeMap();
         void startBehavior(BehaviorID BID);
+        void stopBehavior(BehaviorID BID);
     };
 
 }

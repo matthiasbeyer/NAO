@@ -121,6 +121,16 @@ void drawObject(std::vector<Objekte> theObjects,
     }
 }
 
+void drawObject(std::vector<Objekte> theObjects, cv::Mat &frame){
+
+	for(int i =0; i<theObjects.size(); i++){
+
+	cv::circle(frame,cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()),10,cv::Scalar(0,0,255));
+    cv::putText(frame,intTostring(theObjects.at(i).getXPos())+ " , " + intTostring(theObjects.at(i).getYPos()),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()+20),1,1,cv::Scalar(0,255,0));
+	cv::putText(frame,theObjects.at(i).getType(),cv::Point(theObjects.at(i).getXPos(),theObjects.at(i).getYPos()-30),1,2,theObjects.at(i).getColor());
+	}
+}
+
 void morphOps(cv::Mat &thresh) {
     //create structuring element that will be used to "dilate" and "erode" image.
     //the element chosen here is a 3px by 3px rectangle
@@ -221,6 +231,57 @@ void naocv::CannyThreshold(int, void*)
 
     src.copyTo(dst, detected_edges);
     imshow(window_name, dst);
+}
+
+void trackFilteredObject(cv::Mat threshold,cv::Mat HSV, cv::Mat &cameraFeed)
+{
+    std::vector <Objekte> objects;
+	cv::Mat temp;
+	threshold.copyTo(temp);
+	//these two vectors needed for output of findContours
+	std::vector<std::vector<cv::Point> > contours;
+	std::vector<cv::Vec4i> hierarchy;
+	//find contours of filtered image using openCV findContours function
+	findContours(temp,contours,hierarchy,CV_RETR_CCOMP,CV_CHAIN_APPROX_SIMPLE );
+	//use moments method to find our filtered object
+	double refArea = 0;
+	bool objectFound = false;
+	if (hierarchy.size() > 0) {
+		int numObjects = hierarchy.size();
+		//if number of objects greater than MAX_NUM_OBJECTS we have a noisy filter
+		if(numObjects<MAX_NUM_OBJECTS)
+		{
+			for (int index = 0; index >= 0; index = hierarchy[index][0])
+			{
+				cv::Moments moment = moments((cv::Mat)contours[index]);
+				double area = moment.m00;
+				//if the area is less than 20 px by 20px then it is probably just noise
+				//if the area is the same as the 3/2 of the image size, probably just a bad filter
+				//we only want the object with the largest area so we safe a reference area each
+				//iteration and compare it to the area in the next iteration.
+				if(area>MIN_OBJECT_AREA)
+				{
+					Objekte object;
+
+					object.setXPos(moment.m10/area);
+					object.setYPos(moment.m01/area);
+
+					objects.push_back(object);
+
+					objectFound = true;
+
+				}
+				else objectFound = false;
+			}
+			//let user know you found an object
+			if(objectFound ==true)
+			{
+				//draw object location on screen
+				drawObject(objects,cameraFeed);
+			}
+		}
+		else putText(cameraFeed,"TOO MUCH NOISE! ADJUST FILTER",cv::Point(0,50),1,2,cv::Scalar(0,0,255),2);
+	}
 }
 
 void naocv::createTrackbars() {
@@ -349,9 +410,9 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             //we can use their member functions/information
             //##### ADDING ONE COLOR in Objekte.cpp and FarbPos.hpp!
             Objekte blue("blue");
+            Objekte bluedark("bluedark");
             Objekte yellow("yellow");
             Objekte red("red");
-            Objekte red2("red2");
             Objekte green("green");
             Objekte greendark("greendark");
             Objekte cyan("cyan");
@@ -362,6 +423,12 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             inRange(HSV, blue.getHSVmin(), blue.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(blue, threshold, HSV, cameraFeed);
+            
+            //then bluedarks
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+            inRange(HSV, bluedark.getHSVmin(), bluedark.getHSVmax(), threshold);
+            morphOps(threshold);
+            trackFilteredObject(bluedark, threshold, HSV, cameraFeed);
 
             //then yellows
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
@@ -375,18 +442,12 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             morphOps(threshold);
             trackFilteredObject(red, threshold, HSV, cameraFeed);
 
-            //then red2
-            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
-            inRange(HSV, red2.getHSVmin(), red2.getHSVmax(), threshold);
-            morphOps(threshold);
-            trackFilteredObject(red2, threshold, HSV, cameraFeed);
-
             //then greens
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, green.getHSVmin(), green.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(green, threshold, HSV, cameraFeed);
-
+           
             //then dark greens
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, greendark.getHSVmin(), greendark.getHSVmax(), threshold);
@@ -409,9 +470,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         //show frames
         //imshow(windowName2, threshold);
 
-        //TODO:Only for show!
-        //imshow(windowName, cameraFeed);
-        //cv::waitKey(0);
+        //TODO:Only for show
 
         //imshow(windowName1, HSV);
 
@@ -428,6 +487,10 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         }
 
         if(calibrationMode)cv::waitKey(fps);
+        else {
+            //imshow(windowName, cameraFeed);
+            //cv::waitKey(0);
+        }
     }while(calibrationMode);
 
     if(farblist.size() == 0)naocv::Farbe();

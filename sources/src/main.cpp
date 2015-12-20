@@ -16,55 +16,99 @@
 int main(int /*argc*/, char** /*argv[]*/)
 {
     // INIT <-----
-    std::string pathToFile("C:/naoqi/_workspace/_src/imgg_magenta.jpg");
+    std::string pathToFile("C:/naoqi/_workspace/_src/rot_ferne.jpg");
     std::string robotIp("169.254.216.239");
+    float x, y;
+    float angle;
+    bool direction;
+    /*
     algo::Card min = 1;
     algo::Card max = 6;
     algo::Algorithm algo(min, max);
-    int x, y;
-    float angle;
-    bool direction;
+    behavior::Behavior behaviorProxy(robotIp);
+    navigation::Navigation navigationProxy(robotIp);
+    imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
+    */
 
-    //behavior::Behavior behaviorProxy(robotIp);
-    //navigation::Navigation navigationProxy(robotIp);
-    //imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
-    //imageLoaderProxy.getImage();
     // ----->
 
     try {
+
         //behaviorProxy.startBehavior(behavior::Search_Dice);
         //navigationProxy.moveTo(0.2,0.2,1);
-        //std::cout << "Wert: " << naocv::colorDetection(imagePath, false) << std::endl;
+        //behaviorProxy.startBehavior(behavior::Register_Color);
+        //imageLoaderProxy.getImage();
+        //std::cout << "Wert: " << naocv::colorDetection(pathToFile, true) << std::endl;
         //naocv::getImageNao(robotIp,imagePath);
         //if(naocv::colorDetection(imagePath, false) == 4){
             //behaviorProxy.startBehavior(Stand_up, robotIp);
         
         //naocv::colorDetection(pathToFile, true); int i; std::cin >> i;
-        bool a = ShapeDetection(pathToFile);
-        //if(a) std::cout << "gefunden" << std::endl;
-        
-        
-        //Main-Module Start <----
-        //Throw cube
-        //behaviorProxy.startBehavior(behavior::Pickup);
-        //behaviorProxy.startBehavior(behavior::Throw);
+        bool a = ShapeDetection(pathToFile, angle, y ,x);
+
         /*
+        behaviorProxy.startBehavior(behavior::Stand_up);
+        imageLoaderProxy.getImage();
+        bool a = ShapeDetection(pathToFile, angle, x , y);
+        x = x * 0.01; //cm in m
+        y = y * 0.01; //cm in m
+        x = x - 0.03; //calibration value
+        y = y - (x*0.174); //compensate slip
+        std::cout << x << " X " << y << std::endl;
+        navigationProxy.moveTo(x, y, 0);
+        std::cout << "WINKEL: " << angle << " X: " << x << " Y: " << y << "cm" << std::endl;
+        behaviorProxy.startBehavior(behavior::Register_Color);
+        imageLoaderProxy.getImage();
+        naocv::colorDetection(pathToFile);
+        behaviorProxy.startBehavior(behavior::Pickup);
+        behaviorProxy.startBehavior(behavior::Throw);
+        */
+        
+        /*
+        //Main-Module Start <----
+        behaviorProxy.startBehavior(behavior::Stand_up);
+        behaviorProxy.startBehavior(behavior::Pickup);
+        behaviorProxy.startBehavior(behavior::Throw);
+        
         do {
             //Find cube
-            do {
-                behaviorProxy.startBehavior(behavior::Rotate);
-            } while(!ShapeDetection(x, y, angle));
+            for(int i = 0; !ShapeDetection(pathToFile, angle, x, y); i++){
+                if(i == 0) navigationProxy.moveTo(0, 0, 1.0472);
+                else if(i == 1) navigationProxy.moveTo(0, 0, -2.0944);
+                else throw std::runtime_error("Cube not Found");
+            }
 
-            //goto cube
+            x = x * 0.01; //cm in m
+            y = y * 0.01; //cm in m
+            x = x - 0.03; //calibration value
+            y = y - (x*0.174); //compensate slip
+
+            //Goto cube
             navigationProxy.moveTo(x, y, angle);
          
-            // Game step
+            //Analyze cube-color
+            behaviorProxy.startBehavior(behavior::Register_Color);
             auto analyzed = naocv::colorDetection(pathToFile);
-            algo.update(std::make_shared<algo::Card>(analyzed));
-            
-        } while (algo.doDraw());*/
-        //--->
 
+            //Game step
+            algo.update(std::make_shared<algo::Card>(analyzed));
+
+            //Find throw-direction
+            behaviorProxy.startBehavior(behavior::Pickup);
+
+            if(direction){
+                behaviorProxy.startBehavior(behavior::Search_Mark_X);
+                direction = true;
+            } else {
+                behaviorProxy.startBehavior(behavior::Search_Mark_y);
+                direction = false;
+            }
+
+            behaviorProxy.startBehavior(behavior::Throw);
+            
+        } while (algo.doDraw());
+        //--->
+        */
     }
     catch(cv::Exception& e){
         std::cout << "OpenCV Error: " << e.what() << std::endl;
@@ -73,50 +117,6 @@ int main(int /*argc*/, char** /*argv[]*/)
     }catch(std::runtime_error& e){
         std::cout << "Runtime Error: " << e.what() << std::endl;
     }
-     
+
     return 0;
-
-    /* PSEUDOCODE
-    algo::Card min = 1;
-    algo::Card max = 6;
-    algo::Algorithm algo(min, max);
-
-    // Introduction
-    behaviour::intro();
-
-    // Find Cube
-    auto cube = nao::behaviour::find_cube();
-    if (!cube) {
-        nao::behaviour::abort("Cannot find cube");
-        exit(1);
-    }
-
-    // Go to cube
-    auto b = nao::behaviour::go_to(cube);
-    if (!b) {
-        nao::behaviour::abort("Cannot goto cube");
-    }
-
-    do {
-        nao::behaviour::throw_cube(cube); // Throw cube
-
-        cube = nao::behaviour::find_cube(); // find/goto cube
-        if (!cube) {
-            nao::behaviour::abort("Cannot find cube");
-            break;
-        }
-
-        auto b = nao::behaviour::go_to(cube);
-        if (!b) {
-            nao::behaviour::abort("Cannot goto cube");
-            break;
-        }
-
-        auto analyzed = nao::behaviour::analyze_cube(); // analyze cube-color
-        algo.update(analyzed); // Game step
-    } while (algo.doDraw()); // as long as game algo says yes
-
-    // Outro
-    nao::behaviour::outro();
-*/
 }
