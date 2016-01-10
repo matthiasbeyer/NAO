@@ -100,11 +100,11 @@ bool find_squares(cv::Mat& image, std::vector<std::vector<cv::Point>>& squares)
                             maxCosine = MAX(maxCosine, cosine);
                     }
                     //Ignore too big rectangle
-                    if (maxCosine < 1.5 && (approx[2].x - approx[0].x) < 300  && (approx[2].y - approx[0].y) < 300 && approx[0].x > 300 && approx[1].x > 300 && approx[2].x > 300 && approx[3].x > 300) {
-                            squares.push_back(approx);
+                    if (maxCosine < 1.5  && (approx[2].x - approx[0].x) < 200  && (approx[2].y - approx[0].y) < 200/* && approx[0].x > 300 && approx[1].x > 300 && approx[2].x > 300 && approx[3].x > 300*/) {
+                            /*squares.push_back(approx);
 
-                            looprequest = false;
-                        /*cv::Mat cut = image(cv::Rect(approx[0], approx[2]));
+                            looprequest = false;*/
+                        cv::Mat cut = image(cv::Rect(approx[0], approx[2]));
                         //Used to find very small rectangle-cuts
                         if(cut.cols < 20 || cut.rows < 20){
                             cv::Mat whitespace(cv::Size(cut.cols + 50, cut.rows + 50), CV_8UC3);
@@ -121,11 +121,11 @@ bool find_squares(cv::Mat& image, std::vector<std::vector<cv::Point>>& squares)
                         //If cut is inside colorspace
                         if(getColorAtRectangle() != 0){ 
                             squares.push_back(approx);
-                            looprequest = true;
+                            //looprequest = true;
                         }
                         else {
                             std::cout << "Falsches" << std::endl;
-                        }*/
+                        }
                     }
                 }
             }
@@ -205,35 +205,49 @@ void getXY(float& x, float& y){
     //unit in cm
     int start = 20;
     if(centerPoint.y >= 752) {
-        y = start + (centerPoint.x - 752) / 20.8;
-    }else if(centerPoint.x >= 615) {
-        x = start + 10 + (centerPoint.x - 615) / 13.7;
-    }else if(centerPoint.x >= 512) {
-        x = start + 20 + (centerPoint.x - 512) / 10.3;
-    }else if(centerPoint.x >= 416) {
-        x = start + 30 + (centerPoint.x - 416) / 9.6;
-    }else if(centerPoint.x >= 345) {
-        x = start + 40 + (centerPoint.x - 345) / 7.1;
-    }else if(centerPoint.x >= 285) {
-        x = start + 50 + (centerPoint.x - 285) / 6;
-    }else if(centerPoint.x >= 232) {
-        x = start + 60 + (centerPoint.x - 232) / 5.3;
-    }else if(centerPoint.x >= 189) {
-        x = start + 70 + (centerPoint.x - 189) / 4.3;
-    }else if(centerPoint.x >= 150) {
-        x = start + 80 + (centerPoint.x - 150) / 3.9;
-    }else if(centerPoint.x >= 117) {
-        x = start + 90 + (centerPoint.x - 117) / 3.3;
+        x = start + (centerPoint.y - 752) / 20.8;
+    }else if(centerPoint.y >= 615) {
+        x = start + 10 + (centerPoint.y - 615) / 13.7;
+    }else if(centerPoint.y >= 512) {
+        x = start + 20 + (centerPoint.y - 512) / 10.3;
+    }else if(centerPoint.y >= 416) {
+        x = start + 30 + (centerPoint.y - 416) / 9.6;
+    }else if(centerPoint.y >= 345) {
+        x = start + 40 + (centerPoint.y - 345) / 7.1;
+    }else if(centerPoint.y >= 285) {
+        x = start + 50 + (centerPoint.y - 285) / 6;
+    }else if(centerPoint.y >= 232) {
+        x = start + 60 + (centerPoint.y - 232) / 5.3;
+    }else if(centerPoint.y >= 189) {
+        x = start + 70 + (centerPoint.y - 189) / 4.3;
+    }else if(centerPoint.y >= 150) {
+        x = start + 80 + (centerPoint.y - 150) / 3.9;
+    }else if(centerPoint.y >= 117) {
+        x = start + 90 + (centerPoint.y - 117) / 3.3;
     }
     y = (640 - centerPoint.x) / 14;
+}
+
+void getMinYRec(std::vector<std::vector<cv::Point>>& squares, std::vector<std::vector<cv::Point>>& temp){
+    int maxY = 960;
+    for(int i = 0; i < squares.size(); i++){
+        for(int i2 = 0; i2 < squares.at(i).size(); i2++){
+            if(squares.at(i).at(i2).y < maxY){ 
+                maxY = squares.at(i).at(i2).y;
+                temp.at(0) = squares.at(i); 
+            }
+        }
+    }
 }
 
 bool ShapeDetection(std::string& pathToFile, float& angle, float& x, float& y) 
 {
     cv::Mat                             image;
-    std::vector<std::vector<cv::Point>> squares;
+    std::vector<std::vector<cv::Point>> squares, temp;
     bool                                video = false;
     bool                                squareFound;
+    std::vector<cv::Point>              empty;
+    temp.push_back(empty);
    
     if(video){
         cv::VideoCapture    capture;
@@ -251,6 +265,9 @@ bool ShapeDetection(std::string& pathToFile, float& angle, float& x, float& y)
     }
 
     squareFound = find_squares(image, squares);
+    getMinYRec(squares, temp);
+    squares = temp;
+
 
     if(squareFound) {
         //TODO: centerPoint festlegen

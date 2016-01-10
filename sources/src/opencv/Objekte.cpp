@@ -13,8 +13,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(100, 120, 200));
-        this->setHSVmax(cv::Scalar(120, 180, 250));
+        this->setHSVmin(cv::Scalar(100, 120, 150));
+        this->setHSVmax(cv::Scalar(120, 240, 255));
 
         //BGR value for Blue:
         this->setColor(cv::Scalar(255, 0, 0));
@@ -24,8 +24,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(105, 220, 140));
-        this->setHSVmax(cv::Scalar(120, 240, 170));
+        this->setHSVmin(cv::Scalar(105, 140, 30));
+        this->setHSVmax(cv::Scalar(125, 255, 115));
 
         //BGR value for Blue:
         this->setColor(cv::Scalar(255, 0, 0));
@@ -41,8 +41,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(40, 30, 180));
-        this->setHSVmax(cv::Scalar(75, 70, 250));
+        this->setHSVmin(cv::Scalar(40, 35, 90));
+        this->setHSVmax(cv::Scalar(75, 100, 250));
 
         //BGR value for Green:
         this->setColor(cv::Scalar(0, 255, 0));
@@ -58,8 +58,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(30, 70, 120));
-        this->setHSVmax(cv::Scalar(90, 140, 190));
+        this->setHSVmin(cv::Scalar(30, 65, 30));
+        this->setHSVmax(cv::Scalar(90, 150, 120));
 
         //BGR value for Green:
         this->setColor(cv::Scalar(0, 255, 0));
@@ -69,8 +69,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(20, 110, 135)); //TODO: 135 only freehand! maybe 2nd yellow object
-        this->setHSVmax(cv::Scalar(35, 210, 255));
+        this->setHSVmin(cv::Scalar(10, 135, 100)); //TODO: 135 only freehand! maybe 2nd yellow object
+        this->setHSVmax(cv::Scalar(35, 230, 255));
 
         //BGR value for Yellow:
         this->setColor(cv::Scalar(0, 255, 255));
@@ -86,8 +86,18 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(0, 150, 210));
-		this->setHSVmax(cv::Scalar(10, 240, 255));
+		this->setHSVmin(cv::Scalar(0, 140, 190)); //TODO: V 190 changed free hand
+		this->setHSVmax(cv::Scalar(10, 250, 255));
+
+        //BGR value for Red:
+		this->setColor(cv::Scalar(0, 0, 255));
+	}
+    if (name=="reddark") {
+        //TODO: use "calibration mode" to find HSV min
+        //and HSV max values
+
+		this->setHSVmin(cv::Scalar(0, 140, 190)); //TODO: V 190 changed free hand
+		this->setHSVmax(cv::Scalar(10, 250, 255));
 
         //BGR value for Red:
 		this->setColor(cv::Scalar(0, 0, 255));
@@ -104,7 +114,7 @@ Objekte::Objekte(std::string name)
         //and HSV max values
 
         this->setHSVmin(cv::Scalar(90, 30, 215));
-		this->setHSVmax(cv::Scalar(110, 90, 255));
+		this->setHSVmax(cv::Scalar(110, 105, 255));
 
         //BGR value for Cyan:
 		this->setColor(cv::Scalar(255, 255, 0));
@@ -115,13 +125,23 @@ Objekte::Objekte(std::string name)
     //cyan fern
     //95 65 215
     //105 90 255
+    if (name=="cyandark") {
+        //TODO: use "calibration mode" to find HSV min
+        //and HSV max values
+
+        this->setHSVmin(cv::Scalar(90, 75, 155));
+		this->setHSVmax(cv::Scalar(120, 175, 170));
+
+        //BGR value for Cyan:
+		this->setColor(cv::Scalar(255, 255, 0));
+    }
 
     if (name=="magenta") {
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(145, 40, 155));
-		this->setHSVmax(cv::Scalar(165, 195, 245));
+		this->setHSVmin(cv::Scalar(145, 80, 185));
+		this->setHSVmax(cv::Scalar(165, 195, 255));
 
         //BGR value for Magenta:
 		this->setColor(cv::Scalar(255, 0, 255));

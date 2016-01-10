@@ -63,11 +63,11 @@ namespace naocv {
         }
 
         operator Farbe() {
-            if (this->farbe == "cyan"){
+            if (this->farbe == "cyan" || this->farbe == "cyandark"){
                 return CYAN;
             }
 
-            if (this->farbe == "red"){
+            if (this->farbe == "red" || this->farbe == "reddark"){
                 return RED;
             }
 

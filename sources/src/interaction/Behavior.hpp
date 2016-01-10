@@ -16,7 +16,7 @@ namespace behavior {
         Pickup,
         Throw,
         Register_Color,
-        Walk_To,
+        Walk_To, //make head -5°
         Search_Mark_X,
         Search_Mark_y,
         Won,

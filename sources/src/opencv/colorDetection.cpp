@@ -413,9 +413,11 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             Objekte bluedark("bluedark");
             Objekte yellow("yellow");
             Objekte red("red");
+            Objekte reddark("reddark");
             Objekte green("green");
             Objekte greendark("greendark");
             Objekte cyan("cyan");
+            Objekte cyandark("cyandark");
             Objekte magenta("magenta");
 
             //first find blue objects
@@ -442,6 +444,12 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             morphOps(threshold);
             trackFilteredObject(red, threshold, HSV, cameraFeed);
 
+            //then reds
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+            inRange(HSV, reddark.getHSVmin(), reddark.getHSVmax(), threshold);
+            morphOps(threshold);
+            trackFilteredObject(reddark, threshold, HSV, cameraFeed);
+            
             //then greens
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, green.getHSVmin(), green.getHSVmax(), threshold);
@@ -453,12 +461,18 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             inRange(HSV, greendark.getHSVmin(), greendark.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(greendark, threshold, HSV, cameraFeed);
-
+            
             //then cyan
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, cyan.getHSVmin(), cyan.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(cyan, threshold, HSV, cameraFeed);
+
+            //then cyandark
+            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+            inRange(HSV, cyandark.getHSVmin(), cyandark.getHSVmax(), threshold);
+            morphOps(threshold);
+            trackFilteredObject(cyandark, threshold, HSV, cameraFeed);
 
             //then magenta
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
@@ -489,6 +503,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         if(calibrationMode)cv::waitKey(fps);
         else {
             //imshow(windowName, cameraFeed);
+            //cv::imwrite("C:/naoqi/_workspace/_src/_out/bild.jpg", cameraFeed);
             //cv::waitKey(0);
         }
     }while(calibrationMode);
