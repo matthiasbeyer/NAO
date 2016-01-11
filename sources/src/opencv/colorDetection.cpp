@@ -420,6 +420,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             Objekte cyandark("cyandark");
             Objekte magenta("magenta");
 
+            /*
             //first find blue objects
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, blue.getHSVmin(), blue.getHSVmax(), threshold);
@@ -437,14 +438,14 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             inRange(HSV, yellow.getHSVmin(), yellow.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(yellow, threshold, HSV, cameraFeed);
-
+            */
             //then reds
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, red.getHSVmin(), red.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(red, threshold, HSV, cameraFeed);
 
-            //then reds
+            /*//then reds
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, reddark.getHSVmin(), reddark.getHSVmax(), threshold);
             morphOps(threshold);
@@ -478,7 +479,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, magenta.getHSVmin(), magenta.getHSVmax(), threshold);
             morphOps(threshold);
-            trackFilteredObject(magenta, threshold, HSV, cameraFeed);
+            trackFilteredObject(magenta, threshold, HSV, cameraFeed);*/
 
         }
         //show frames
@@ -503,7 +504,7 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         if(calibrationMode)cv::waitKey(fps);
         else {
             //imshow(windowName, cameraFeed);
-            //cv::imwrite("C:/naoqi/_workspace/_src/_out/bild.jpg", cameraFeed);
+            cv::imwrite("C:/naoqi/_workspace/_src/_out/bild.jpg", cameraFeed);
             //cv::waitKey(0);
         }
     }while(calibrationMode);

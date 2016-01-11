@@ -15,8 +15,8 @@
 int main(int /*argc*/, char** /*argv[]*/)
 {
     // INIT <-----
-    std::string pathToFile("C:/naoqi/_workspace/_src/rot_ferne.jpg");
-    std::string robotIp("169.254.51.192");
+    std::string pathToFile("C:/naoqi/_workspace/_src/dice_red2.jpg");
+    std::string robotIp("169.254.216.239");
     float x, y;
     float angle;
     bool direction;
@@ -24,17 +24,18 @@ int main(int /*argc*/, char** /*argv[]*/)
     algo::Card min = 1;
     algo::Card max = 6;
     algo::Algorithm algo(min, max);
-    behavior::Behavior behaviorProxy(robotIp);
-    navigation::Navigation navigationProxy(robotIp);
-    imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
+    //behavior::Behavior behaviorProxy(robotIp);
+    //navigation::Navigation navigationProxy(robotIp);
+    //imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
 
     // ----->
 
     try {
         /*behaviorProxy.startBehavior(behavior::Register_Color);
-        imageLoaderProxy.getImage();
-        //naocv::colorDetection(pathToFile, false);
-        ShapeDetection(pathToFile, angle, x, y);*/
+        imageLoaderProxy.getImage();*/
+        naocv::colorDetection(pathToFile, false);
+        //ShapeDetection(pathToFile, angle, x, y);
+        //imageLoaderProxy.getImage();
 
         //behaviorProxy.startBehavior(behavior::Search_Dice);
         //navigationProxy.moveTo(0.2,0.2,1);
@@ -51,6 +52,7 @@ int main(int /*argc*/, char** /*argv[]*/)
             //behaviorProxy.startBehavior(behavior::Stand_up);
 
         //for(int g = 0; g < 4; g++){
+        /*
         behaviorProxy.startBehavior(behavior::Pickup);
         behaviorProxy.startBehavior(behavior::Throw);
         
@@ -122,6 +124,7 @@ int main(int /*argc*/, char** /*argv[]*/)
             std::cin >> g;
             behaviorProxy.startBehavior(behavior::Throw);
         }while(algo.doDraw());
+        */
         
         /*
         behaviorProxy.startBehavior(behavior::Register_Color);
@@ -185,8 +188,8 @@ int main(int /*argc*/, char** /*argv[]*/)
         std::cout << "Runtime Error: " << e.what() << std::endl;
     }
 
-    int i;
-    std::cin >> i;
+    //int i;
+    //std::cin >> i;
 
      return 0;
 }
