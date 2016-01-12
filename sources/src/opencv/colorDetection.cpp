@@ -383,7 +383,7 @@ void showAngle(cv::Mat &image){ //Funktion um das Bild auszugeben
     cv::waitKey(0);
 }
 
-Farbe naocv::colorDetection(const std::string& pathToFile,
+bool naocv::colorDetection(const std::string& pathToFile,
         float &x,
         float &y,
         float &angle,
@@ -585,9 +585,11 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
 
             showAngle(cameraFeed);
 
+            return true;
         }
         else{
             std::cout << "CALI-MODE ON or EMPTY" << std::endl;
+            return false;
         }
 
         if(calibrationMode)cv::waitKey(fps);
@@ -600,6 +602,4 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
     }while(calibrationMode);
 
     if(farblist.size() == 0)naocv::Farbe();
-
-    return getTopColor();
 }

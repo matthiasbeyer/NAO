@@ -16,14 +16,10 @@ namespace behavior {
         Pickup,
         Throw,
         Register_Color,
-        Walk_To, //make head -5°
-        Search_Mark_X,
-        Search_Mark_y,
+        Search_Position,
         Won,
         Lost,
-        Search_Dice,
-        Search_Dice2,
-        Search_Dice3,
+        Turn_Around,
         ALL
     };
 
@@ -40,5 +36,4 @@ namespace behavior {
         void startBehavior(BehaviorID BID);
         void stopBehavior(BehaviorID BID);
     };
-
 }

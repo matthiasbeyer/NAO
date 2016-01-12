@@ -7,7 +7,7 @@ int HoughDetection(cv::Mat& src_gray, cv::Mat& src_display, int cannyThreshold, 
     // will hold the results of the detection
     std::vector<cv::Vec3f> circles;
     // runs the actual detection
-    cv::HoughCircles(src_gray, circles, CV_HOUGH_GRADIENT, 1, src_gray.rows/8, cannyThreshold, accumulatorThreshold, 0, 20);
+    cv::HoughCircles(src_gray, circles, CV_HOUGH_GRADIENT, 1, src_gray.rows/8, cannyThreshold, accumulatorThreshold, 25, 55);
 
     // clone the colour, input image for displaying purposes
     cv::Mat display = src_display.clone();
@@ -49,5 +49,5 @@ int CircleDetection(std::string& pathToFile){
     // Reduce the noise so we avoid false circle detection
     GaussianBlur(src_gray, src_gray, cv::Size(9, 9), 2, 2);
 
-    return HoughDetection(src_gray, src, 35, 35);
+    return HoughDetection(src_gray, src, 35, 30);
 }

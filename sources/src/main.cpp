@@ -15,8 +15,8 @@
 int main(int /*argc*/, char** /*argv[]*/)
 {
     // INIT <-----
-    std::string pathToFile("C:/naoqi/_workspace/_src/imgg_red.jpg");
-    std::string robotIp("169.254.216.239");
+    std::string pathToFile("C:/naoqi/_workspace/_src/a.jpg");
+    std::string robotIp("169.254.51.192");
     float x, y;
     float angle;
     bool direction;
@@ -25,19 +25,25 @@ int main(int /*argc*/, char** /*argv[]*/)
     algo::Card max = 6;
     algo::Algorithm algo(min, max);
 
-    //behavior::Behavior behaviorProxy(robotIp);
-    //navigation::Navigation navigationProxy(robotIp);
-    //imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
+    behavior::Behavior behaviorProxy(robotIp);
+    navigation::Navigation navigationProxy(robotIp);
+    imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
 
     // ----->
 
     try {
-        //CircleDetection(pathToFile);
-        /*behaviorProxy.startBehavior(behavior::Register_Color);
-        imageLoaderProxy.getImage();*/
+        behaviorProxy.startBehavior(behavior::Stand_up);
 
-        naocv::colorDetection(pathToFile, x, y, angle, false);
+        behaviorProxy.startBehavior(behavior::Pickup);
+        navigationProxy.moveTo(0, 0, 3.14159);
         //CircleDetection(pathToFile);
+        //behaviorProxy.startBehavior(behavior::Stand_up);
+        //imageLoaderProxy.getImage();
+
+        //behaviorProxy.startBehavior(behavior::Register_Color);
+
+        //naocv::colorDetection(pathToFile, x, y, angle, false);
+        //std::cout << CircleDetection(pathToFile) << std::endl;
 
         //ShapeDetection(pathToFile, angle, x, y);
         //imageLoaderProxy.getImage();
@@ -57,79 +63,81 @@ int main(int /*argc*/, char** /*argv[]*/)
             //behaviorProxy.startBehavior(behavior::Stand_up);
 
         //for(int g = 0; g < 4; g++){
-        /*
-        behaviorProxy.startBehavior(behavior::Pickup);
-        behaviorProxy.startBehavior(behavior::Throw);
         
-        do {
-            behaviorProxy.startBehavior(behavior::Stand_up);
-            behaviorProxy.startBehavior(behavior::Walk_To);
-            imageLoaderProxy.getImage();
-            for(int i = 0; !ShapeDetection(pathToFile, angle, x, y); i++){
-                if(i == 0){ 
-                    navigationProxy.moveTo(0, 0, 0.95);
-                    behaviorProxy.startBehavior(behavior::Walk_To);
-                    imageLoaderProxy.getImage();
-                }
-                else if(i == 1){ 
-                    navigationProxy.moveTo(0, 0, -1.7472);
-                    behaviorProxy.startBehavior(behavior::Walk_To);
-                    imageLoaderProxy.getImage();
-                }
-                else throw std::runtime_error("Cube not Found");
-            }
-            x = x * 0.01; //cm in m
-            y = y * 0.01; //cm in m
-            // x = x + (x * 0.02);
-            //y = 0;
-            //x = x - 0.03; //calibration value 
-            y = y + -(x*0.015); //compensate slip
-            angle = (-(x * 0.00581776)*0.2);
-            //avigationProxy.moveTo(x, y, angle);
-            navigationProxy.moveTo(0, y, 0);
-            navigationProxy.moveTo(x/2, 0, 0);
-             
-            imageLoaderProxy.getImage();
-            for(int i = 0; !ShapeDetection(pathToFile, angle, x, y); i++){
-                if(i == 0){ 
-                    navigationProxy.moveTo(0, 0, 0.95);
-                    behaviorProxy.startBehavior(behavior::Walk_To);
-                    imageLoaderProxy.getImage();
-                }
-                else if(i == 1){ 
-                    navigationProxy.moveTo(0, 0, -1.7472);
-                    behaviorProxy.startBehavior(behavior::Walk_To);
-                    imageLoaderProxy.getImage();
-                }
-                else throw std::runtime_error("Cube not Found");
-            }
-            x = x * 0.01; //cm in m
-            y = y * 0.01; //cm in m
-            //x = x + (x * 0.4);
-            //x = x + 18;
-            y = y*0.40; //+ -(x*0.020); //compensate slip
-            angle = (-(x * 0.00581776)*0.2);
+        /*behaviorProxy.startBehavior(behavior::Pickup);
+        behaviorProxy.startBehavior(behavior::Throw);*/
+        
+        //do {
+        //    behaviorProxy.startBehavior(behavior::Stand_up);
+        //    behaviorProxy.startBehavior(behavior::Search_Position);
+        //    imageLoaderProxy.getImage();
+        //    for(int i = 0; !naocv::colorDetection(pathToFile, x, y, angle); i++){
+        //        if(i == 0){ 
+        //            navigationProxy.moveTo(0, 0, 0.95);
+        //            behaviorProxy.startBehavior(behavior::Search_Position);
+        //            imageLoaderProxy.getImage();
+        //        }
+        //        else if(i == 1){ 
+        //            navigationProxy.moveTo(0, 0, -1.7472);
+        //            behaviorProxy.startBehavior(behavior::Search_Position);
+        //            imageLoaderProxy.getImage();
+        //        }
+        //        else throw std::runtime_error("Cube not Found");
+        //    }
+        //    x = x * 0.01; //cm in m
+        //    y = y * 0.01; //cm in m
+        //    // x = x + (x * 0.02);
+        //    //y = 0;
+        //    //x = x - 0.03; //calibration value 
+        //    y = y + -(x*0.010); //compensate slip
+        //    angle = (-(x * 0.00581776)*0.2);
+        //    //avigationProxy.moveTo(x, y, angle);
+        //    navigationProxy.moveTo(0, y, 0);
+        //    navigationProxy.moveTo(x/2, 0, 0);
+        //     
+        //    imageLoaderProxy.getImage();
+        //    for(int i = 0; !naocv::colorDetection(pathToFile, x, y, angle); i++){
+        //        if(i == 0){ 
+        //            navigationProxy.moveTo(0, 0, 0.95);
+        //            behaviorProxy.startBehavior(behavior::Search_Position);
+        //            imageLoaderProxy.getImage();
+        //        }
+        //        else if(i == 1){ 
+        //            navigationProxy.moveTo(0, 0, -1.7472);
+        //            behaviorProxy.startBehavior(behavior::Search_Position);
+        //            imageLoaderProxy.getImage();
+        //        }
+        //        else throw std::runtime_error("Cube not Found");
+        //    }
+        //    x = x * 0.01; //cm in m
+        //    y = y * 0.01; //cm in m
+        //    //x = x + (x * 0.4);
+        //    //x = x + 18;
+        //    x = x*1.05;
+        //    y = y*0.40; //+ -(x*0.020); //compensate slip
+        //    angle = (-(x * 0.00581776)*0.2);
 
-            navigationProxy.moveTo(0, y, 0);
-            navigationProxy.moveTo(x, 0, angle);
-            
-            std::cout << "WINKEL: " << angle << " X: " << x << " Y: " << y << "cm" << std::endl;
+        //    navigationProxy.moveTo(0, y, 0);
+        //    navigationProxy.moveTo(x, 0, angle);
+        //    
+        //    std::cout << "WINKEL: " << angle << " X: " << x << " Y: " << y << "cm" << std::endl;
 
-            //Analyze cube-color
-            behaviorProxy.startBehavior(behavior::Register_Color);
-            imageLoaderProxy.getImage();
-            auto analyzed = naocv::colorDetection(pathToFile);
+        //    //Analyze cube-color
+        //    behaviorProxy.startBehavior(behavior::Register_Color);
+        //    imageLoaderProxy.getImage();
+        //    auto analyzed = CircleDetection(pathToFile);
+        //    std::cout << "WUERFEL ZAHL: " << analyzed << std::endl;
 
-            //Game step
-            algo.update(std::make_shared<algo::Card>(analyzed));
-            behaviorProxy.startBehavior(behavior::Walk_To);
+        //    //Game step
+        //    algo.update(std::make_shared<algo::Card>(analyzed));
+        //    behaviorProxy.startBehavior(behavior::Search_Position);
 
-            behaviorProxy.startBehavior(behavior::Pickup);
-            int g;
-            std::cin >> g;
-            behaviorProxy.startBehavior(behavior::Throw);
-        }while(algo.doDraw());
-        */
+        //    behaviorProxy.startBehavior(behavior::Pickup);
+        //    int g;
+        //    std::cin >> g;
+        //    behaviorProxy.startBehavior(behavior::Throw);
+        //}while(algo.doDraw());
+        
         
         /*
         behaviorProxy.startBehavior(behavior::Register_Color);
@@ -192,9 +200,6 @@ int main(int /*argc*/, char** /*argv[]*/)
     }catch(std::runtime_error& e){
         std::cout << "Runtime Error: " << e.what() << std::endl;
     }
-
-    //int i;
-    //std::cin >> i;
 
      return 0;
 }

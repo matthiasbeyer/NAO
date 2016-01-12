@@ -19,7 +19,7 @@
 
 namespace naocv {
      
-    Farbe colorDetection(const std::string& pathToFile,
+    bool colorDetection(const std::string& pathToFile,
             float& x,
             float& y,
             float& angle,

@@ -86,7 +86,7 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(0, 140, 1)); //TODO: V 190 changed free hand
+		this->setHSVmin(cv::Scalar(0, 140, 60)); //TODO: V 190 changed free hand
 		this->setHSVmax(cv::Scalar(10, 255, 255));
 
         //BGR value for Red:
