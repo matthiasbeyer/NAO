@@ -29,6 +29,10 @@ cv::Mat                                     dst;
 cv::Mat                                     detected_edges;
 cv::Mat                                     src;
 cv::Mat                                     src_gray;
+
+cv::Point                                   centerPoint;
+int                                         width;
+int                                         height;
       
 std::vector<std::shared_ptr<FarbPos>>       farblist;
 
@@ -38,8 +42,8 @@ std::vector<std::shared_ptr<FarbPos>>       farblist;
  *
  */
 
-void saveColorPos(std::string s, int yPos, int size) {
-    auto fp = std::make_shared<FarbPos>(s, yPos, size);
+void saveColorPos(std::string s, int xPos, int yPos, int size) {
+    auto fp = std::make_shared<FarbPos>(s, xPos, yPos, size);
     farblist.push_back(fp);
 }
 
@@ -84,7 +88,8 @@ void drawObject(std::vector<Objekte> theObjects,
         }
         auto type = theObjects.at(i).getType();
         auto ypos = theObjects.at(i).getYPos();
-        saveColorPos(type, ypos, size);
+        auto xpos = theObjects.at(i).getXPos();
+        saveColorPos(type, xpos, ypos, size);
 
         cv::drawContours(frame,
                          contours,
@@ -314,8 +319,74 @@ void naocv::createTrackbars() {
     cv::createTrackbar("V_MAX", trackbarWindowName, &V_MAX, V_MAX);
 }
 
+//External
+double getAngle(cv::Point pt)
+{
+    cv::Point center(width/2, height);
+    cv::Point zero(0, 0);
+    
+    const double Rad2Deg = 180.0 / M_PI;
+
+    //TODO: Change when first real start
+    //return atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y) * Rad2Deg; //degree
+    return -atan2((double)center.x - (double)pt.x, (double)center.y - (double)pt.y); //rad
+}
+
+void getXY(float& x, float& y){
+    //unit in cm
+    int start = 20;
+    if(centerPoint.y >= 752) {
+        x = start + (centerPoint.y - 752) / 20.8;
+    }else if(centerPoint.y >= 615) {
+        x = start + 10 + (centerPoint.y - 615) / 13.7;
+    }else if(centerPoint.y >= 512) {
+        x = start + 20 + (centerPoint.y - 512) / 10.3;
+    }else if(centerPoint.y >= 416) {
+        x = start + 30 + (centerPoint.y - 416) / 9.6;
+    }else if(centerPoint.y >= 345) {
+        x = start + 40 + (centerPoint.y - 345) / 7.1;
+    }else if(centerPoint.y >= 285) {
+        x = start + 50 + (centerPoint.y - 285) / 6;
+    }else if(centerPoint.y >= 232) {
+        x = start + 60 + (centerPoint.y - 232) / 5.3;
+    }else if(centerPoint.y >= 189) {
+        x = start + 70 + (centerPoint.y - 189) / 4.3;
+    }else if(centerPoint.y >= 150) {
+        x = start + 80 + (centerPoint.y - 150) / 3.9;
+    }else if(centerPoint.y >= 117) {
+        x = start + 90 + (centerPoint.y - 117) / 3.3;
+    }
+    y = (640 - centerPoint.x) / 14;
+}
+
+void showAngle(cv::Mat &image){ //Funktion um das Bild auszugeben
+    cv::Mat showImage = image;
+
+    cv::Point zeroPoint(width/2, height);
+    cv::Point rightAngle(width/2, centerPoint.y);
+
+    double angle = getAngle(centerPoint);
+
+    std::stringstream angleText;
+    angleText << "Winkel: " << angle;
+
+    cv::circle(showImage, zeroPoint, 4, cv::Scalar(0, 0, 255), 2);
+    cv::circle(showImage, rightAngle, 4, cv::Scalar(0, 0, 255), 2);
+    cv::circle(showImage, centerPoint, 4, cv::Scalar(0, 0, 255), 2);
+    cv::line(showImage, zeroPoint, rightAngle, cv::Scalar(0, 0, 255), 1);
+    cv::line(showImage, zeroPoint, centerPoint, cv::Scalar(0, 0, 255), 1);
+    cv::ellipse(showImage, zeroPoint, cv::Size((height-centerPoint.y)*0.4, (height-centerPoint.y)*0.4), 270-angle, 0, angle, cv::Scalar(0, 255, 0), 1);
+    cv::putText(showImage, angleText.str(), cv::Point(0, height-5), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 1);
+
+    cvNamedWindow("circles",1);
+    cv::imshow("circles",showImage);
+    cv::waitKey(0);
+}
 
 Farbe naocv::colorDetection(const std::string& pathToFile,
+        float &x,
+        float &y,
+        float &angle,
         bool calibrationMode,
         bool videoMode)
 {
@@ -364,6 +435,9 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
                 throw std::runtime_error("Falscher Dateipfad");
             }
         }
+
+        width = src.cols;
+        height = src.rows;
 
         //convert frame from BGR to HSV colorspace
         cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
@@ -445,12 +519,12 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
             morphOps(threshold);
             trackFilteredObject(red, threshold, HSV, cameraFeed);
 
-            /*//then reds
+            //then reds
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, reddark.getHSVmin(), reddark.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(reddark, threshold, HSV, cameraFeed);
-            
+            /*
             //then greens
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, green.getHSVmin(), green.getHSVmax(), threshold);
@@ -494,8 +568,23 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
 
         if(!calibrationMode && farblist.size() != 0){
             //cout << "FARBE IST: " << getTopColor().yPos << endl;
-            Farbe f = getTopColor();
-            std::cout << "Wert: " << (int) f << std::endl;
+            FarbPos f = getTopColor();
+
+            x = f.xPos;
+            y = f.yPos;
+            centerPoint.x = x;
+            centerPoint.y = y;
+            getXY(x, y);
+            angle = getAngle(centerPoint);
+
+            //TODO: Only for show!
+            std::cout << "Farbe: " << f.farbe << std::endl;
+            std::cout << "X-Pos: " << x << std::endl;
+            std::cout << "Y-Pos: " << y << std::endl;
+            std::cout << "ANGLE: " << angle << std::endl;
+
+            showAngle(cameraFeed);
+
         }
         else{
             std::cout << "CALI-MODE ON or EMPTY" << std::endl;
@@ -504,7 +593,8 @@ Farbe naocv::colorDetection(const std::string& pathToFile,
         if(calibrationMode)cv::waitKey(fps);
         else {
             //imshow(windowName, cameraFeed);
-            cv::imwrite("C:/naoqi/_workspace/_src/_out/bild.jpg", cameraFeed);
+
+            //cv::imwrite("C:/naoqi/_workspace/_src/_out/bild.jpg", cameraFeed);
             //cv::waitKey(0);
         }
     }while(calibrationMode);

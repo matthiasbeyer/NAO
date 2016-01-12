@@ -16,10 +16,11 @@ namespace naocv {
     struct FarbPos {
 
         std::string farbe;
+        int         xPos;
         int         yPos;
         int         size;
 
-        FarbPos(std::string s, int i, int is): farbe(s), yPos(i), size(is) {
+        FarbPos(std::string c, int x, int y, int s): farbe(c), xPos(x), yPos(y), size(s) {
         }
 
         FarbPos(){}

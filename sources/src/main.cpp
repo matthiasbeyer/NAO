@@ -6,7 +6,7 @@
  */
 
 #include "opencv/colorDetection.hpp"
-#include "opencv/ShapeDetection.hpp"
+#include "opencv/CircleDetection.h"
 #include "interaction/Behavior.hpp"
 #include "interaction/ImageLoader.hpp"
 #include "interaction/Navigation.hpp"
@@ -15,7 +15,7 @@
 int main(int /*argc*/, char** /*argv[]*/)
 {
     // INIT <-----
-    std::string pathToFile("C:/naoqi/_workspace/_src/dice_red2.jpg");
+    std::string pathToFile("C:/naoqi/_workspace/_src/imgg_red.jpg");
     std::string robotIp("169.254.216.239");
     float x, y;
     float angle;
@@ -24,6 +24,7 @@ int main(int /*argc*/, char** /*argv[]*/)
     algo::Card min = 1;
     algo::Card max = 6;
     algo::Algorithm algo(min, max);
+
     //behavior::Behavior behaviorProxy(robotIp);
     //navigation::Navigation navigationProxy(robotIp);
     //imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
@@ -31,9 +32,13 @@ int main(int /*argc*/, char** /*argv[]*/)
     // ----->
 
     try {
+        //CircleDetection(pathToFile);
         /*behaviorProxy.startBehavior(behavior::Register_Color);
         imageLoaderProxy.getImage();*/
-        naocv::colorDetection(pathToFile, false);
+
+        naocv::colorDetection(pathToFile, x, y, angle, false);
+        //CircleDetection(pathToFile);
+
         //ShapeDetection(pathToFile, angle, x, y);
         //imageLoaderProxy.getImage();
 
