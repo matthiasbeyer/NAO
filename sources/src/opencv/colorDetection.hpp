@@ -19,10 +19,11 @@
 
 namespace naocv {
      
-    bool colorDetection(const std::string& pathToFile,
+    int colorDetection(const std::string& pathToFile,
             float& x,
             float& y,
             float& angle,
+            bool findCube = true,
             bool calibrationMode = false,
             bool videoMode = false);
 

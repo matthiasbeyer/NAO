@@ -63,6 +63,12 @@ Algorithm::doDraw(void)
     auto poss_next_draws = this->calc_possible_next_draws(poss_draws, sum);
 
     if (0 == poss_next_draws.size()) {
+        if(Algorithm::get_current_sum() <= 21){
+            state = WON;
+        }
+        else{
+            state = LOST;
+        }
         return Draw(-100);
     }
 
@@ -77,6 +83,12 @@ Algorithm::doDraw(void)
      */
     if (percentage < 50) {
         percentage *= -2;
+        if(Algorithm::get_current_sum() <= 21){
+            state = WON;
+        }
+        else{
+            state = LOST;
+        }
     }
 
     return Draw(percentage);

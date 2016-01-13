@@ -47,7 +47,7 @@ void saveColorPos(std::string s, int xPos, int yPos, int size) {
     farblist.push_back(fp);
 }
 
-FarbPos getTopColor() {
+FarbPos getTopColor(){
     FarbPos result;
 
     if(!farblist.empty()){
@@ -72,6 +72,15 @@ FarbPos getTopColor() {
 
     // TODO : What if color is not found?
     return result;
+}
+
+int getDiceValue(){
+    int counter = 0;
+    for(int i = 0; i < farblist.size(); i++){
+        if(farblist.at(i)->size > 90)
+            counter++;
+    }
+    return counter;
 }
 
 void drawObject(std::vector<Objekte> theObjects,
@@ -383,10 +392,11 @@ void showAngle(cv::Mat &image){ //Funktion um das Bild auszugeben
     cv::waitKey(0);
 }
 
-bool naocv::colorDetection(const std::string& pathToFile,
+int naocv::colorDetection(const std::string& pathToFile,
         float &x,
         float &y,
         float &angle,
+        bool findCube,
         bool calibrationMode,
         bool videoMode)
 {
@@ -478,21 +488,21 @@ bool naocv::colorDetection(const std::string& pathToFile,
                            CannyThreshold);
 
             /// Show the image
-            //trackFilteredObject(threshold,HSV,cameraFeed);
+            trackFilteredObject(threshold,HSV,cameraFeed);
         } else {
             //create some temp fruit objects so that
             //we can use their member functions/information
             //##### ADDING ONE COLOR in Objekte.cpp and FarbPos.hpp!
-            Objekte blue("blue");
-            Objekte bluedark("bluedark");
+            //Objekte blue("blue");
+            //Objekte bluedark("bluedark");
             Objekte yellow("yellow");
             Objekte red("red");
             Objekte reddark("reddark");
-            Objekte green("green");
-            Objekte greendark("greendark");
-            Objekte cyan("cyan");
-            Objekte cyandark("cyandark");
-            Objekte magenta("magenta");
+            //Objekte green("green");
+            //Objekte greendark("greendark");
+            //Objekte cyan("cyan");
+            //Objekte cyandark("cyandark");
+            //Objekte magenta("magenta");
 
             /*
             //first find blue objects
@@ -506,25 +516,28 @@ bool naocv::colorDetection(const std::string& pathToFile,
             inRange(HSV, bluedark.getHSVmin(), bluedark.getHSVmax(), threshold);
             morphOps(threshold);
             trackFilteredObject(bluedark, threshold, HSV, cameraFeed);
-
+*/
             //then yellows
-            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
-            inRange(HSV, yellow.getHSVmin(), yellow.getHSVmax(), threshold);
-            morphOps(threshold);
-            trackFilteredObject(yellow, threshold, HSV, cameraFeed);
-            */
+            if(!findCube){
+                cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+                inRange(HSV, yellow.getHSVmin(), yellow.getHSVmax(), threshold);
+                morphOps(threshold);
+                trackFilteredObject(yellow, threshold, HSV, cameraFeed);
+            }
+            else{
             //then reds
-            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
-            inRange(HSV, red.getHSVmin(), red.getHSVmax(), threshold);
-            morphOps(threshold);
-            trackFilteredObject(red, threshold, HSV, cameraFeed);
+                cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+                inRange(HSV, red.getHSVmin(), red.getHSVmax(), threshold);
+                morphOps(threshold);
+                trackFilteredObject(red, threshold, HSV, cameraFeed);
 
-            //then reds
-            cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
-            inRange(HSV, reddark.getHSVmin(), reddark.getHSVmax(), threshold);
-            morphOps(threshold);
-            trackFilteredObject(reddark, threshold, HSV, cameraFeed);
-            /*
+                //then reds
+                cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+                inRange(HSV, reddark.getHSVmin(), reddark.getHSVmax(), threshold);
+                morphOps(threshold);
+                trackFilteredObject(reddark, threshold, HSV, cameraFeed);
+            }
+            /* 
             //then greens
             cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
             inRange(HSV, green.getHSVmin(), green.getHSVmax(), threshold);
@@ -568,30 +581,38 @@ bool naocv::colorDetection(const std::string& pathToFile,
 
         if(!calibrationMode && farblist.size() != 0){
             //cout << "FARBE IST: " << getTopColor().yPos << endl;
-            FarbPos f = getTopColor();
+            if(findCube){
+                //Look for largest found object
+                FarbPos f = getTopColor();
 
-            x = f.xPos;
-            y = f.yPos;
-            centerPoint.x = x;
-            centerPoint.y = y;
-            getXY(x, y);
-            angle = getAngle(centerPoint);
+                x = f.xPos;
+                y = f.yPos;
+                centerPoint.x = x;
+                centerPoint.y = y;
+                getXY(x, y);
+                angle = getAngle(centerPoint);
 
-            //TODO: Only for show!
-            std::cout << "Farbe: " << f.farbe << std::endl;
-            std::cout << "X-Pos: " << x << std::endl;
-            std::cout << "Y-Pos: " << y << std::endl;
-            std::cout << "ANGLE: " << angle << std::endl;
+                //TODO: Only for show!
+                std::cout << "Farbe: " << f.farbe << std::endl;
+                std::cout << "X-Pos: " << x << std::endl;
+                std::cout << "Y-Pos: " << y << std::endl;
+                std::cout << "ANGLE: " << angle << std::endl;
 
-            showAngle(cameraFeed);
+                showAngle(cameraFeed);
 
-            return true;
+                return 1;
+            }
+            else{
+                cv::imshow("BILD", cameraFeed);
+                cv::waitKey(0);
+                return getDiceValue();
+            }
         }
         else{
             std::cout << "CALI-MODE ON or EMPTY" << std::endl;
-            return false;
+            if(!calibrationMode)
+                return 0;
         }
-
         if(calibrationMode)cv::waitKey(fps);
         else {
             //imshow(windowName, cameraFeed);
@@ -600,6 +621,4 @@ bool naocv::colorDetection(const std::string& pathToFile,
             //cv::waitKey(0);
         }
     }while(calibrationMode);
-
-    if(farblist.size() == 0)naocv::Farbe();
 }

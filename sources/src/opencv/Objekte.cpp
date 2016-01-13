@@ -69,8 +69,8 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(10, 135, 100)); //TODO: 135 only freehand! maybe 2nd yellow object
-        this->setHSVmax(cv::Scalar(35, 230, 255));
+        this->setHSVmin(cv::Scalar(10, 170, 210)); //TODO: 135 only freehand! maybe 2nd yellow object
+        this->setHSVmax(cv::Scalar(30, 220, 255));
 
         //BGR value for Yellow:
         this->setColor(cv::Scalar(0, 255, 255));
@@ -86,7 +86,7 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-		this->setHSVmin(cv::Scalar(0, 140, 60)); //TODO: V 190 changed free hand
+		this->setHSVmin(cv::Scalar(0, 140, 70)); //TODO: V 190 changed free hand
 		this->setHSVmax(cv::Scalar(10, 255, 255));
 
         //BGR value for Red:
