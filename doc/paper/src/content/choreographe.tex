@@ -1,0 +1,43 @@
+\chapter{Choreographe}
+
+    Nachdem der Choreographe installiert wurde (\ref{chap:inst:choreo}) kann
+    dieser benutzt werden um sich mit dem Roboter zu verbinden.
+    Dazu muss im Menü "`Connection'' die Auswahl "`Connect to..'' getroffen
+    und der Robotername ausgewählt werden (\autoref{img:nao:choreo:welcome}).
+    Dabei ist zu beachten dass die \ac{IP}-Adresse und der Port korrekt sind.
+
+    Zur Entwicklung von Behaviours kann zudem der virtuelle Roboter der
+    Software verwendet werden, es ist kein physisch vorhandener Roboter nötig.
+    Dazu ist die Software "`naoqi'' nötig, welche mit der Installations-\ac{CD}
+    beliegt.
+    Sobald "`naoqi'' gestartet ist, wird im "`Connection''-Menü des Choreographe
+    ein Eintrag zu ersterer sichtbar.
+
+    Zudem kann, um reale Bedingungen zu simulieren, "`WebotsForNAO'' von der
+    Installations-\ac{CD} installiert werden.
+
+    Beiliegend zum Choreographe wird ein Programm "`Monitor'' geliefert, welches
+    dazu dient, die Speichernutzung sowie die Kameras des NAO zu überwachen und
+    verschiedene Optionen letzterer zu bearbeiten.
+
+    % \section{Erstellen von Behaviours}
+
+    Auf der linken Seite des Choreographe befinden sich die "`Box libraries'',
+    welche benutzt werden können um einzelne Bewegungen zu komplexen
+    zusammenzusetzen.
+    Hier sind zudem Beispielanimationen und Sensorikfunktionalität auffindbar
+    (\autoref{img:nao:choreo:boxlib}).
+
+    Mittels "`drag-and-drop'' können einzelne Elemente auf der Arbeitsfläche
+    positioniert werden (\autoref{img:nao:choreo:draganddrop}).
+    Danach können die Input- und Output-Ports der einzelnen Behaviour-Module
+    verbunden werden (\autoref{img:nao:choreo:connect}).
+    Die Parameter und Optionen der Behaviour können bearbeitet werden, indem im
+    unteren, linken Bereich der Behaviour das Optionen-Symbol betätigt wird
+    (\autoref{img:nao:choreo:options}).
+    In dem erscheinenden Dialog gibt es die Möglichkeit direkt Python-Code
+    einzufügen um das Behaviour zu modifizieren\footnote{
+        \ac{API}-Dokumentation unter \cite{nao:api}.
+    }.
+
+
