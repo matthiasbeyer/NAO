@@ -1,0 +1,68 @@
+\chapter{Der NAO-Roboter}
+
+    Der NAO verfügt über verschiedenste Sensoren und Motoren.
+    Er kann dank seiner Sensoren (Beschleunigungssensoren, Gyroskop)
+    (\autoref{img:nao:sensors}) das Gleichgewicht
+    beim Laufen wie auch bei verschiedenen Bewegungen beibehalten.
+    Dank seiner Touch-Sensoren an Hand, Kopf und Fuß, sowie Sonarsensor kann der
+    NAO seine Umgebung wahrnehmen und mit ihr interagieren.
+    Die Interaktion zwischen Mensch und Roboter wird über Lautsprecher und
+    Mikrofone im Kopf des NAO ermöglicht.
+    Die Mikrofone können zudem für Spracherkennung genutzt werden, um zum
+    Beispiel eine Sprachsteuerung des Roboters umzusetzen.
+    Der Kopf des Roboters ist mit zwei hochauflösenden Kameras ausgestattet,
+    welche Bild- und Echtzeitaufnahmen ermöglichen.
+    Dabei gibt es eine Möglichkeit, Licht- und Farbverhältnisse automatisch
+    optimieren zu lassen.
+
+    \section{Inbetriebnahme}
+
+        Im ausgeschaltenen Zustand hat der Roboter keine Körperspannung
+        (`"Stiffness''), weswegen er mit Vorsicht behandelt werden sollte.
+        Insbesondere soll sein Kopf in einer natürlichen Position gehalten
+        werden.
+
+        Nachdem der Roboter aus der Packung entpackt wurde und in eine aufrechte
+        Position gebacht wurde (\autoref{img:nao:sitting}), kann er, indem 3-4
+        Sekunden auf den Knopf welcher sich im Kopf des NAO befindet, gestartet
+        werden.
+        Die Computer des NAO booten nun und die verschiedenen Körperteile des
+        NAO leuchten in verschiedenen Farben\footnote{
+            Da der NAO nach dem Einschalten eventuell ein Standard-Behaviour
+            startet, sollte er während seiner Initialisierungsphase unter
+            Aufsicht bleiben.
+        }.
+
+        Der NAO verfügt über einen Lithium-Akku welcher eine Selbstständigkeit
+        des Roboters für etwa 60 Minuten gewährleisten kann.
+        Der NAO macht selbst auf einen niedrigen Batteriestand mittels einer
+        Sprachnachricht aufmerksam. Der NAO kann auf mit Netzstrom verwendet
+        werden.
+
+        Der Roboter überwacht selbstständig die Temperatur in seinem Inneren und
+        warnt den Nutzer über eine Sprachnachricht über zu hohe Temperaturen.
+        Erreicht die Temperatur einen kritischen Punkt, schaltet der Roboter
+        sich selbstständig ab\footnote{Dabei verliert der Roboter seine
+            Körperspannung und fällt um, was zu Schäden am Roboter führen
+            kann.
+        }.
+
+        Um eine Notabschaltung am Roboter vorzunehmen kann der Hauptknopf
+        (Brust) zwei mal schnell gedrückt werden.
+
+    \section{Verbindung und Programmierung}
+
+        Der NAO besitzt zwei eingebaute Computer (\autoref{img:nao:computers}),
+        welche in Kopf und Brust
+        untergebracht sind und verschiedene Aufgaben erfüllen.
+        Sie werden benutzt um Eingaben und Ausgaben zu verarbeiten sowie um die
+        Motoren des Roboters zu steuern.
+        Es existiert eine Entwicklungsumgebung mit welcher diese Computer in
+        verschiedenen Sprachen, wie zum Beispiel C, C++, Java und Python
+        programmiert werden können.
+
+        Um den NAO mit Verhaltensstrukturen (in weiterem `"Behaviour'') zu
+        programmieren kann eine \ac{LAN}- oder \ac{Wifi}-Verbindung mit dem
+        Roboter hergestellt werden.
+
+
