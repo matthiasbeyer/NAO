@@ -75,11 +75,29 @@ FarbPos getTopColor(){
 }
 
 int getDiceValue(){
-    int counter = 0;
+    int counter = 1;
+    int diffx, diffy;
+    std::vector<std::shared_ptr<FarbPos>> closerSelection;
+
     for(int i = 0; i < farblist.size(); i++){
-        if(farblist.at(i)->size > 90)
-            counter++;
+        if(farblist.at(i)->size > 85){
+            closerSelection.push_back(farblist.at(i));
+        }
     }
+    counter = closerSelection.size();
+    for(int i = 0; i < closerSelection.size()-1; i++){
+        for(int i2 = i+1; i2 < closerSelection.size(); i2++){
+            diffx = std::abs(closerSelection.at(i)->xPos - closerSelection.at(i2)->xPos);
+            diffy = std::abs(closerSelection.at(i)->yPos - closerSelection.at(i2)->yPos);
+
+            std::cout << "DIFF x: " << diffx << " y: " << diffy << std::endl;
+            if(diffx <= 40 && diffy <= 40){
+                counter--;
+                break;
+            }
+        }
+    }
+    
     return counter;
 }
 
@@ -117,7 +135,9 @@ void drawObject(std::vector<Objekte> theObjects,
         cv::putText(frame,
                     intTostring(theObjects.at(i).getXPos()) +
                     " , " +
-                    intTostring(theObjects.at(i).getYPos()),
+                    intTostring(theObjects.at(i).getYPos()) +
+                    " , " +
+                    intTostring(size),
                     cv::Point(theObjects.at(i).getXPos(),
                               theObjects.at(i).getYPos() + 20),
                     1,
@@ -128,10 +148,9 @@ void drawObject(std::vector<Objekte> theObjects,
                     theObjects.at(i).getType(),
                     cv::Point(theObjects.at(i).getXPos(),
                               theObjects.at(i).getYPos()-20),
-                              1,
-                              2,
-                              theObjects.at(i).getColor()
-                    );
+                    1,
+                    2,
+                    theObjects.at(i).getColor());
     }
 }
 
@@ -496,6 +515,8 @@ int naocv::colorDetection(const std::string& pathToFile,
             //Objekte blue("blue");
             //Objekte bluedark("bluedark");
             Objekte yellow("yellow");
+            Objekte yellowdark("yellowdark");
+            Objekte yellowthree("yellowthree");
             Objekte red("red");
             Objekte reddark("reddark");
             //Objekte green("green");
@@ -523,6 +544,16 @@ int naocv::colorDetection(const std::string& pathToFile,
                 inRange(HSV, yellow.getHSVmin(), yellow.getHSVmax(), threshold);
                 morphOps(threshold);
                 trackFilteredObject(yellow, threshold, HSV, cameraFeed);
+
+                cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+                inRange(HSV, yellowdark.getHSVmin(), yellowdark.getHSVmax(), threshold);
+                morphOps(threshold);
+                trackFilteredObject(yellowdark, threshold, HSV, cameraFeed);
+
+                cvtColor(cameraFeed, HSV, cv::COLOR_BGR2HSV);
+                inRange(HSV, yellowthree.getHSVmin(), yellowthree.getHSVmax(), threshold);
+                morphOps(threshold);
+                trackFilteredObject(yellowthree, threshold, HSV, cameraFeed);
             }
             else{
             //then reds

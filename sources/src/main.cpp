@@ -16,7 +16,7 @@
 int main(int /*argc*/, char** /*argv[]*/)
 {
     /////////<----- INIT
-    std::string pathToFile("C:/naoqi/_workspace/_src/_out/out.jpg");
+    std::string pathToFile("C:/naoqi/_workspace/_src/fehler4.jpg");
     std::string robotIp("169.254.51.192");
     int counter = 0;
     float x, y;
@@ -27,13 +27,13 @@ int main(int /*argc*/, char** /*argv[]*/)
     algo::Card max = 6;
     algo::Algorithm algo(min, max);
     
-    behavior::Behavior behaviorProxy(robotIp);
+    /*behavior::Behavior behaviorProxy(robotIp);
     navigation::Navigation navigationProxy(robotIp);
     imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
     AL::ALTextToSpeechProxy speakProxy(robotIp, 9559);
 
     speakProxy.setLanguage("German");
-    speakProxy.setVolume(0.9);
+    speakProxy.setVolume(0.9);*/
     /////////-------->
 
     try {
@@ -54,7 +54,7 @@ int main(int /*argc*/, char** /*argv[]*/)
         std::cout << naocv::colorDetection(pathToFile, x, y, angle, false) << std::endl;
         int i; std::cin >> i;*/
 
-        //std::cout << CircleDetection(pathToFile) << std::endl;
+        std::cout << naocv::colorDetection(pathToFile, x, y, angle, false, false) << std::endl;
 
         //ShapeDetection(pathToFile, angle, x, y);
         //imageLoaderProxy.getImage();
@@ -76,6 +76,7 @@ int main(int /*argc*/, char** /*argv[]*/)
         ///////////////////////////////////////////
         //--------PROGRAM CYCLE START-----------//
         /////////////////////////////////////////
+        /*
         behaviorProxy.startBehavior(behavior::Greetings);
         speakProxy.say("Lass uns beginnen, ich fange an");
 
@@ -163,12 +164,13 @@ int g; std::cin >> g;
             counter++;
         }while(draw);
         
+
         int state = algo.getState();
         std::cout << "SUM: " << algo.get_current_sum() << std::endl;
         std::cout << "STATE: " << state << std::endl;
         speakProxy.say("ich bin fertig mit wuerfeln");
         if(state == 4){
-            //speakProxy.say("uh, ich habe leider verloren");
+            speakProxy.say("Glueckwunsch, du hast gewonnen!");
             behaviorProxy.startBehavior(behavior::Lost);
         }
         else if(state == 3){
@@ -177,6 +179,8 @@ int g; std::cin >> g;
             }
             else{
                speakProxy.say("Jetzt darfst du wuerfeln!");
+int z;
+std::cin >> z;
                behaviorProxy.startBehavior(behavior::Search_Position);
                 speakProxy.say("Ich suche jetzt den Wuerfel");
                 imageLoaderProxy.getImage();
@@ -251,7 +255,7 @@ int g; std::cin >> g;
         }
         else {
             throw std::runtime_error("State not found State:"+algo.getState());
-        }
+        }*/
         
         ///////////////////////////////////////////
         //---------PROGRAM CYCLE END------------//

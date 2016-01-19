@@ -72,7 +72,7 @@ namespace naocv {
                 return RED;
             }
 
-            if (this->farbe == "yellow"){
+            if (this->farbe == "yellow" || this->farbe == "yellowdark" ||this->farbe == "yellowthree"){
                 return YELLOW;
             }
 
