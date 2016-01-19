@@ -20,6 +20,7 @@ namespace behavior {
         Won,
         Lost,
         Turn_Around,
+        Greetings,
         ALL
     };
 

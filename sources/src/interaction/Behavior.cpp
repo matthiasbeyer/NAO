@@ -23,6 +23,7 @@ void Behavior::initializeMap(){
         insert_in_map(Won, "Black_Won");
         insert_in_map(Lost, "Black_Lost");
         insert_in_map(Turn_Around, "Turn_Around");
+        insert_in_map(Greetings, "Black_Greetings");
         insert_in_map(ALL, "");
        
     #undef insert_in_map
@@ -52,8 +53,8 @@ void Behavior::startBehavior(BehaviorID BID){
         case 6:
             globalBehaveProxy->runBehavior(BIDstring[Lost]);
             break;
-        case 7:
-            globalBehaveProxy->runBehavior(BIDstring[Lost]);
+        case 8:
+            globalBehaveProxy->runBehavior(BIDstring[Greetings]);
             break;
     }
 }
@@ -85,6 +86,8 @@ void Behavior::stopBehavior(BehaviorID BID){
             globalBehaveProxy->stopBehavior(BIDstring[Turn_Around]);
             break;
         case 8:
+            globalBehaveProxy->stopBehavior(BIDstring[Greetings]);
+        case 9:
             globalBehaveProxy->stopAllBehaviors();
             break;
     }

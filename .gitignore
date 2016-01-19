@@ -91,3 +91,6 @@ sources/src/build-naochain/src.aps
 cd
 dir
 Microsoft
+sources/src/build-naochain/Win32/Release/ZERO_CHECK/ZERO_CHECK.log
+sources/src/build-naochain/src.dir/Release/src.log
+sources/src/build-naochain/src.dir/Release/src.unsuccessfulbuild

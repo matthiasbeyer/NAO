@@ -81,7 +81,7 @@ Algorithm::doDraw(void)
      *
      * So a 40 % will be a -80 % afterwards.
      */
-    if (percentage < 50) {
+    if (percentage <= 50) {
         percentage *= -2;
         if(Algorithm::get_current_sum() <= 21){
             state = WON;
