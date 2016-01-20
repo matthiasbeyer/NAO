@@ -21,19 +21,21 @@ int main(int /*argc*/, char** /*argv[]*/)
     int counter = 0;
     float x, y;
     float angle;
-    bool direction, draw;
+    bool cubeFound, draw;
+    cubeFound = false;
     
     algo::Card min = 1;
     algo::Card max = 6;
     algo::Algorithm algo(min, max);
     
-    /*behavior::Behavior behaviorProxy(robotIp);
+    
+    behavior::Behavior behaviorProxy(robotIp);
     navigation::Navigation navigationProxy(robotIp);
     imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
     AL::ALTextToSpeechProxy speakProxy(robotIp, 9559);
 
     speakProxy.setLanguage("German");
-    speakProxy.setVolume(0.9);*/
+    speakProxy.setVolume(0.3);
     /////////-------->
 
     try {
@@ -54,7 +56,7 @@ int main(int /*argc*/, char** /*argv[]*/)
         std::cout << naocv::colorDetection(pathToFile, x, y, angle, false) << std::endl;
         int i; std::cin >> i;*/
 
-        std::cout << naocv::colorDetection(pathToFile, x, y, angle, false, false) << std::endl;
+        //std::cout << naocv::colorDetection(pathToFile, x, y, angle, false, false) << std::endl;
 
         //ShapeDetection(pathToFile, angle, x, y);
         //imageLoaderProxy.getImage();
@@ -76,7 +78,7 @@ int main(int /*argc*/, char** /*argv[]*/)
         ///////////////////////////////////////////
         //--------PROGRAM CYCLE START-----------//
         /////////////////////////////////////////
-        /*
+        algo.update(std::make_shared<algo::Card>(15));
         behaviorProxy.startBehavior(behavior::Greetings);
         speakProxy.say("Lass uns beginnen, ich fange an");
 
@@ -100,12 +102,25 @@ int g; std::cin >> g;
                     behaviorProxy.startBehavior(behavior::Search_Position);
                     imageLoaderProxy.getImage();
                 }
-                else{
-                    speakProxy.say("Ich habe den Wuerfel nicht gefunden!");
-                    throw std::runtime_error("Cube not Found");
+                else if(i == 2){
+                    navigationProxy.moveTo(0, 0, 0.95);
+                    navigationProxy.moveTo(-0.2, 0, 0);
+                    behaviorProxy.startBehavior(behavior::Search_Position);
+                    imageLoaderProxy.getImage();
+                    if(naocv::colorDetection(pathToFile, x, y, angle) != 0){
+                        cubeFound = true;
+                    }
+                }
+                else {
+                    if(cubeFound)
+                        break;
+                    else{
+                        speakProxy.say("Ich habe den Wuerfel nicht gefunden!");
+                        throw std::runtime_error("Cube not Found");
+                    }
                 }
             }
-            speakProxy.say("Ich habe den Wuerfel gefunden, und laufe dort hin");
+            speakProxy.say("Ich habe den Wuerfel gefunden");
             x = x * 0.01; //cm in m
             y = y * 0.01; //cm in m
             y = y + -(x*0.005); //compensate slip
@@ -125,9 +140,22 @@ int g; std::cin >> g;
                     behaviorProxy.startBehavior(behavior::Search_Position);
                     imageLoaderProxy.getImage();
                 }
-                else{
-                 speakProxy.say("Ich habe den Wuerfel nicht gefunden");                
-                 throw std::runtime_error("Cube not Found");
+                else if(i == 2){
+                    navigationProxy.moveTo(0, 0, 0.95);
+                    navigationProxy.moveTo(-0.2, 0, 0);
+                    behaviorProxy.startBehavior(behavior::Search_Position);
+                    imageLoaderProxy.getImage();
+                    if(naocv::colorDetection(pathToFile, x, y, angle) != 0){
+                        cubeFound = true;
+                    }
+                }
+                else {
+                    if(cubeFound)
+                        break;
+                    else{
+                        speakProxy.say("Ich habe den Wuerfel nicht gefunden!");
+                        throw std::runtime_error("Cube not Found");
+                    }
                 }
             }
             x = x * 0.01; //cm in m
@@ -200,7 +228,7 @@ std::cin >> z;
                         throw std::runtime_error("Cube not Found");
                     }
                 }
-                speakProxy.say("Ich habe den Wuerfel gefunden, und laufe dort hin");
+                speakProxy.say("Ich habe den Wuerfel gefunden");
                 x = x * 0.01; //cm in m
                 y = y * 0.01; //cm in m
                 y = y + -(x*0.010); //compensate slip
@@ -255,8 +283,7 @@ std::cin >> z;
         }
         else {
             throw std::runtime_error("State not found State:"+algo.getState());
-        }*/
-        
+        }
         ///////////////////////////////////////////
         //---------PROGRAM CYCLE END------------//
         /////////////////////////////////////////

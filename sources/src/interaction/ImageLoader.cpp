@@ -9,6 +9,7 @@ ImageLoader::ImageLoader(std::string robotIp, std::string path){
 
 void ImageLoader::initializeVideoProxy(std::string &robotIp) {
     globalVideoProxy = std::make_shared<AL::ALVideoDeviceProxy>(robotIp, 9559);
+    globalVideoProxy->setActiveCamera(1);
 }
 
 void ImageLoader::getImage(){
