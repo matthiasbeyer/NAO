@@ -1,0 +1,437 @@
+\chapter{Hardwareansteuerung}
+
+    In folgendem Kapitel wird die Hardwareansteuerung des Roboters dokumentiert.
+
+    \section{Behaviour}
+
+        Um Behaviour, welche in dem Roboter abgespeichert sind, starten und
+        stoppen zu können, wird zu Beginn des Programmes ein
+        "`Behaviour-Objekt'' mit der \ac{IP}-Adresse als Parameter instanziiert
+        (\autoref{lst:initbeh}).
+
+\begin{lstlisting}[language=c++,
+                   caption={Initialisierung Behaviour},
+                   label={lst:initbeh}]
+behaviour::Behaviour behaviourProxy(robotIp);
+\end{lstlisting}
+
+        Um später per Namespace auf die verschiedenen Behaviour zugereifen zu
+        können ohne den Namen der Behaviour wissen zu müssen, werden die
+        Behaviours mit einem Enumerator-Wert (\autoref{lst:behenum}) und deren
+        richtigen Namen in einer Map gespeichert (\autoref{lst:behmap}).
+
+\begin{lstlisting}[language=c++,
+                   caption={Behaviour Map},
+                   label={lst:behmap}]
+void Behavior::initializeMap(){
+    #define insert_in_map(k,v) do {                                     \
+            BIDstring.insert(std::pair<BehaviorID, std::string>(k,v));  \
+        } while(0)
+
+    insert_in_map(Stand_up, "Black_Standup");
+    insert_in_map(Pickup, "Black_Pickup");
+    insert_in_map(Throw, "Black_Throw");
+    insert_in_map(Search_Position, "Black_Search_Position");
+    insert_in_map(Register_Color, "Black_Register_Color");
+    insert_in_map(Search_Position, "Black_Search_Position");
+    insert_in_map(Won, "Black_Won");
+    insert_in_map(Lost, "Black_Lost");
+    insert_in_map(Turn_Around, "Turn_Around");
+    insert_in_map(Greetings, "Black_Greetings");
+    insert_in_map(ALL, "");
+
+    #undef insert_in_map
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=c++,
+                   caption={Behaviour Enumerator},
+                   label={lst:behenum}]
+enum BehaviorID {
+    Stand_up,
+    Pickup,
+    Throw,
+    Register_Color,
+    Search_Position,
+    Won,
+    Lost,
+    Turn_Around,
+    Greetings,
+    ALL
+};
+\end{lstlisting}
+
+        \autoref{lst:behenum} sicher zur Compiletime, dass die Behaviour richtig
+        referenziert werden (Konzept des Single-Point-of-Failure).
+
+        Um die Behaviour nun starten und stoppen zu können wurden zusätzliche
+        Hilfsfunktionen erstellt
+        (\autoref{lst:behstart}, \autoref{lst:behstop}).
+
+\begin{lstlisting}[language=c++,
+                   caption={Behaviour Enumerator},
+                   label={lst:behstart}]
+void Behavior::startBehavior(BehaviorID BID){
+    switch(BID) {
+        case 0:
+            std::cout << "STANDUP" << std::endl;
+            globalBehaveProxy->runBehavior(BIDstring[Stand_up]);
+            break;
+        case 1:
+            globalBehaveProxy->runBehavior(BIDstring[Pickup]);
+            break;
+        case 2:
+            globalBehaveProxy->runBehavior(BIDstring[Throw]);
+            break;
+        case 3:
+            globalBehaveProxy->runBehavior(BIDstring[Register_Color]);
+            break;
+        case 4:
+            globalBehaveProxy->runBehavior(BIDstring[Search_Position]);
+            break;
+        case 5:
+            globalBehaveProxy->runBehavior(BIDstring[Won]);
+            break;
+        case 6:
+            globalBehaveProxy->runBehavior(BIDstring[Lost]);
+            break;
+        case 8:
+            globalBehaveProxy->runBehavior(BIDstring[Greetings]);
+            break;
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=c++,
+                   caption={Behaviour Enumerator},
+                   label={lst:behstop}]
+
+void Behavior::stopBehavior(BehaviorID BID){
+    switch(BID) {
+        case 0:
+            globalBehaveProxy->stopBehavior(BIDstring[Stand_up]);
+            break;
+        case 1:
+            globalBehaveProxy->stopBehavior(BIDstring[Pickup]);
+            break;
+        case 2:
+            globalBehaveProxy->stopBehavior(BIDstring[Throw]);
+            break;
+        case 3:
+            globalBehaveProxy->stopBehavior(BIDstring[Register_Color]);
+            break;
+        case 4:
+            globalBehaveProxy->stopBehavior(BIDstring[Search_Position]);
+            break;
+        case 5:
+            globalBehaveProxy->stopBehavior(BIDstring[Won]);
+            break;
+        case 6:
+            globalBehaveProxy->stopBehavior(BIDstring[Lost]);
+            break;
+        case 7:
+            globalBehaveProxy->stopBehavior(BIDstring[Turn_Around]);
+            break;
+        case 8:
+            globalBehaveProxy->stopBehavior(BIDstring[Greetings]);
+        case 9:
+            globalBehaveProxy->stopAllBehaviors();
+            break;
+    }
+}
+\end{lstlisting}
+
+    \section{Navigation}
+
+        Um den Roboter steuern zu können, wird zu Beginn des Programmes ein
+        Navigation-Objekt mit der \ac{IP}-Adresse als Parameter instanziiert
+        (\autoref{lst:navinst}).
+
+\begin{lstlisting}[language=c++,
+                   caption={Navigation Instanziierung},
+                   label={lst:navinst}]
+navigation::Navigation navigationProxy(robotIp);
+\end{lstlisting}
+
+        Für die Steuerung wird in \autoref{lst:navmove} eine Funktion mit drei
+        Parametern definiert.
+
+\begin{lstlisting}[language=c++,
+                   caption={Funktion: "`moveTo''},
+                   label={lst:navmove}]
+void Navigation::moveTo(const float x, const float y, const float rad) {
+    globalNavProxy->moveTo(x, y, rad);
+}
+\end{lstlisting}
+
+    \section{ImageLoader}
+
+        Um ein Bild von dem Roboter auf den Steuer-Computer übertragen zu können
+        wird zu Beginn des Programms ein "`ImageLoader''-Objekt instanziiert
+        (\autoref{lst:imginst}).
+        Dieses wird mit der \ac{IP}-Adresse und einer Pfadangabe zur Speicherung
+        des Bildes instanziiert.
+
+\begin{lstlisting}[language=c++,
+                   caption={ImageLoader Instanziierung},
+                   label={lst:imginst}]
+imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
+\end{lstlisting}
+
+        Zu Beginn muss der VideoStream des NAO-Roboters "`angemeldet'' werden.
+        Anschließend kann das Bild auf den Computer übertragen, und in ein
+        Bild-Objekt von OpenCV gespeichert werden.
+        Nach dem das Bild auf dem Computer gespeichert wurde, muss der
+        VideoStream „abgemeldet“ und das Bild über die OpenCV-Funktion
+        "`imwrite'' auf den Computer gespeichert werden.
+        Das SDK bietet sechs unterschiedliche Bildqualitäten an, wie in
+        \autoref{tbl:qualities} gelistet.
+
+        \begin{table}[h]
+            \caption{SDK Bildqualität}
+            \label{tbl:qualities}
+            \begin{center}
+                \begin{tabular}[]{| l | l | l |}
+                    AL::kQQQQVGA & 8 & Image of $40 * 30px$ \\
+                    AL::kQQQVGA  & 7 & Image of $80 * 60px$ \\
+                    AL::kQQVGA   & 0 & Image of $160 * 120px$ \\
+                    AL::kQVGA    & 1 & Image of $320 * 240px$ \\
+                    AL::kVGA     & 2 & Image of $640 * 480px$ \\
+                    AL::k4VGA    & 3 & Image of $1280 * 960px$ \\
+                \end{tabular}
+            \end{center}
+        \end{table}
+
+\begin{lstlisting}[language=c++,
+                   caption={Funktion: "`ImageLoader::getImage()''},
+                   label={lst:imgget}]
+void ImageLoader::getImage(){
+    const std::string clientName = globalVideoProxy->subscribe("imgloader", AL::k4VGA, AL::kBGRColorSpace, 5);
+    cv::Mat imgHeader = cv::Mat(cv::Size(1280, 960), CV_8UC3);
+    AL::ALValue img = globalVideoProxy->getImageRemote(clientName);
+    imgHeader.data = (uchar*) img[6].GetBinary();
+    globalVideoProxy->releaseImage(clientName);
+    globalVideoProxy->unsubscribe(clientName);
+    cv::imwrite(pathToFile, imgHeader);
+}
+\end{lstlisting}
+
+    \section{Main-Funktion}
+
+        Um mit dem Roboter Sprachausgaben tätigen zu können, wird neben dem
+        Behaviour-, Navigation- und ImageLoader-Objekt ein
+        ALTextToSpeechProxy-Objekt instanziiert.
+        Dieses wird im Anschluss mit Lautstärke und Sprache konfiguriert.
+
+\begin{lstlisting}[language=c++,
+                   caption={Instanziierung ALTextToSpeechProxy},
+                   label={lst:alttts}]
+AL::ALTextToSpeechProxy speakProxy(robotIp, 9559);
+speakProxy.setLanguage("German");
+speakProxy.setVolume(0.3);
+behaviorProxy.startBehavior(behavior::Greetings);
+speakProxy.say("Lass uns beginnen, ich fange an");
+\end{lstlisting}
+
+        Bevor der Spielzyklus beginnt, begrüßt der NAO-Roboter das Publikum mit
+        dem Behavior „Greetings“ und teilt mit, dass er nun bereit ist
+        anzufangen (\autoref{lst:alttts}).
+
+        Der NAO-Roboter und somit auch der Spielzyklus beginnt damit, dass der
+        Roboter den Würfel aufhebt und auf eine Eingabe wartet, damit der
+        Roboter in die richtige Wurfposition positioniert werden kann.
+
+        Nach dem eine Eingabe getätigt wurde, wirft der Roboter den Würfel.
+        Nun begibt sich der Roboter in die Suchposition, sagt dass
+        er nun mit der Suche des Würfels beginnt und schießt ein Foto.
+
+\begin{lstlisting}[language=c++,
+                   caption={Mainloop, Teil 1},
+                   label={lst:main1}]
+do {
+    behaviorProxy.startBehavior(behavior::Pickup);
+    int g; std::cin >> g;
+    BehaviorProxy.startBehavior(behavior::Throw);
+    behaviorProxy.startBehavior(behavior::Stand_up);
+    behaviorProxy.startBehavior(behavior::Search_Position);
+    speakProxy.say("Ich suche jetzt den Wuerfel");
+    imageLoaderProxy.getImage();
+\end{lstlisting}
+
+        Zu Beginn sucht der Roboter in der Ausgangsposition nach dem Würfel.
+        Wenn der Würfel nicht gefunden werden kann, dreht sich der Roboter um
+        60 Grad nach links.
+        Dort schießt er erneut ein Foto und führt seine Suche durch.
+        Bei erneutem Fehlschlag dreht sich der Roboter um 120 Grad nach rechts,
+        schießt ein Foto und führt seine Suche durch.
+        Wenn der Würfel bis dahin noch nicht gefunden wurde, liegt der Würfel
+        mit größter Wahrscheinlichkeit genau vor seinen Füßen, und somit
+        außerhalb seines Sichtbereiches.
+        Um dieses Problems aus dem Weg zu gehen, dreht sich der Roboter in die
+        Ausgangsposition und läuft 20 Zentimeter nach hinten.
+        Dort schießt er ein Bild und analysiert es.
+        Wenn nun dort auch kein Würfel gefunden werden kann, wird das Programm
+        mit einer Exception beendet.
+        Bei erfolgreicher Suche werden die x-, y-Koordinate und der Winkel
+        berechnet und in die lokalen Variablen gespeichert und eine
+        Sprachausgabe getätigt.
+
+\begin{lstlisting}[language=c++,
+                   caption={Mainloop, Teil 2},
+                   label={lst:main2}]
+for(int i = 0; naocv::colorDetection(pathToFile, x, y, angle) == 0; i++){
+    if(i == 0){
+        navigationProxy.moveTo(0, 0, 0.95);
+        behaviorProxy.startBehavior(behavior::Search_Position);
+        imageLoaderProxy.getImage();
+    }
+    else if(i == 1){
+        navigationProxy.moveTo(0, 0, -1.7472);
+        behaviorProxy.startBehavior(behavior::Search_Position);
+        imageLoaderProxy.getImage();
+    }
+    else if(i == 2){
+        navigationProxy.moveTo(0, 0, 0.95);
+        navigationProxy.moveTo(-0.2, 0, 0);
+        behaviorProxy.startBehavior(behavior::Search_Position);
+        imageLoaderProxy.getImage();
+        if(naocv::colorDetection(pathToFile, x, y, angle) != 0){
+            cubeFound = true;
+        }
+    }
+    else {
+        if(cubeFound)
+            break;
+        else{
+            speakProxy.say("Ich habe den Wuerfel nicht gefunden!");
+            throw std::runtime_error("Cube not Found");
+        }
+    }
+}
+speakProxy.say("Ich habe den Wuerfel gefunden");
+\end{lstlisting}
+
+        Nachdem der Würfel gefunden wurde, werden die x –und y-Koordinate von
+        Meter in Zentimeter umgerechnet, und die x,-y-Koordinate und der Winkel
+        dem Rutschen des Roboters angepasst.
+        Wenn dann alle Werte richtig umgerechnet und angepasst sind, läuft der
+        Roboter zuerst den kompletten Weg in y-Richtung und anschließend den
+        halben Weg in x-Richtung.
+        Der Grundgedanke hierbei ist, mögliche Abweichungen des Roboters durch
+        Aufteilung des Laufweges in zwei Teile, zu kompensieren.
+
+\begin{lstlisting}[language=c++,
+                   caption={Mainloop, Teil 3},
+                   label={lst:main3}]
+x = x * 0.01; // cm in m
+y = y * 0.01; // cm in m
+y = y + -(x * 0.005); //compensate slip
+angle = (-(x * 0.00581776) * 0.2);
+navigationProxy.moveTo(0, y, 0);
+navigationProxy.moveTo(x / 2, 0, angle);
+\end{lstlisting}
+
+        Nun werden die zwei letzten Schritte (FindCube, WalkToCube) wiederholt
+        nur mit dem kleinen Unterschied, dass bei „WalkToCube“ der x-Wert nicht
+        halbiert, sondern vollständig gegangen wird.
+
+\begin{lstlisting}[language=c++,
+                   caption={Mainloop, Teil 4},
+                   label={lst:main4}]
+navigationProxy.moveTo(x, 0, angle);
+\end{lstlisting}
+
+        Jetzt befindet sich der Roboter vor dem Würfel, und signalisiert mit
+        einer Sprachausgabe, dass dieser nun schaut welche Zahl er gewürfelt
+        hat.
+        Hierbei wird das Behavior„"`Register\_Color'' aufgerufen und
+        anschließend ein Bild geschossen.
+        Nun wird analysiert(Farberkennung – Ziel2) welche Zahl gewürfelt worden
+        ist.
+        Diese Zahl wird anschließend in den Spielalgorithmus eingespeist.
+        Dann sagt der Roboter welche Zahl er gewürfelt hat - ab der zweiten
+        Runde sagt der Roboter noch wie viel er insgesamt hat.
+        Als nächstes wird per „algo.doDraw()“ abgefragt, ob der Roboter noch
+        einmal würfeln soll.
+        Wenn ja, sagt der Roboter, dass er noch einmal würfelt und der
+        Spielzyklus beginnt von vorne.
+        Wenn nein, wird der Spielzyklus verlassen.
+
+
+\begin{lstlisting}[language=c++,
+                   caption={Mainloop, Teil 5},
+                   label={lst:main5}]
+    speakProxy.say("Nun schaue ich welche Zahl ich habe");
+    behaviorProxy.startBehavior(behavior::Register_Color);
+    imageLoaderProxy.getImage();
+    auto analyzed = naocv::colorDetection(pathToFile, x, y, angle, false);
+
+    algo.update(std::make_shared<algo::Card>(analyzed));
+    draw = algo.doDraw();
+
+    speakProxy.say("Ich habe eine");
+    speakProxy.say(naocv::intTostring(analyzed));
+
+    if (counter > 0) {
+        speakProxy.say(",Insgesamt habe ich");
+        speakProxy.say(naocv::intTostring(algo.get_current_sum()));
+    }
+
+    if (draw) {
+        speakProxy.say("Ich wuerfel noch ein mal");
+    }
+
+    counter++;
+} while (draw);
+
+\end{lstlisting}
+
+        Anschließend sagt der Roboter dass er mit Würfeln fertig ist.
+        Dann wird überprüft, ob der Roboter gewonnen (Behavior::Won), verloren
+        (Behavior::Lost), oder ob der Gegenspieler(Bank) einmal würfeln darf.
+        Wenn der Gegenspieler einmal würfeln darf, sagt der Roboter dies, und
+        wartet bis eine Eingabe getätigt wird um würfeln zu können.
+        Nachdem die Eingabe getätigt wurde beginnt der Roboter wie zuvor den
+        Würfel zu suchen (FindCube, WalkToCube).
+        Nachdem der Roboter den Würfel gefunden hat, sagt er dass er nun schaut
+        welche Zahl der Gegenspieler gewürfelt hat.
+        Dann wird überprüft welche Zahl gewürfelt wurde (Farberkennung – Ziel2).
+        Anschließend sagt der Roboter welche Zahl er gewürfelt hat und es wird
+        berechnet ob der Roboter, oder der Gegenspieler gewonnen hat.
+        Wenn der Gegenspieler gewonnen hat wird das Behavior "`Lost'' ausgeführt
+        und der Roboter sagt, dass der Gegenspieler gewonnen hat.
+        Wenn der Roboter gewonnen hat, wird das Behavior „Won“ ausgeführt und
+        der Main-Cycle ist beendet.
+
+\begin{lstlisting}[language=c++,
+                   caption={Mainloop, Teil 6},
+                   label={lst:main6}]
+int state = algo.getState();
+std::cout << "SUM: " << algo.get_current_sum() << std::endl;
+std::cout << "STATE: " << state << std::endl;
+speakProxy.say("ich bin fertig mit wuerfeln");
+
+if (state == 4) {
+    speakProxy.say("Glueckwunsch, du hast gewonnen!");
+    behaviorProxy.startBehavior(behavior::Lost);
+} else if (state == 3) {
+    if (algo.get_current_sum() == 21) {
+        behaviorProxy.startBehavior(behavior::Won);
+    } else {
+        speakProxy.say("Jetzt darfst du wuerfeln!");
+        int z;
+        std::cin >> z;
+        speakProxy.say("Nun schaue ich welche Zahl du gewuerfelt hast");
+        behaviorProxy.startBehavior(behavior::Register_Color);
+        imageLoaderProxy.getImage();
+        auto analyzed = naocv::colorDetection(pathToFile, x, y, angle, false);
+        speakProxy.say("Du hast eine");
+        speakProxy.say(naocv::intTostring(analyzed));
+        int newSum = algo.get_current_sum() + analyzed;
+        if (newSum <= 21) {
+            speakProxy.say("Glueckwunsch, du hast gewonnen!");
+            behaviorProxy.startBehavior(behavior::Lost);
+        } else {
+            behaviorProxy.startBehavior(behavior::Won);
+        }
+\end{lstlisting}
