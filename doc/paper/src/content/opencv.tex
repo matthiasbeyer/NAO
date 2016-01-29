@@ -1,0 +1,227 @@
+\chapter{Farberkennung}
+
+    Die Implementierung der Farberkennung wurde in zwei Ziele unterteilt.
+    \begin{itemize}
+        \item Erkennung des Würfels (Rot)
+        \item Erkennung der Augenzahl des Würfels (Gelb)
+    \end{itemize}
+    Generell wird dabei vom NAO zunächst ein Bild augenommen.
+    Anhand dieses Bildes wird im nächsten Schritt die Erkennung durchgeführt.
+
+    \section{Würfelerkennung}
+
+        Im Falle der Erkennung des Würfels selbst wird über eine Farbanalyse
+        nach der Farbe Rot gesucht und die Koordinaten des erkannten Bereichs
+        mitsamt des Winkels zum erkannten diesem errechnet.
+        Sollte das Programm mehrere Farbbereiche erkennen, werden diese
+        gefiltert und nur der Größte wird im weiteren Programmverlauf verwendet.
+        Somit werden Fehlerquellen minimiert.
+        Die Koordinaten des erkannten Bereichs werden dem Programm zur Verfügung
+        gestellt.
+
+    \section{Erkennung der Augenzahl}
+
+        Im Falle der Erkennung der Augenzahl des Würfels wird mit Hilfe der
+        Farbanalyse nach gelben Farbsegmenten gesucht.
+        Die so gefundenen Farbelemente werden nach ihrer Größe gefiltert und
+        gezählt.
+        Diese Vorgehensweise soll zur Fehlervermeidung beitragen, da der Würfel
+        oft leicht schräg abgebildet wird, was dazu führt das nicht nur die
+        Oberseite des Würfels auf der Abbildung sichtbar ist, sondern auch
+        dessen Seiten und deren Augen.
+        Diese werden bei beschriebenem Filtervorgang entfernt, da diese auf der
+        Abbildung kleiner sind.
+        Lediglich die Anzahl der so gefundenen Farbelemente wird dem Programm
+        zur Verfügung gestellt.
+
+        Letzteres wird mit einer \ac{HSV}-Analyse realisiert.
+        Mittels dieser wird überprüft, ob gefundene Farbbereiche in der
+        gesetzten \ac{HSV}-Reichweite liegen.
+        Um später im Programm Berechnungen durchführen zu können, wird parallel
+        zu diesen Werten der gefundene Farbwert, die Koordinaten des
+        Mittelpunktes des Farbbereichs sowie die Größe des Farbbereichs in einer
+        Liste abgelegt.
+
+    \section{Implementierungsdetails}
+
+        Die Implementierung der Augenzahl-Erkennung basiert auf
+        \cite{github:motboc}.
+
+        Es wurde ein Datentyp angelegt, welcher Informationen zu erkannten
+        Farbbereichen gruppiert (\ref{lst:farbpos}).
+
+\begin{lstlisting}[language=c++,
+                   caption={Typ: "`FarbPos''},
+                   label={lst:farbpos}]
+struct FarbPos {
+    std::string farbe;
+    int         xPos;
+    int         yPos;
+    int         size;
+    FarbPos(std::string c, int x, int y, int s):
+        farbe(c), xPos(x), yPos(y), size(s)
+    {
+    }
+}
+\end{lstlisting}
+
+        Für den in \autoref{lst:farbpos} aufgezigten Datentyp wurden folgende
+        Operatoren überladen, um Verarbeitung der Werte zu vereinfachen:
+        \begin{itemize}
+            \item "`<''
+            \item "`<=''
+            \item "`>''
+            \item "`>=''
+            \item "`==''
+            \item "`!=''
+            \item "`int()''
+            \item "`string()''
+        \end{itemize}
+
+        Ein Beispiel für den "`<''-Operator ist in
+        \autoref{lst:farbpos:operator-lt} aufgezeigt.
+
+\begin{lstlisting}[language=c++,
+                   caption={Beispiel: Implementation "`FarbPos::operator<''},
+                   label={lst:farbpos:operator-lt}]
+friend bool
+FarbPos::operator < (const FarbPos& self, const FarbPos& other)
+{
+    return self.yPos < other.yPos;
+}
+\end{lstlisting}
+
+        Mit Hilfe der \ac{HSV}-Analyse wird festgestellt in welchem Bereich
+        welcher \ac{HSV}-Wert liegt.
+        Diese Werte werden anhand festgelegter Objekte mit einem Minimal- und
+        einem Maximalwert verglichen.
+        Damit kann errechnet werden, welcher \ac{HSV}-Wert welcher Farbe
+        entspricht.
+        Um weitere Rechnungen durchführen zu können, werden die Farben mit der
+        dazugehörigen Koordinate des Mittelpunktes des Farbbereiches, sowie
+        deren Größe, in einem sogenannten "`Rechenvektor'' gespeichert
+        (\autoref{lst:savecolorpos}).
+
+\begin{lstlisting}[language=c++,
+                   caption={Abspeichern der Farbwerte},
+                   label={lst:savecolorpos}]
+void saveColorPos(std::string s, int x, int y, int size)
+{
+    auto fp = std::make_shared<FarbPos>(s, x, y, size);
+    farblist.push_back(fp);
+}
+\end{lstlisting}
+
+        \autoref{tbl:hsv} zeigt Werte, welche zur Farberkennung genutzt wurden.
+
+        \begin{table}[h]
+            \caption{Farbwerte}
+            \label{tbl:hsv}
+            \begin{center}
+                \begin{tabular}[]{| l | l | l | l | l | l | l |}
+                    &
+                    \multicolumn{2}{|c|}{H} &
+                    \multicolumn{2}{|c|}{S} &
+                    \multicolumn{2}{|c|}{V} \\
+
+                    Farbe
+                    & min & max
+                    & min & max
+                    & min & max \\
+
+                    \hline
+                    yellow      & 10 & 30 & 170 & 220 & 205 & 255 \\
+                    yellowdark  & 10 & 30 & 175 & 220 & 190 & 255 \\
+                    yellowthree & 10 & 30 & 170 & 220 & 220 & 255 \\
+                    red         & 0  & 10 & 140 & 255 & 70  & 255 \\
+                    reddark     & 0  & 10 & 140 & 250 & 161 & 255 \\
+
+                \end{tabular}
+            \end{center}
+        \end{table}
+
+        Nachdem das größte Farbsegment (Würfel) gefiltert wurde, werden die
+        Koordinaten gesondert abgespeichert.
+
+\begin{lstlisting}[language=c++,
+                   caption={Finden der größten Farbfläche},
+                   label={lst:biggestcolorsurface}]
+FarbPos getTopColor()
+{
+    if (!farblist.empty()) {
+        result = *farblist.at(0);
+        for (int i = 0; i < farblist.size(); i++) {
+            if (farblist.at(i) -> size > result.size) {
+                result = *farblist.at(i);
+            }
+        }
+    }
+    return result;
+}
+\end{lstlisting}
+
+        Im Anschluss wird die obere Fläche gesucht
+        (\autoref{lst:biggestcolorsurface} und die errechneten Koordinaten des
+        Bildes in Weltkoordinaten umgerechnet.
+
+        \begin{equation} \label{eq:koordiform}
+            E_{cm} = \frac{P - B}{k}
+        \end{equation}
+
+        Dabei ist $P$ die Anzahl der Pixel, $B$ die Basis, $k$ der Quotient und
+        $E_{cm}$ das Ergebnis in Zentimeter.
+
+        Hierfür wurde die Ausrichtung des NAO-Roboters eindeutig definiert und
+        mittels eines Bildes auf welchem Markierungen abgelichtet wurden
+        (wie in \autoref{img:marks})
+        die Quotienten berechnet, mittels welchen dann die Weltkoordinaten
+        errechnet werden können (\ref{eq:koordiform}).
+        Mit Hilfe dieser konnte \autoref{tbl:cmtbl} errechnet werden.
+
+        \begin{equation} \label{eq:ykoord}
+            E_{cm} = \frac{B - P}{k}
+        \end{equation}
+
+        Dabei ist $P$ die Anzahl der Pixel, $B$ die Basis, $k$ der Quotient und
+        $E_{cm}$ das Ergebniss in Zentimeter.
+
+        Da der Quotient $pixel / cm$ in jedem der Segmente $14$ beträgt, wurde
+        keine Tabelle angefertigt.
+
+        Die Funktion in \autoref{lst:getxy} kalkuliert, in welchem Segment der
+        $y$-Wert liegt und errechnet mit Hilfe der Formel die
+        $x$-(Welt-)Koordinate.
+        Diese Werte werden dann per Übergabwert an die aufrufende Funktion
+        zurückgegeben.
+
+        Im letzten Schritt wird der Winkel zum gefundenen Würfel errechnet.
+        Dazu wurde der Punkt "`centerPoint'' initialisiert, welcher nun
+        verwendet wird.
+
+\begin{lstlisting}[language=c++,
+                   caption={Funktion: "`getAngle''},
+                   label={lst:getAngle}]
+void getAngle(cv::Point pt) {
+    cv::Point center(width/2, height);
+    cv::Point zero(0, 0);
+
+    const double Rad2Deg = 180.0 / M_PI;
+
+    //TODO: Change when first real start
+    //return atan2((double) center.x - (double) pt.x, (double) center.y - (double) pt.y) * Rad2Deg; //degree
+    return -atan2((double) center.x - (double) pt.x, (double) center.y - (double)pt.y); //rad
+}
+\end{lstlisting}
+
+        Um die gefundenen Farbobjekte herausfiltern zu können, wird zunächst die
+        Größe der Konturen überprüft.
+        Nur Konturen mit einer Größe von $> 85$ werden selektiert.
+
+        Dann wird diese Selektion nach doppelt gefundenen Konturen durchsucht,
+        da mehrere Gelbtöne erkannt werden müssen.
+        Hierbei wird die Selektion nach Konturen durchsucht, welche in $x$- wie
+        auch in $y$-Reichtung $<= 40 px$ beieinander liegen.
+        Wird eine doppelte Kontur gefunden, wird diese nicht berücksichtigt
+        und es wird die nächste Kontur selektiert.
+        Die so erkannte Augenzahl wird zurückgegeben.
+

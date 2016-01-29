@@ -121,10 +121,14 @@
                         ausführen
 
                     \item Systemumgebungsvariablen öffnen und dabei
-                        Systemvariablen ``Neu''  auswählen
+                        Systemvariablen ``Neu'' auswählen
+                        (\autoref{img:win:sysvar1}, \autoref{img:win:sysvar2},
+                        \autoref{img:win:sysvar3})
 
                     \begin{itemize}
                         \item ``Name der Variablen:'' ``PY\_HOME''
+                            (\autoref{img:py:home})
+
                         \item ``Wert der Variablen:'' ``Python\_Pfad'',
                             zum Beispiel ``C:\textbackslash{}Python27'')
                     \end{itemize}
@@ -201,5 +205,105 @@
                             caption={Windows Path},
                              label=lst:win:path]
                              {src/sources/windows-path-edit.txt}
+
+        \subsection{OpenCV Installation unter Windows}
+
+            Zur Installation von OpenCV unter Windows müssen folgende Schritte
+            erfolgreich durchgeführt werden:
+
+            \begin{itemize}
+                \item "`opencv-2.4.11.exe'' ausführen und nach
+                    "`C:\textbackslash{}naoqi\textbackslash{}'' installieren
+
+                \item Systemumgebungsvariablen öffnen und die bereits bestehende
+                    Variable "`Path'' bearbeiten, folgendes hinzufügen:
+                    "`;C:\textbackslash{}naoqi\textbackslash{}opencv2\textbackslash{}build\textbackslash{}x86\textbackslash{}vc10\textbackslash{}bin;''
+
+                \item "`OpenCV\_Debug.props'' und "`OpenCV\_Release.props'' nach
+                    "`C:\textbackslash{}naoqi\textbackslash{}opencv\textbackslash{}props\textbackslash{}'' kopieren
+            \end{itemize}
+
+            Um ein NAOqi-Projekt in Microsoft Visual Studio 2010 zu erstellen,
+            müssen folgende Schritte durchgeführt werden:
+
+            \begin{itemize}
+                \item per Windows-Taste $x \rightarrow a$ die
+                    Administrator-Eingabeaufforderung aufrufen
+
+                \item Mit "`cd C:\textbackslash{}naoqi\textbackslash{}\_workspace\textbackslash{}''
+                    zu dem Arbeitsordner wechseln (Falls nicht vorhanden, diesen
+                    Ordner erstellen)
+
+                \item Ein neuen Worktree von qiBuild mit "`qibuild init -f''
+                    anlegen
+
+                \item Neues Toolchain für den Workspace  mit
+                    "`qitoolchain create workspacechain C:\textbackslash{}naoqi\textbackslash{}sdk\textbackslash{}toolchain.xml''
+                    erstellen
+
+                \item Durch "`qibuild create meinProjekt'' ein neues Projekt
+                    erstellen (Name frei wählbar).
+                    Zur Inbetriebnahme eines bestehenden Projektes ab hier
+                    einsteigen! (Nächster Punkt muss nicht immer beachtet werden)
+
+                \item Anschließend
+                    "`C:\textbackslash{}naoqi\textbackslash{}\_workspace\textbackslash{}meinProjekt\textbackslash{}CMakeLists.txt'' öffnen
+                    und folgende Zeile in der letzten Zeile einfügen:
+                    "`qi\_use\_lib(meinProjekt ALCOMMON)''
+                    (Wichtig: Eigenen Projektnamen einsetzen)
+
+                \item Die Visualstudio Projektdateien mit CMake generieren \\
+                    "`cd C:\textbackslash{}naoqi\textbackslash{}\_workspace\textbackslash{}meinProjekt\textbackslash{}''
+                    $\rightarrow$
+                    "`qibuild configure -c workspacechain''
+
+
+                \item Nun kann
+                    "`C:\textbackslash{}naoqi\textbackslash{}\_workspace\textbackslash{}meinProjekt\textbackslash{}build-workspacechain\textbackslash{}meinProjekt.sln''
+                    mit Microsoft Visual Studio 2010 geöffnet werden
+
+                \item Im Projektmappen-Explorer auf "`meinProjekt'' ein
+                    Rechtsklick ausführen $\rightarrow$
+                    "`Als Startprojekt festlegen'' auswählen
+
+            \end{itemize}
+
+            Um OpenCV in Microsoft Visual Studio 2010 zu integrieren müssen
+            folgende Schritte durchgeführt werden:
+
+            \begin{itemize}
+                \item Projekt öffnen
+                \item Eigenschaftsmanager öffnen
+                \item Zu "`meinProjekt'' $\rightarrow$ "`Debug Win32''
+                    navigieren und anwählen
+                \item "`Vorhandenes Eigenschaftsblatt hinzufügen'' aufwählen und
+                    zu
+                    "`C:\textbackslash{}naoqi\textbackslash{}opencv\textbackslash{}props''
+                    navigieren. "`OpenCV\_Release.props'' auswählen
+
+                \item Zum "`Projektmappen-Explorer'' wechseln und auf
+                    "`meinProjekt'' rechtsklicken und "`Eigenschaften''
+                    auswählen
+
+                \item Nun zu "`Konfigurationseigenschaften'' $\rightarrow$ "`Linker'' $\rightarrow$
+                    "`Eingabe'' navigieren und im rechten Feld bei "`zusätzliche
+                    Abhängigkeiten'' auf den kleinen Pfeil nach unten klicken und
+                    "`Bearbeiten'' auswählen. Nun den Hacken bei "`vom
+                    übergeordneten Projekt erben oder ..'' setzen und mit "`OK''
+                    und "`Übernehmen'' bestätigen
+            \end{itemize}
+
+            Nun kann mit Microsoft Visual Studio 2010 ein Programm mit NAOqi und
+            OpenCV entwickelt werden.
+
+    \section{Choreographe und Tools}
+        \label{chap:inst:choero}
+
+        Um den NAO Roboter mit Behaviours ausstatten zu können wird die
+        "`Choreographe''-Software von Aldebaran verwendet.
+
+        Um diese Installieren zu können wird die offizielle NAO-\ac{CD}
+        benötigt, sowie ein Lizenzschlüssel, falls beabsichtigt wird die
+        Software für mehr als 90 Tage zu benutzen.
 
 % vim: spelllang=de

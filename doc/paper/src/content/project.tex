@@ -1,0 +1,175 @@
+\chapter{Projekt}
+
+    In diesem Kapitel soll beschrieben werden wie das Projekt aufgebaut und in
+    Angriff genommen wurde.
+
+    Die relevanten Rollen sowie deren Verteilung, der Projektablauf, die
+    Schwierigkeiten sowie die gewonnenen Erfahrungen werden in diesem Kapitel
+    umschrieben, können jedoch in nachfolgenden Kapitel noch vertieft werden.
+
+    \section{Rollen}
+        \label{chap:rollen}
+
+        Im Semesterprojekt wurden folgende Rollen festgelegt:
+
+        \begin{itemize}
+            \item Entwickler
+                \begin{itemize}
+                    \item Ansteuerung Hardware \\
+                        Schreibt oder Produziert Quellcode welcher mit der
+                        Hardware des Roboters in direkter Verbindung steht.
+
+                    \item Bilderkennung \\
+                        Schreibt oder Produziert Quellcode welcher benutzt
+                        werden kann um Daten aus Bildern zu extrahieren welche
+                        für den Ablauf des Roboterprogramms nötig sind.
+
+                    \item Quellcode \\
+                        Quellcodeentwickler welcher Quellcode produziert welcher
+                        nicht in die anderen Rollenbeschreibungen der Entwickler
+                        passt.
+
+                    \item Spielealgorithmus \\
+                        Entwickelt und Implementiert den Spielealgorithmus.
+
+                \end{itemize}
+            \item Ersteller der Dokumentation \\
+                Erstellt die Dokumentation/das Tutorial basierend auf Inhalten
+                welche die anderen Projektmitglieder liefern.
+
+            \item Leitung Marketing \\
+                Entwirft und Erstellt Werbung und Marketinginhalte welche zur
+                Abschlusspräsentation des Projektes verwendet werden.
+
+            \item Projektleiter \\
+                Leitet das Projekt, verwaltet Meilensteine und Arbeitspakete.
+                Kümmert sich um eventuell benötigte Zusatzkomponenten für das
+                Projekt.
+
+            \item Protokollant \\
+                Protokolliert Projekttreffen und notiert kritische
+                Informationen, sofern notwendig.
+
+            \item Präsentator \\
+                Präsentiert das Projekt dem Kunden und vertritt dabei die
+                Projektgruppe.
+
+            \item Tester \\
+                Testet das Produkt.
+
+        \end{itemize}
+
+        Jede Rolle sollte zwei Mal vergeben werden: Einmal an eine Hauptperson
+        für diese Rolle, zudem sollte für jede Rolle ein Vertreter existieren.
+
+    \section{Rollenverteilung}
+
+        Die in \autoref{chap:rollen} aufgezeigten Rollen wurden wie Folgt
+        verteilt:
+
+        \begin{center}
+            \begin{tabular}{l | l | l }
+                Rollenname                       & Hauptperson     & Vertreter \\
+
+                \hline
+
+                Entwickler: Ansteuerung Hardware & Sardor Tarik    & Butrint Veselaj \\
+                Entwickler: Bilderkennung        & Matthias Kotz   & Daniel Eisenreich \\
+                Entwickler: Quellcode            & Alle            & Alle \\
+                Entwickler: Spielealgorithmus    & Matthias Beyer  & Daniel Eisenreich \\
+                Ersteller der Dokumentation      & Matthias Beyer  & Butrint Veselaj \\
+                Leitung Marketing                & Sardor Tarik    & Matthias Kotz, Butrint Veselaj \\
+                Projektleiter                    & Butrint Veselaj & \\
+                Protokollant                     & Matthias Beyer  & Butrint Veselaj \\
+                Präsentator                      & Matthias Kotz   & Daniel Eisenreich \\
+                Tester                           & Alle            & Alle \\
+            \end{tabular}
+            \captionof{table}{Rollenverteilung}
+            \label{tab:rollenverteilung}
+        \end{center}
+
+        Wie in \autoref{tab:rollenverteilung} dargestellt, wurde jedes
+        Projektmitglied mit mehreren Rollen ausgestattet.
+        Manche Rollen wurden von allen Projektmitgliedern belegt.
+
+    \section{Projektablaufplanung}
+
+        Das Projekt wurde in mehrere Phasen unterteilt:
+
+        \begin{itemize}
+            \item Organisationsphase
+            \item Installation der Umgebung
+            \item Replizierung des Vorhgängerprojektes
+            \item Entwicklung der Demo
+            \item Test- und Optimierungsphase
+            \item Marketing
+            \item Abschluss
+        \end{itemize}
+
+        Die Projektablaufplanung wurde im Laufe des Projektes mehrmals verändert
+        und angepasst.
+        Zunächst war der Ablauf des Projektes wie oben aufgelistet geplant.
+        Da diese Planung nicht detailiert genug war, wurde sie in
+        \autoref{img:planung1},
+        \autoref{img:planung2},
+        \autoref{img:planung3},
+        \autoref{img:planung4} und
+        \autoref{img:planung5}
+        neu definiert.
+
+        Neben den regelmäßigen Projekttreffen, welche zunächst einmal pro Woche
+        statt fanden, später im Projekt dann mehrmals, wurde der
+        "`Kundenkontakt'' zum betreuenden Professor mit Treffen in jeder zweiten
+        Woche möglichst eng gehalten.
+        Dies ermöglichte dem Projektbetreuer früh korrigierend in den
+        Projektverlauf einzugreifen.
+        Zudem konnten Änderungswünsche so Zeitnah berücksichtigt werden.
+
+    \section{Herausforderungen}
+
+        Die Herausforderungen des Projektes waren vor allem das Erlernen der
+        OpenCV-Schnittstellen sowie die Projektplanung.
+        Des weiteren entstanden Probleme mit der Farberkennung, der Hardware des
+        Roboters und des Greifens des Würfels.
+
+        Die OpenCV-Bibliothek wird aufgrund ihrer Flexibilität und ihres
+        Funktionsumfangs in verschiedenen Bereichen, wie zum Beispiel der
+        Gesichts- oder Gestenerkennung, Segmentierung oder Photogrammetrie
+        (\cite{wiki:opencv}) eingesetzt.
+        Dementsprechend komplex gestaltet sich das Interface der Bibliothek und
+        dementsprechend Anspruchsvoll war auch die Einarbeitung in diese
+        Bibliothek.
+
+        Die Projektplanung gestaltete sich aufgrund von verschiedenen Faktoren
+        als schwierig.
+        Zunächst war die Aufgabenstellung relativ breit formuliert.
+        Das generelle Vorgehen war unstruktuiert und zunächst nicht geplant.
+        Generell war das Zeitmanagement schwierig zu meistern, da die
+        Herausforderungen bis zum Abgabetermin umfangreich gestaltet waren.
+
+        Die Farberkennung bereitete dem Projekt in so fern Probleme, dass sie
+        sehr unzuverlässig war und leicht gestört werden konnte.
+        Unterschiedlicher Lichteinfall sorgte dafür dass zum Beispiel Magenta
+        als Blau erkannt wurde, was das Auswerten der gewürfelten Zahl unmöglich
+        machte.
+
+        Die Hardware des Roboters erhitzte während unserer Testläufe oft sehr
+        schnell, was zu Notabschaltungen des Roboters führte und ein flüssiges
+        Arbeiten oft behinderte.
+        Ausserdem waren die Motoren (Knie, Schulter) des Roboters teilweiße
+        defekt, was dazu führte dass der Roboter nicht richtig laufen oder den
+        Würfel nicht werfen konnte.
+        Als Folge dieser Probleme konnte der Roboter nicht präzise agieren.
+
+    \section{Gewonnene Erfahrungen}
+
+        Das Projekt hat sich schon nach kurzer Zeit für einige als sehr gute
+        Lernerfahrung herausgestellt.
+        So konnten Erfahrungen mit OpenCV, dem NAO-Roboter selbst, also dessen
+        Ansteuerung und dessen Tücken, Programmierung in C++ und auch
+        Projektplanung gemacht werden.
+
+        Es war vor allem für die Studenten aus den Studiengängen AIB und CNB
+        interessant das Projekt zu leiten und zu steuern, da dies in den
+        Studiengängen nur wenig behandelt wird.
+
