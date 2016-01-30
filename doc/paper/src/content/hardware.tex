@@ -141,8 +141,8 @@ speakProxy.say("Lass uns beginnen, ich fange an");
     anzufangen (\autoref{lst:alttts}).
 
     Der NAO-Roboter und somit auch der Spielzyklus beginnt damit, dass der
-    Roboter den Würfel aufhebt und auf eine Eingabe wartet, damit der
-    Roboter in die richtige Wurfposition positioniert werden kann.
+    Roboter den Würfel aufhebt und auf eine Eingabe wartet, damit er
+    in die richtige Position für einen Wurf gebracht werden kann.
 
     Nach dem eine Eingabe getätigt wurde, wirft der Roboter den Würfel.
     Nun begibt sich der Roboter in die Suchposition, sagt dass
@@ -151,63 +151,64 @@ speakProxy.say("Lass uns beginnen, ich fange an");
     Zu Beginn sucht der Roboter in der Ausgangsposition nach dem Würfel.
     Wenn der Würfel nicht gefunden werden kann, dreht sich der Roboter um
     60 Grad nach links.
-    Dort schießt er erneut ein Foto und führt seine Suche durch.
+    Dort schießt er erneut ein Foto und führt eine Suche durch.
     Bei erneutem Fehlschlag dreht sich der Roboter um 120 Grad nach rechts,
-    schießt ein Foto und führt seine Suche durch.
+    schießt ein Foto und führt eine Suche durch.
     Wenn der Würfel bis dahin noch nicht gefunden wurde, liegt der Würfel
-    mit größter Wahrscheinlichkeit genau vor seinen Füßen, und somit
-    außerhalb seines Sichtbereiches.
-    Um dieses Problems aus dem Weg zu gehen, dreht sich der Roboter in die
+    mit größter Wahrscheinlichkeit genau vor den Füßen des Roboters, und somit
+    außerhalb des Sichtbereichs des Roboters.
+    Um dieses Problem zu umgehen, dreht sich der Roboter in die
     Ausgangsposition und läuft 20 Zentimeter nach hinten.
     Dort schießt er ein Bild und analysiert es.
-    Wenn nun dort auch kein Würfel gefunden werden kann, wird das Programm
-    mit einer Exception beendet.
-    Bei erfolgreicher Suche werden die x-, y-Koordinate und der Winkel
-    berechnet und in die lokalen Variablen gespeichert und eine
-    Sprachausgabe getätigt.
+    Wenn dort kein Würfel gefunden werden kann, wird das Programm
+    mit einer Ausnahme beendet.
+    Bei erfolgreicher Suche werden die x- und y-Koordinaten sowie der Winkel
+    berechnet und in die lokalen Variablen gespeichert.
+    Im Anschluss wird eine Sprachausgabe getätigt.
 
-    Nachdem der Würfel gefunden wurde, werden die x –und y-Koordinate von
-    Meter in Zentimeter umgerechnet, und die x,-y-Koordinate und der Winkel
-    dem Rutschen des Roboters angepasst.
-    Wenn dann alle Werte richtig umgerechnet und angepasst sind, läuft der
-    Roboter zuerst den kompletten Weg in y-Richtung und anschließend den
+    Nachdem der Würfel gefunden wurde, werden die Koordinaten von
+    Meter in Zentimeter umgerechnet.
+    Zudem werden die Koordinaten und der Winkel dem Rutschen des Roboters
+    angepasst.
+    Nachdem alle Werte umgerechnet sind, läuft der
+    Roboter zunächst den kompletten Weg in y-Richtung und anschließend den
     halben Weg in x-Richtung.
-    Der Grundgedanke hierbei ist, mögliche Abweichungen des Roboters durch
-    Aufteilung des Laufweges in zwei Teile, zu kompensieren.
+    Dies soll mögliche Abweichungen des Roboters durch Aufteilung des Laufweges
+    kompensieren.
 
-    Nun werden die zwei letzten Schritte (FindCube, WalkToCube) wiederholt
-    nur mit dem kleinen Unterschied, dass bei „WalkToCube“ der x-Wert nicht
-    halbiert, sondern vollständig gegangen wird.
+    Nun werden die zwei letzten Schritte wiederholt.
+    Allerdings wird nun nicht die Hälfte des Weges gelaufen, sondern der
+    komplette restlich Weg.
 
-    Jetzt befindet sich der Roboter vor dem Würfel, und signalisiert mit
-    einer Sprachausgabe, dass dieser nun schaut welche Zahl er gewürfelt
-    hat.
+    Jetzt befindet sich der Roboter vor dem Würfel.
+    Er signalisiert mit einer Sprachausgabe, dass er nun die Zahl welche er
+    gewürfelt hat versucht herauszufinden.
     Hierbei wird das Behavior„"`Register\_Color'' aufgerufen und
-    anschließend ein Bild geschossen.
-    Nun wird analysiert(Farberkennung – Ziel2) welche Zahl gewürfelt worden
-    ist.
-    Diese Zahl wird anschließend in den Spielalgorithmus eingespeist.
-    Dann sagt der Roboter welche Zahl er gewürfelt hat - ab der zweiten
-    Runde sagt der Roboter noch wie viel er insgesamt hat.
-    Als nächstes wird per „algo.doDraw()“ abgefragt, ob der Roboter noch
-    einmal würfeln soll.
-    Wenn ja, sagt der Roboter, dass er noch einmal würfelt und der
-    Spielzyklus beginnt von vorne.
-    Wenn nein, wird der Spielzyklus verlassen.
+    anschließend ein Bild aufgenommen.
+    Danach wird analysiert welche Zahl gewürfelt wurde.
+    Das Ergebnis der Analyse wird anschließend in den Spielalgorithmus
+    eingespeist.
+    Die gewürfelte Zahl wird per Sprachausgabe bekannt gegeben.
+    Nach der Ersten Runde gibt der Roboter zudem den aktuellen Spielstand per
+    Sprachausgabe bekannt.
+    Im Anschluss errechnet der Roboter ob er weiter spielen soll.
+    Sollte dies zutreffen, gibt der Roboter dies wiederum per Sprachausgabe
+    bekannt und der Spielzyklus beginnt von vorne.
+    Sollte dies nicht zutreffen wird das Spiel beendet.
 
-    Anschließend sagt der Roboter dass er mit Würfeln fertig ist.
-    Dann wird überprüft, ob der Roboter gewonnen (Behavior::Won), verloren
-    (Behavior::Lost), oder ob der Gegenspieler(Bank) einmal würfeln darf.
-    Wenn der Gegenspieler einmal würfeln darf, sagt der Roboter dies, und
-    wartet bis eine Eingabe getätigt wird um würfeln zu können.
+    Nun gibt der Roboter bekannt, dass er mit Würfeln fertig ist.
+    Es wird überprüft, ob der Roboter gewonnen oder verloren hat, oder ob der
+    Gegenspieler (die Bank) einmal würfeln darf.
+    Wenn der Gegenspieler einmal würfeln darf, gibt der Roboter dies per
+    Sprachausgabe bekannt und wartet bis eine Eingabe getätigt wird.
     Nachdem die Eingabe getätigt wurde beginnt der Roboter wie zuvor den
-    Würfel zu suchen (FindCube, WalkToCube).
-    Nachdem der Roboter den Würfel gefunden hat, sagt er dass er nun schaut
-    welche Zahl der Gegenspieler gewürfelt hat.
-    Dann wird überprüft welche Zahl gewürfelt wurde (Farberkennung – Ziel2).
-    Anschließend sagt der Roboter welche Zahl er gewürfelt hat und es wird
-    berechnet ob der Roboter, oder der Gegenspieler gewonnen hat.
-    Wenn der Gegenspieler gewonnen hat wird das Behavior "`Lost'' ausgeführt
-    und der Roboter sagt, dass der Gegenspieler gewonnen hat.
-    Wenn der Roboter gewonnen hat, wird das Behavior „Won“ ausgeführt und
-    der Main-Cycle ist beendet.
+    Würfel zu suchen.
+    Wenn der Roboter den Würfel gefunden hat, gibt er dies bekannt und versucht
+    zu erkennen, welche Zahl der Gegenspieler gewürfelt hat.
+    Anschließend gibt der Roboter bekannt welche Zahl er erkannt hat und es wird
+    errechnet ob der Roboter oder der Gegenspieler gewonnen hat.
+
+    Sollte der Gegenspieler gewonnen haben, wird das Behavior "`Lost''
+    ausgeführt und der Roboter gibt bekannt, dass der Gegenspieler gewonnen hat.
+    Wenn der Roboter gewonnen hat, wird das Behavior "`Won'' ausgeführt und
+    das Programm wird beendet.
