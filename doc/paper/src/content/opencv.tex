@@ -5,14 +5,14 @@
         \item Erkennung des Würfels (Rot)
         \item Erkennung der Augenzahl des Würfels (Gelb)
     \end{itemize}
-    Generell wird dabei vom NAO zunächst ein Bild augenommen.
+    Generell wird dabei vom NAO zunächst ein Bild aufgenommen.
     Anhand dieses Bildes wird im nächsten Schritt die Erkennung durchgeführt.
 
     \section{Würfelerkennung}
 
         Im Falle der Erkennung des Würfels selbst wird über eine Farbanalyse
         nach der Farbe Rot gesucht und die Koordinaten des erkannten Bereichs
-        mitsamt des Winkels zum erkannten diesem errechnet.
+        mitsamt des Winkels zu diesem errechnet.
         Sollte das Programm mehrere Farbbereiche erkennen, werden diese
         gefiltert und nur der Größte wird im weiteren Programmverlauf verwendet.
         Somit werden Fehlerquellen minimiert.
@@ -26,7 +26,7 @@
         Die so gefundenen Farbelemente werden nach ihrer Größe gefiltert und
         gezählt.
         Diese Vorgehensweise soll zur Fehlervermeidung beitragen, da der Würfel
-        oft leicht schräg abgebildet wird, was dazu führt das nicht nur die
+        oft leicht schräg abgebildet wird, was dazu führt dass nicht nur die
         Oberseite des Würfels auf der Abbildung sichtbar ist, sondern auch
         dessen Seiten und deren Augen.
         Diese werden bei beschriebenem Filtervorgang entfernt, da diese auf der
@@ -161,7 +161,7 @@ FarbPos getTopColor()
 \end{lstlisting}
 
         Im Anschluss wird die obere Fläche gesucht
-        (\autoref{lst:biggestcolorsurface} und die errechneten Koordinaten des
+        (\autoref{lst:biggestcolorsurface}) und die errechneten Koordinaten des
         Bildes in Weltkoordinaten umgerechnet.
 
         \begin{equation} \label{eq:koordiform}
