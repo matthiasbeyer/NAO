@@ -81,7 +81,7 @@ Algorithm::doDraw(void)
      *
      * So a 40 % will be a -80 % afterwards.
      */
-    if (percentage <= 50) {
+    if (percentage < 50) {
         percentage *= -2;
         if(Algorithm::get_current_sum() <= 21){
             state = WON;
@@ -111,7 +111,7 @@ Algorithm::calc_possible_next_draws(const std::vector<Card> &v, unsigned int sum
     auto insert = std::back_inserter<std::vector<Card>>(res);
     std::copy_if(v.begin(), v.end(), insert,
             [sum](const Card &c) {
-                return c < (WINNERS_NUMBER - sum);
+                return c <= (WINNERS_NUMBER - sum);
             });
     return std::move(res);
 }

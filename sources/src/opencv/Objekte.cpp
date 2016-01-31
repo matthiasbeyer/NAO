@@ -79,11 +79,13 @@ Objekte::Objekte(std::string name)
         //TODO: use "calibration mode" to find HSV min
         //and HSV max values
 
-        this->setHSVmin(cv::Scalar(10, 175, 190)); //TODO: 10, 170 ,170 when dark!
+        this->setHSVmin(cv::Scalar(10, 175, 175)); //TODO: 10, 170 ,170 when dark!
         this->setHSVmax(cv::Scalar(30, 220, 255));
 
         //BGR value for Yellow:
-        this->setColor(cv::Scalar(0, 255, 255));
+        //this->setHSVmin(cv::Scalar(10, 175, 190)); //TODO: 10, 170 ,170 when dark!
+        //this->setHSVmax(cv::Scalar(30, 220, 255));
+        //this->setColor(cv::Scalar(0, 255, 255));
     }
       if (name=="yellowthree") {
         //TODO: use "calibration mode" to find HSV min

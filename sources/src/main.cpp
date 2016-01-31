@@ -16,7 +16,7 @@
 int main(int /*argc*/, char** /*argv[]*/)
 {
     /////////<----- INIT
-    std::string pathToFile("C:/naoqi/_workspace/_src/fehler4.jpg");
+    std::string pathToFile("C:/naoqi/_workspace/_src/Ziel2.jpg");
     std::string robotIp("169.254.51.192");
     int counter = 0;
     float x, y;
@@ -27,15 +27,14 @@ int main(int /*argc*/, char** /*argv[]*/)
     algo::Card min = 1;
     algo::Card max = 6;
     algo::Algorithm algo(min, max);
-    
-    
+    /*
     behavior::Behavior behaviorProxy(robotIp);
     navigation::Navigation navigationProxy(robotIp);
     imgloader::ImageLoader imageLoaderProxy(robotIp, pathToFile);
     AL::ALTextToSpeechProxy speakProxy(robotIp, 9559);
 
     speakProxy.setLanguage("German");
-    speakProxy.setVolume(0.3);
+    speakProxy.setVolume(0.7);*/
     /////////-------->
 
     try {
@@ -56,9 +55,10 @@ int main(int /*argc*/, char** /*argv[]*/)
         std::cout << naocv::colorDetection(pathToFile, x, y, angle, false) << std::endl;
         int i; std::cin >> i;*/
 
-        //std::cout << naocv::colorDetection(pathToFile, x, y, angle, false, false) << std::endl;
+        std::cout << naocv::colorDetection(pathToFile, x, y, angle, false) << std::endl;
 
         //ShapeDetection(pathToFile, angle, x, y);
+        //behaviorProxy.startBehavior(behavior::Stand_up);
         //imageLoaderProxy.getImage();
 
         //behaviorProxy.startBehavior(behavior::Search_Dice);
@@ -78,7 +78,7 @@ int main(int /*argc*/, char** /*argv[]*/)
         ///////////////////////////////////////////
         //--------PROGRAM CYCLE START-----------//
         /////////////////////////////////////////
-        algo.update(std::make_shared<algo::Card>(15));
+        /*
         behaviorProxy.startBehavior(behavior::Greetings);
         speakProxy.say("Lass uns beginnen, ich fange an");
 
@@ -178,6 +178,7 @@ int g; std::cin >> g;
             //Game step
             algo.update(std::make_shared<algo::Card>(analyzed));
             draw = algo.doDraw();
+            std::cout << "State: " << draw << std::endl;
             
             //Interaction
             speakProxy.say("Ich habe eine");
@@ -284,10 +285,18 @@ std::cin >> z;
         else {
             throw std::runtime_error("State not found State:"+algo.getState());
         }
+        */
         ///////////////////////////////////////////
         //---------PROGRAM CYCLE END------------//
         /////////////////////////////////////////
-
+        
+        //TESTCYCLE START
+/*
+        algo.update(std::make_shared<algo::Card>(19));
+        bool b = algo.doDraw();
+        std::cout << b << std::endl;
+*/
+        //TESTCYCLE END
     }
     catch(cv::Exception& e){
         std::cout << "OpenCV Error: " << e.what() << std::endl;

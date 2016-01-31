@@ -90,7 +90,7 @@ int getDiceValue(){
             diffx = std::abs(closerSelection.at(i)->xPos - closerSelection.at(i2)->xPos);
             diffy = std::abs(closerSelection.at(i)->yPos - closerSelection.at(i2)->yPos);
 
-            std::cout << "DIFF x: " << diffx << " y: " << diffy << std::endl;
+            //std::cout << "DIFF x: " << diffx << " y: " << diffy << std::endl;
             if(diffx <= 40 && diffy <= 40){
                 counter--;
                 break;
