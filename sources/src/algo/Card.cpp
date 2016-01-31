@@ -1,4 +1,4 @@
-#include "algo/Card.hpp"
+#include "Card.hpp"
 
 using namespace algo;
 

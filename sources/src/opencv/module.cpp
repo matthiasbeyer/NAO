@@ -1,9 +1,5 @@
 #include "module.hpp"
 
-#include <string>
-#include <memory>
-#include <vector>
-
 using namespace naocv;
 
 int                 H_MIN                  = 0;

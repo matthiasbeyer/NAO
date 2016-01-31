@@ -2,11 +2,7 @@
 #include <algorithm>
 #include <iterator>
 
-#include "algo/Algorithm.hpp"
-
-#include "algo/Card.hpp"
-#include "algo/Draw.hpp"
-#include "algo/State.hpp"
+#include "Algorithm.hpp"
 
 using namespace algo;
 
@@ -67,6 +63,12 @@ Algorithm::doDraw(void)
     auto poss_next_draws = this->calc_possible_next_draws(poss_draws, sum);
 
     if (0 == poss_next_draws.size()) {
+        if(Algorithm::get_current_sum() <= 21){
+            state = WON;
+        }
+        else{
+            state = LOST;
+        }
         return Draw(-100);
     }
 
@@ -81,6 +83,12 @@ Algorithm::doDraw(void)
      */
     if (percentage < 50) {
         percentage *= -2;
+        if(Algorithm::get_current_sum() <= 21){
+            state = WON;
+        }
+        else{
+            state = LOST;
+        }
     }
 
     return Draw(percentage);
@@ -103,7 +111,7 @@ Algorithm::calc_possible_next_draws(const std::vector<Card> &v, unsigned int sum
     auto insert = std::back_inserter<std::vector<Card>>(res);
     std::copy_if(v.begin(), v.end(), insert,
             [sum](const Card &c) {
-                return c < (WINNERS_NUMBER - sum);
+                return c <= (WINNERS_NUMBER - sum);
             });
     return std::move(res);
 }

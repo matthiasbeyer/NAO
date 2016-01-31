@@ -1,5 +1,5 @@
-#ifndef __colorDetection_HPP__
-#define __colorDetection_HPP__
+#ifndef __MODULE_HPP__
+#define __MODULE_HPP__
 
 #include <iostream>
 #include <vector>
@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <opencv\cv.h>
+#include <memory>
 #include <opencv\highgui.h>
 
 #include "Objekte.h"
@@ -28,4 +29,4 @@ namespace naocv {
 
 }
 
-#endif //__colorDetection_HPP__
+#endif //__MODULE_HPP__

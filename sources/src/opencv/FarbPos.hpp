@@ -16,9 +16,11 @@ namespace naocv {
     struct FarbPos {
 
         std::string farbe;
+        int         xPos;
         int         yPos;
+        int         size;
 
-        FarbPos(std::string s, int i): farbe(s), yPos(i) {
+        FarbPos(std::string c, int x, int y, int s): farbe(c), xPos(x), yPos(y), size(s) {
         }
 
         FarbPos(){}
@@ -62,19 +64,19 @@ namespace naocv {
         }
 
         operator Farbe() {
-            if (this->farbe == "cyan"){
+            if (this->farbe == "cyan" || this->farbe == "cyandark"){
                 return CYAN;
             }
 
-            if (this->farbe == "red" || this->farbe == "red2"){
+            if (this->farbe == "red" || this->farbe == "reddark"){
                 return RED;
             }
 
-            if (this->farbe == "yellow"){
+            if (this->farbe == "yellow" || this->farbe == "yellowdark" ||this->farbe == "yellowthree"){
                 return YELLOW;
             }
 
-            if (this->farbe == "green"){
+            if (this->farbe == "green" || this->farbe == "greendark"){
                 return GREEN;
             }
 
@@ -82,7 +84,7 @@ namespace naocv {
                 return MAGENTA;
             }
 
-            if (this->farbe == "blue"){
+            if (this->farbe == "blue" || this->farbe ==  "bluedark"){
                 return BLUE;
             }
         }

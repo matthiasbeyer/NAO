@@ -1,7 +1,9 @@
 #pragma once
 
-#include <string>
+// Opencv includes.
 #include <opencv\cv.h>
+
+#include <string>
 
 class Objekte
 {

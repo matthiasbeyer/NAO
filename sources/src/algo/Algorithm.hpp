@@ -4,9 +4,9 @@
 #include <vector>
 #include <memory>
 
-#include "algo/Card.hpp"
-#include "algo/State.hpp"
-#include "algo/Draw.hpp"
+#include "Card.hpp"
+#include "State.hpp"
+#include "Draw.hpp"
 
 namespace algo {
 
