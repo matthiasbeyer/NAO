@@ -2,26 +2,26 @@
 
     In folgendem Kapitel wird die Hardwareansteuerung des Roboters dokumentiert.
 
-    \section{Behaviour}
+    \section{Behavior}
 
-        Um Behaviour, welche in dem Roboter abgespeichert sind, starten und
+        Um Behavior, welche in dem Roboter abgespeichert sind, starten und
         stoppen zu können, wird zu Beginn des Programmes ein
-        "`Behaviour-Objekt'' mit der \ac{IP}-Adresse als Parameter instanziiert
+        "`Behavior-Objekt'' mit der \ac{IP}-Adresse als Parameter instanziiert
         (\autoref{lst:initbeh}).
 
 \begin{lstlisting}[language=c++,
-                   caption={Initialisierung Behaviour},
+                   caption={Initialisierung Behavior},
                    label={lst:initbeh}]
-behaviour::Behaviour behaviourProxy(robotIp);
+behaviour::Behavior behaviourProxy(robotIp);
 \end{lstlisting}
 
-        Um später per Namespace auf die verschiedenen Behaviour zugereifen zu
-        können ohne den Namen der Behaviour wissen zu müssen, werden die
-        Behaviour mit einem Enumerator-Wert (\autoref{lst:behenum}) und deren
+        Um später per Namespace auf die verschiedenen Behavior zugereifen zu
+        können ohne den Namen der Behavior wissen zu müssen, werden die
+        Behavior mit einem Enumerator-Wert (\autoref{lst:behenum}) und deren
         richtigen Namen in einer Map gespeichert (\autoref{lst:behmap}).
 
 \begin{lstlisting}[language=c++,
-                   caption={Behaviour Enumerator},
+                   caption={Behavior Enumerator},
                    label={lst:behenum}]
 enum BehaviorID {
     Stand_up,
@@ -37,10 +37,10 @@ enum BehaviorID {
 };
 \end{lstlisting}
 
-        \autoref{lst:behenum} sichert zur Compiletime, dass die Behaviour
+        \autoref{lst:behenum} sichert zur Compiletime, dass die Behavior
         richtig referenziert werden (Konzept des Single-Point-of-Failure).
 
-        Um die Behaviour nun starten und stoppen zu können wurden zusätzliche
+        Um die Behavior nun starten und stoppen zu können wurden zusätzliche
         Hilfsfunktionen erstellt
         (\autoref{lst:behstart}, \autoref{lst:behstop}).
 
@@ -120,7 +120,7 @@ void ImageLoader::getImage(){
 \chapter{Main-Funktion}
 
     Um mit dem Roboter Sprachausgaben tätigen zu können, wird neben dem
-    Behaviour-, Navigation- und ImageLoader-Objekt ein
+    Behavior-, Navigation- und ImageLoader-Objekt ein
     ALTextToSpeechProxy-Objekt instanziiert.
     Dieses wird im Anschluss mit Lautstärke und Sprache konfiguriert.
 
